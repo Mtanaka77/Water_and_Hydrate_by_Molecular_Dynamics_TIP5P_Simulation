@@ -7,7 +7,7 @@ The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= ep
 The ice state of freezing due to microwaves, our theory discovery in J.Chem.Phys. 2007 (Ref. 2), remains the same, due to
 the structure of six-membered ice ! 
 
-### Procedure of water molecules by 5-points Method ###
+### Procedure of Water Molecules by 5-Points Method ###
 
 A. Five sites are oxygen (O), hydrogen 1 and 2 (H), and hydrogen virtual L sites (L). 
 Their charges are 0, 0.241e, 0.241e, -0.241e and -0.241e, respectively. The L1 and L2 are called the dummy sites which have null masses.
