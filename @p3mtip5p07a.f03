@@ -1,20 +1,26 @@
 !*****************************************************************
 !*                                                               *
-!*     Author/Maintainer: Motohiko Tanaka, Ph.D.,Prof.,Japan     *
-!*     Copyright(C) 2006-2023. All rights reserved.              *
-!*                                                               *
-!*    3-Dimensional ES periodici code: 5-point water             *
+!*    ## 3-Dimensional ES Periodici Code: 5-Point Water ##       *
 !*    Coulomb forces /realteil/ and /p3m_perform/ subroutines    * 
 !*                                                               *
-!*    real*8 in Fortran 2003 / PGF 19 (2019)                     *
-!*    Translation and rotation code.                             *
-!*    3-point Coulomb, and epslj_A,B due to tip4/e.              * 
-!*      prefactor (realteil), and pref_eps (LJ)                  *
-!*      L.1950 LJ potential:                                     *
-!*        epslj_A,B for water, ep(i) for hybrid molecules.       *
+!*    Refs.: 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).   *
+!*           2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).   *
+!*           3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995). *
+!*           4) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019). *
 !*                                                               *
-!*    Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020       *
-!**************************************************** 01/2020 ****
+!*    Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor,       *
+!*       Chubu University, Japan.                                *
+!*    Copyright(C) 2006-2023. All rights reserved.               *
+!*                                                               *
+!*    History:                                                   *
+!*     Translation and rotation simulation code.                 *
+!*     3-point Coulomb, and epslj_A,B due to tip4/e.             * 
+!*      prefactor (realteil), and pref_eps (LJ)                  *
+!*      epslj_A,B for water, ep(i) for hybrid molecules.         *
+!*     real*8 in Fortran 2003 / PGF 19 (2019).                   *
+!*                                                               *
+!*     Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020.     *
+!*****************************************************************
 !*                                                               *
 !*    @icecube.f  - initial ice structure                        *
 !*    @dipol_seqT.f  - dipolar Ex field                          *
