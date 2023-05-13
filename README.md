@@ -72,6 +72,10 @@ that equally separates the HOH angle.
 The A_{ij} and e0,e1,e2,e3(i) equations are written in PDF.
 
 
-Ref. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England, 2003; 
+References 
+
+1. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England, 2003; 
 古典力学，吉岡書店，2006.
 ![image](https://github.com/Mtanaka77/Molecular_Dynimics_of_Water_by_TI5P/assets/111667711/aacddf22-0d92-4f3c-ae38-e1115261fd58)
+
+2. M.Tanaka and M.Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 1-9 (2007).
