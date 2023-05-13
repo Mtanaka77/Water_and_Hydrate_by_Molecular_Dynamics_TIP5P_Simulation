@@ -72,7 +72,7 @@ that equally separates the HOH angle.
 The A_{ij} and e0,e1,e2,e3(i) equations are written in PDF.
 
 
-References 
+### References ### 
 
 1. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England, 2003; 
 古典力学，吉岡書店，2006.
