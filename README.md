@@ -69,7 +69,7 @@ Other parameters are: r(OH)=0.9572 Ang, Delta(HOH)=104.52 Ang. r(OM)=0.15 Ang is
 for the TIP4P case, where the equipartition line of the virtual M sites is on the plane 
 that equally separates the HOH angle. 
 
-The A_{ij} and e0,e1,e2,e3(i) equations are written in PDF.
+The A_{ij} and e0,e1,e2,e3(i) equations are written in PDF, "Water_TIP5P_Simulation.pdf".
 
 ### To Start a Run ###
 
@@ -94,6 +94,7 @@ The 6x6x6 water clusters have 64 Na(+) and 64 Cl(-) ions, and a run time is t=17
 We can see random water clusters. 
 Afterwards, the salt ions are gradually removed, and the dryrun is continued for 5 periods.
 
+The dryrun is shown in PDF, "Water_TIP5P_Simulation.pdf".
 
 ### References ### 
 
