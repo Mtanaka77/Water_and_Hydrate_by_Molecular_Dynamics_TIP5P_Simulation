@@ -81,6 +81,7 @@ Short-range and long-range Coulombic forces are best separated for interactions,
 forces are made to be spatially dumped.
 
 2. Around a given temperature, a dryrun is executed at least for 5 periods that is 10^(-9) seconds.
+The long dryrun is very important !!
 
 3. Then, we apply the electric field E_x= E_0*sin(omega*time) in the x-direction to excite the 
 electric dipole interactions of water. For the moment, we give the electric field 10 GHz where 
