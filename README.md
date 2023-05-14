@@ -94,7 +94,7 @@ The 6x6x6 water clusters have 64 Na(+) and 64 Cl(-) ions, and a run time is t=17
 We can see random water clusters. 
 Afterwards, the salt ions are gradually removed, and the dryrun is continued for 5 periods.
 
-The dryrun is shown in PDF, "Water_TIP5P_Simulation.pdf".
+The dryrun is shown with color pictures in PDF, "Water_TIP5P_Simulation.pdf".
 
 ### References ### 
 
