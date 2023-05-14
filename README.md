@@ -71,6 +71,20 @@ that equally separates the HOH angle.
 
 The A_{ij} and e0,e1,e2,e3(i) equations are written in PDF.
 
+### To Start a Run ###
+
+To start a water simulation with the TIP5P code, the adjascent 4x4 hydrogen pairs are summed  
+electrostatically, and oxygen pairs are coupled by TIP5P Lennard-Jones potentials.
+
+1. To get an initial state, we make the size of at least a 6x6x6 water cluster for numerical stability.
+Short-range and long-range Coulombic forces are separated for good interactions.
+
+2. Aroud a given temperature, a dryrun is made at least for 5 periods of 10^(-9) seconds.
+
+3. Then, we execute the electric field E_x= E_0 sin(omega*time) to excite the
+electric dipole interactions. The electric field has 10 GHz where the electric fiels E_0
+and electric dipole p_0 are of the order of 5x10^(-3) eV.
+
 
 ### References ### 
 
