@@ -27,9 +27,9 @@
 !     parameter  (kstart=2,suffix2='0d', & ! 120b, kstart=2
 !                          suffix1='0c', & ! TIP501__0
 !                          suffix0='0')    ! 
-!     parameter  (kstart=2,suffix2='0e', & ! 120e, kstart=1
-!                          suffix1='0d', & ! TIP501__2
-!                          suffix0='2')    ! 
+!     parameter  (kstart=1,suffix2='0f', & ! 120e, kstart=1
+!                          suffix1='0e', & ! TIP501__1
+!                          suffix0='1')    ! 
 ! /home2, /lv01                          +++++++ short 
       parameter (praefixs='/home/tanakam/MPI_wat5/TIP507',  & ! LXwat3
                  praefixi='/data/sht/tanakam/tip507',      &

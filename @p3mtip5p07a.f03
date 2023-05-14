@@ -9,12 +9,12 @@
 !*           4) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019). *
 !*                                                               *
 !*    Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor,       *
-!*       Chubu University, Japan.                                *
+!*                       Chubu University, Japan.                *
 !*    Copyright(C) 2006-2023. All rights reserved.               *
 !*                                                               *
 !*    History:                                                   *
 !*     Translation and rotation simulation code.                 *
-!*     3-point Coulomb, and epslj_A,B due to tip4/e.             * 
+!*     4-point Coulomb, and epslj_A,B due to tip5p.              * 
 !*      prefactor (realteil), and pref_eps (LJ)                  *
 !*      epslj_A,B for water, ep(i) for hybrid molecules.         *
 !*     real*8 in Fortran 2003 / PGF 19 (2019).                   *
@@ -31,40 +31,34 @@
 !*   2. read mhr007.xyz as the h-o-h coordinates input           *
 !*      -- @icecube.f, do not foldback !                         *
 !*   3. no cutoff of the lj force at the bottom (attraction)     *
-!*   4. common particle list for /realteil/ & /f_solvent/        *
-!*   5. efficient particle list for sampling: lipl()             *
-!*   6. ions are placed at the water molecule position;          *
+!*   4. ions are placed at the water molecule position;          *
 !*      -- one water molecule per ion is eliminated.             *
-!*      -- cation radius (cl: 2.2a) is reduced in early phase.   *
-!*   7. put salt among the water network                         *
-!*      -- na in a cell center, cl replaces h2o                  * 
-!*                                                               *
-!*  #  real parameters (ang, ps, kj/mol) are adopted (gamma and  *
-!*    bjerrum parameters do not appear).                         *
-!*  #  edc > 0 and salt ions move after the equilibration phase  *
+!*      -- cation radius (Cl: 2.2A) is reduced in early phase.   *
+!*   5. put salt among the water network                         *
+!*      -- Na in a cell center, Cl replaces h2o                  * 
 !*                                                               *
 !************************************************** 02/26/2005 ***
 !
 !*  1 >>> run's name is given at parameter.h                     *
 !*                                                               *
-!*  2 >>> Run parameters are given in MHR36_config.start1,       *
+!*  2 >>> Run parameters are given in TIP07_config.start0,       *
 !*       which is read by /read_conf/.                           *
 !*                                                               *
-!*  3 >>> Strart, Restart and continue runs.                     *
+!*  3 >>> Start, Restart and continue runs.                      *
 !*                                                               *
 !*   units:                                                      *
 !*    t_unit= 0.0100d-12          ! 0.01 ps                      *
-!*    a_unit= 1.0000d-08          ! 1 ang                        *
-!*    w_unit= 1.6605d-24*18.      ! H2O is the unit of time      *
-!*    e_unit= 4.8033d-10                                         *
+!*    a_unit= 1.0000d-08          ! 1 Ang                        *
+!*    w_unit= 1.6605d-24*18.      ! H2O is the unit              *
+!*    e_unit= 4.8033d-10          ! esu                          *
 !*                                                               *
 !*     ^  dv    t^2 e^2   qq'   12 t^2 eps   r0        r0        *
 !*     m ---- = -------- ---- + ------ --- [(--)^12 - (--)^6]    * 
 !*        dt     ma^3    r^2     ma^2   r    r         r         *
 !*                                                               *
-!*************************************************** 01/2020 *****
-!   A file FT11 is once closed and becomes open at L.1150
-!   FT11 output is directry to /home/tanakam/
+!*****************************************************************
+!  FT11 is open at L.110 and closed at L.680; afterwards it is
+!  open/close when write's statement is called.
 !
       program es3d_tip5
 !
@@ -715,7 +709,7 @@
         exc = 0.d0
       else
         if(temperat.lt.273.d0) then
-          eps_230= 3/88.d0    ! ice
+          eps_230= 3.0/88.d0  ! ice at 230 K
           edc1= eps_230*edc   ! dump factor: eps_230
 !
         else if(temperat.ge.273.d0) then
@@ -756,7 +750,6 @@
         end if
       end if
 !*
-!  Only kstart=1, t>=0
 !  for np=0
       if(temperat.lt.273.d0) go to 230
 !
@@ -801,50 +794,23 @@
           end if 
         end if  
       end if
+  230 continue
 !
-!  May be...
-      if(kstart.eq.1) then  ! use t >= 0
+!   kstart=1, restart with t=0 and exc >0, Read L.600.
+!   kstart=3, general continuation
+      if(kstart.eq.1 .or. kstart.eq.3) then 
 !
-        if(t8.gt.0.d0) then 
-          if(if_wipe) then
-            if_wipe= .false.
+        if(if_kstart .and. t8.gt.0.d0) then 
+          if_kstart= .false.
 !
-            do i= nq+1,nq+np   !<- empty
-            chsav(i)= ch(i) 
-            epsav(i)= ep(i)
-            end do
-!
-            if(io_pe.eq.1 .and. np.gt.0) then
-            open (unit=11,file=praefixc//'.11'//suffix2,             & 
-                  status='unknown',position='append',form='formatted')
-            write(11,*) "# t >= 0 is executed"
-            close(11)
-            end if 
-          end if
-!
-          do i= nq+1,nq+np 
-          ch(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*chsav(i) !<- decease 
-          ep(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*epsav(i) 
-          end do
-!
-        else if(t8.gt.3000.d0) then 
-!
-          do i= nq+1,nq+np 
-          vx(i)= 0
-          vy(i)= 0
-          vz(i)= 0
-          end do
-!
-          if(io_pe.eq.1 .and. np.gt.0) then
-          if_kstart1= .false.
-          open (unit=11,file=praefixc//'.11'//suffix2,             & 
+          if(io_pe.eq.1) then
+          open (unit=11,file=praefixc//'.11'//suffix2,             &
                 status='unknown',position='append',form='formatted')
-          write(11,*) "# t=3000 is ended"
+          write(11,*) "# Restart with t >= 0 and exc > 0 !"
           close(11)
-          end if 
+          end if
         end if 
       end if 
-  230 continue
 !
 !***********************************************************
 !*  Main Loop                                              *
