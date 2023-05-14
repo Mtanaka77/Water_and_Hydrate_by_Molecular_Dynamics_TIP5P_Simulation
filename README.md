@@ -87,6 +87,13 @@ The long dryrun is very important !!
 electric dipole interactions of water. For the moment, we give the electric field 10 GHz where 
 the electric field E_0 and electric dipole p_0 are of the order of 5x10^(-3) eV.
 
+### To Obtain the Initial Equilibrium for 298 K ###
+
+We will use salt ions of Na(+) and Cl(-) initially as the dryrun to give random noises. 
+The 6x6x6 water clusters have 64 Na(+) and 64 Cl(-) ions, and a run time is t=1700.
+We can see random water clusters. 
+Afterwards, the salt ions are gradually removed, and the dryrun is continued for 5 periods.
+
 
 ### References ### 
 
