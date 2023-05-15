@@ -26,20 +26,21 @@ E. After correction of quatenions, go to the beginning of the clcle.  The leap-f
 
 ### Each Step of Molecular Dynamics ###
 
-Each step of molecular dynamics is tranlation (1), rotation (2-4), and adding to the fields (5-8).
+Each step of molecular dynamics simulation consistes of tranlation (step 1), rotation (steps 2-4), 
+and adding to the fields (steps 5-8). The step 0 is made only initially. 
 
-0. Read quaternions e0-e3 from the file by 'read(30) e0,e1,e2,e3'
+0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e,e1,e2,e3)_{j=1,N/3} from the file by 'read(30) e0,e1,e2,e3'.
 
-1. Sum up five sites and advance, 'd{\bf V}_{i}/dt=\sum_{k=1,5} {\bf F}_{i,k}/m_{i}, 
+1. Summation of five sites of water and make advancement in time, 'd{\bf V}_{i}/dt=\sum_{k=1,5} {\bf F}_{i,k}/m_{i}, 
 d{\bf R}_{i}/dt={\bf V}_{i}' for each of the translation motion.
 
 2. For the rotation motion 'd{\bf L}_{i}/dt=\sum_{k} (y_{i,k}F_{i,k}^z-z_{i,k}F_{i,k}^y,
-z_{i,k}F_{i,k}^x-x_{i,k}F_{i,k}^z,x_{i,k}F_{i,k}^y-y_{i,k}F_{i,k}^x)'
-The summations are made over the five sites of k=1,5. 
+z_{i,k}F_{i,k}^x-x_{i,k}F_{i,k}^z,x_{i,k}F_{i,k}^y-y_{i,k}F_{i,k}^x)' where F_x, F_y, F_z stand for the x,y,z 
+direction of forces. The summation over each moleculu is made over the five sites, k=1,5. 
 
-3. 'omega_{i,alpha}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{i,alpha}', 
-the angular frequency for speceis A_{alpha,beta} and inertia moments Im_{i,alpha} 
-for the directions alpha=x,y,z.
+3. 'omega_{j}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{j,alpha}', 
+for A_{alpha,1}, A_{alpha,2}, A_{alpha,3} and inertia moments Im_{j,alpha} 
+and the directions alpha=x,y,z.
 
 4. 'd{\bf q}_{i}/dt =(1/2)Q(e0,e1,e2,e3)(omega_{i,x),omega_{i,y),omega_{i,z),0), 
 d{\bf q}_{i}/dt of Q and omega's has four components found in Goldstein's book.
