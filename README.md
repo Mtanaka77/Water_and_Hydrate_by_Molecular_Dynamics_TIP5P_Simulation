@@ -21,7 +21,7 @@ advance of time.
 D. Before the end of one step, the forces are calculated at {\bf r}_{i,k}= {\bf R}_{i} +A^(-1){\bf s}_{k}
 with the three sites of k=1-3, and the L sites are also calculated by algebraic operation.
 
-E. After correction of quatenions, go to the beginning of the clcle.  The leap-frog method is used for the plasmas and waters.
+E. After correction of quatenions, go to the beginning of the cycle.  The leap-frog method is used for the plasmas and waters.
 
 
 ### Each Step of Molecular Dynamics ###
