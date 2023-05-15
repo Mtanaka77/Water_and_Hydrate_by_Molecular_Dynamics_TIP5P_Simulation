@@ -1,4 +1,4 @@
-## Molecular_Dynamics_of_Water_by_TIP5P_Code ##
+## Molecular Dynamics of Water and Ice by TIP5P Code ##
 
 Procedures of water molecules dynamics simulation are shown for the 5-points molecules. 
 This approach is done with five-water molecules with two hydrogens and two L1, L2 hydrogens of dummy sites. 
