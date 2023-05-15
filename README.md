@@ -54,6 +54,7 @@ at the three components {\bf r}_{i} and the position {\bf R}_{i}. The dummy site
 determined by algebraic vector operation.
 
 7. Forces by Coulombic interations and Lennard-Jones potentials are calculated using five sites.
+This is the most time consuming part of the TIP5P code.
 
 8. The correction and normalization by quaternions are made in every 10-step interval. 
 Then, go to the next time step as step 1.
