@@ -95,7 +95,8 @@ We can see random water clusters.
 Afterwards, the salt ions are gradually removed, and the dryrun is continued for 5 periods.
 
 The dryrun is shown with color pictures in PDF, "Water_TIP5P_Simulation.pdf".
-The code including salt ions could be slower than the water code even if the salt ions are not present.
+The code including salt ions could be slower than the pure water code even if the salt ions are not present
+(due to NEC's compiler ?).
 
 ### References ### 
 
