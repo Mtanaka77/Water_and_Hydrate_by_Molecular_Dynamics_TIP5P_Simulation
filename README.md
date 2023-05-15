@@ -42,22 +42,24 @@ direction of forces. The summation over each moleculu is made over the five site
 for A_{alpha,1}, A_{alpha,2}, A_{alpha,3} and inertia moments Im_{j,alpha} 
 and the directions alpha=x,y,z.
 
-4. 'd{\bf q}_{i}/dt =(1/2)Q(e0,e1,e2,e3)(omega_{i,x),omega_{i,y),omega_{i,z),0), 
-d{\bf q}_{i}/dt of Q and omega's has four components found in Goldstein's book.
+4. 'd{\bf q}_{j}/dt =(1/2)Q(e0,e1,e2,e3)(omega_{j,x),omega_{j,y),omega_{j,z),0), 
+d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
 
-5. Get a new rotation matrix A_{ij}(e0,e1,e2,e3) in p.205 of Goldstein's book.
+5. Get a new rotation matrix A_{alpha,beta}(e0,e1,e2,e3) in p.205 of Goldstein's book.
 
 6. x_{i}= X_{i} +(A_{11}x_{i}+A_{21}y_{i}+A_{31}z_{i}, 
-   y_{i}= Y_{i} +(A_{11}x_{i}+A_{21}y_{i}+A_{31}z_{i},
-   z_{i}= Z_{i} +(A_{11}x_{i}+A_{21}y_{i}+A_{31}z_{i},
-at the three sites {\bf r}_{i,k} and the position {\bf R}_{i}. The dummy sites are
+   y_{i}= Y_{i} +(A_{12}x_{i}+A_{22}y_{i}+A_{32}z_{i},
+   z_{i}= Z_{i} +(A_{13}x_{i}+A_{23}y_{i}+A_{33}z_{i},
+at the three components {\bf r}_{i} and the position {\bf R}_{i}. The dummy sites are
 determined by algebraic vector operation.
 
-7. Forces by Coulombic and Lennard-Jonnes potentials are calculated using five sites.
+7. Forces by Coulombic interations and Lennard-Jones potentials are calculated using five sites.
 
-8. Correction and normalization by quaternions are made at every 10-step interval. Then, go to the next time step as (1).
+8. The correction and normalization by quaternions are made in every 10-step interval. 
+Then, go to the next time step as step 1.
 
-Note that the choice of a time step is important. For TIP5P case, it may be dt=0.025, else the code is inaccurate or goes overflow.
+Note that the choice of a time step is important. For TIP5P case, it may be dt=0.025, else 
+the code is inaccurate or/and goes overflow.
 
 
 ### The Lennard-Jones Potential ###
