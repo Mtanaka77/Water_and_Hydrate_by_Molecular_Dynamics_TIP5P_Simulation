@@ -878,7 +878,7 @@
       if(kstart.eq.0 .and. it.eq.1) then
 !
 !  Takes q_H sums only 
-        call realteil_n (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
+        call realteil (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
 !
         npq= nq +np
         call p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
@@ -1104,8 +1104,8 @@
 !*  Find forces
 !--------------------
 !
-!  In /realteil_n/, all nq are taken, but np=0 in fec(i, )
-      call realteil_n (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
+!  In /realteil/, all nq and np, but could be slow if np=0 
+      call realteil (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
 !
         call clocks (wall_t02,size,cl_first)
 !
@@ -1487,9 +1487,8 @@
       end subroutine moldyn
 !
 !
-!  Remark: nq/5, not in nq/5+np in water's q_H sums
 !----------------------------------------------------------------------
-      subroutine realteil_n (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np) 
+      subroutine realteil (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np) 
 !----------------------------------------------------------------------
       use, intrinsic :: iso_c_binding 
       implicit none
@@ -1587,10 +1586,10 @@
 !$OMP DO SCHEDULE(STATIC,1)
 !
       do ll= ipar,nq/5,size     !!only charges for water 
-      do jp= 1,nq/5             !!+np
+      do jp= 1,nq/5+np          !!+np
       if(jp.eq.ll) go to 300
 !
-!     if(jp.le.nq/5) then       ! there are two possibilities
+      if(jp.le.nq/5) then       ! there are two possibilities
 !     +++++++++++++++++++++++++++++++++++++
 !     if(abs(ch(j)) .lt. 1.d-5) go to 400
 !     +++++++++++++++++++++++++++++++++++++
@@ -1752,12 +1751,156 @@
                                                     +forceV4*dz4
       e_c_r = e_c_r +e_c_r1 +e_c_r2 +e_c_r3 +e_c_r4
 !
+!
+      else if(jp.gt.nq/5) then    ! 2) salt, j= nq+1, i= water
+!       ++++++++
+        j= jp -nq/5 +nq 
+!
+        i= 5*ll -3
+        dx1= xa(i) -xa(j)
+        dy1= ya(i) -ya(j)
+        dz1= za(i) -za(j)
+        dx1= dx1 -DNINT(dx1/xmax)*xmax
+        dy1= dy1 -DNINT(dy1/ymax)*ymax
+        dz1= dz1 -DNINT(dz1/zmax)*zmax
+        call forces_5 (dx1,dy1,dz1,ch(i),ch(j),xmax,ymax,zmax,  &
+                       alpha,e_c_r1,forceV1)
+        fec(i,1) = fec(i,1) +forceV1*dx1
+        fec(i,2) = fec(i,2) +forceV1*dy1 
+        fec(i,3) = fec(i,3) +forceV1*dz1 
+!
+        i= 5*ll -2
+        dx2= xa(i) -xa(j)
+        dy2= ya(i) -ya(j)
+        dz2= za(i) -za(j)
+        dx2= dx2 -DNINT(dx2/xmax)*xmax
+        dy2= dy2 -DNINT(dy2/ymax)*ymax
+        dz2= dz2 -DNINT(dz2/zmax)*zmax
+        call forces_5 (dx2,dy2,dz2,ch(i),ch(j),xmax,ymax,zmax,  &
+                       alpha,e_c_r2,forceV2)
+        fec(i,1) = fec(i,1) +forceV2*dx2
+        fec(i,2) = fec(i,2) +forceV2*dy2 
+        fec(i,3) = fec(i,3) +forceV2*dz2 
+!
+        i= 5*ll -1
+        dx3= xa(i) -xa(j)
+        dy3= ya(i) -ya(j)
+        dz3= za(i) -za(j)
+        dx3= dx3 -DNINT(dx3/xmax)*xmax
+        dy3= dy3 -DNINT(dy3/ymax)*ymax
+        dz3= dz3 -DNINT(dz3/zmax)*zmax
+        call forces_5 (dx3,dy3,dz3,ch(i),ch(j),xmax,ymax,zmax,  &
+                       alpha,e_c_r3,forceV3)
+        fec(i,1) = fec(i,1) +forceV3*dx3
+        fec(i,2) = fec(i,2) +forceV3*dy3 
+        fec(i,3) = fec(i,3) +forceV3*dz3 
+!
+        i= 5*ll
+        dx4= xa(i) -xa(j)
+        dy4= ya(i) -ya(j)
+        dz4= za(i) -za(j)
+        dx4= dx4 -DNINT(dx4/xmax)*xmax
+        dy4= dy4 -DNINT(dy4/ymax)*ymax
+        dz4= dz4 -DNINT(dz4/zmax)*zmax
+        call forces_5 (dx4,dy4,dz4,ch(i),ch(j),xmax,ymax,zmax,  &
+                       alpha,e_c_r4,forceV4)
+        fec(i,1) = fec(i,1) +forceV4*dx4
+        fec(i,2) = fec(i,2) +forceV4*dy4 
+        fec(i,3) = fec(i,3) +forceV4*dz4 
+!
+        e_c_r = e_c_r +e_c_r1 +e_c_r2 +e_c_r3 +e_c_r4
+      end if
+!
   300 continue
       end do
       end do
 !$OMP END DO
 !$OMP END PARALLEL
 !
+!***
+!  Salt case
+!
+      do ll= nq+ipar,nq+np,size  !! charges for salt 
+      i= ll                      ! nq+1
+!
+      do jp= 1,nq/5+np           ! nq/5+1
+      if(jp.gt.nq/5) then
+        if(jp -nq/5.eq.ll-nq) go to 400
+      end if
+!
+      if(jp.le.nq/5) then        ! 1) water
+!*
+      j= 5*jp -3       
+      dx1= xa(i) -xa(j)
+      dy1= ya(i) -ya(j)
+      dz1= za(i) -za(j)
+      dx1= dx1 -DNINT(dx1/xmax)*xmax
+      dy1= dy1 -DNINT(dy1/ymax)*ymax
+      dz1= dz1 -DNINT(dz1/zmax)*zmax
+      call forces_5 (dx1,dy1,dz1,ch(i),ch(j),xmax,ymax,zmax,  &
+                     alpha,e_c_r1,forceV1)
+!
+      j= 5*jp -2
+      dx2= xa(i) -xa(j)
+      dy2= ya(i) -ya(j)
+      dz2= za(i) -za(j)
+      dx2= dx2 -DNINT(dx2/xmax)*xmax
+      dy2= dy2 -DNINT(dy2/ymax)*ymax
+      dz2= dz2 -DNINT(dz2/zmax)*zmax
+      call forces_5 (dx2,dy2,dz2,ch(i),ch(j),xmax,ymax,zmax,  &
+                     alpha,e_c_r2,forceV2)
+!
+      j= 5*jp -1 
+      dx3= xa(i) -xa(j)
+      dy3= ya(i) -ya(j)
+      dz3= za(i) -za(j)
+      dx3= dx3 -DNINT(dx3/xmax)*xmax
+      dy3= dy3 -DNINT(dy3/ymax)*ymax
+      dz3= dz3 -DNINT(dz3/zmax)*zmax
+      call forces_5 (dx3,dy3,dz3,ch(i),ch(j),xmax,ymax,zmax,  &
+                     alpha,e_c_r3,forceV3)
+!
+      j= 5*jp
+      dx4= xa(i) -xa(j)
+      dy4= ya(i) -ya(j)
+      dz4= za(i) -za(j)
+      dx4= dx4 -DNINT(dx4/xmax)*xmax
+      dy4= dy4 -DNINT(dy4/ymax)*ymax
+      dz4= dz4 -DNINT(dz4/zmax)*zmax
+      call forces_5 (dx4,dy4,dz4,ch(i),ch(j),xmax,ymax,zmax,  &
+                     alpha,e_c_r4,forceV4)
+!
+      fec(i,1) = fec(i,1) +forceV1*dx1 +forceV2*dx2 +forceV3*dx3 &
+                                                    +forceV4*dx4
+      fec(i,2) = fec(i,2) +forceV1*dy1 +forceV2*dy2 +forceV3*dy3 &
+                                                    +forceV4*dy4
+      fec(i,3) = fec(i,3) +forceV1*dz1 +forceV2*dz2 +forceV3*dz3 &
+                                                    +forceV4*dz4
+      e_c_r = e_c_r +e_c_r1 +e_c_r2 +e_c_r3 +e_c_r4
+!
+!*
+      else if(jp.gt.nq/5) then    ! 2) salt, j >= nq+1 
+!       ++++++++
+        j= jp -nq/5 +nq 
+!
+        dx1= xa(i) -xa(j)
+        dy1= ya(i) -ya(j)
+        dz1= za(i) -za(j)
+        dx1= dx1 -DNINT(dx1/xmax)*xmax
+        dy1= dy1 -DNINT(dy1/ymax)*ymax
+        dz1= dz1 -DNINT(dz1/zmax)*zmax
+        call forces_5 (dx1,dy1,dz1,ch(i),ch(j),xmax,ymax,zmax,  &
+                       alpha,e_c_r1,forceV1)
+!
+        fec(i,1) = fec(i,1) +forceV1*dx1
+        fec(i,2) = fec(i,2) +forceV1*dy1
+        fec(i,3) = fec(i,3) +forceV1*dz1 
+        e_c_r = e_c_r +e_c_r1 
+      end if
+!
+  400 continue
+      end do
+      end do
 !***
 !
       do i= 1,nq+np  
@@ -1824,6 +1967,7 @@
 !
       r = sqrt(dx**2 +dy**2 +dz**2)
 !
+!   For water
       if(ll.le.nq/5 .and. jp.le.nq/5) then
 !*
         if(r.le.r_cut) then
@@ -1839,10 +1983,10 @@
           e_lj1 = 0
         end if
 !  
-!   All water + salt ions
+!  All water + salt ions
 !   ep(l-4)= epslj_w= 1.0d-14, 4*ep*snt*snt= 4*(ep*1.0d-14)^1/2*snt*snt
-!# Radius of counterion Na+............:    0.9200000000000000
-!# Radius of coion Cl-.................:    1.5890000000000000
+!   # Radius of counterion Na+............:    0.9200000000000000
+!   # Radius of coion Cl-.................:    1.5890000000000000
       else
         rlj = r/(ag(i)+ag(j))
 !
@@ -1900,7 +2044,7 @@
       e_lj   = unif1(2)
 !***
       return
-      end subroutine realteil_n
+      end subroutine realteil
 !
 !
 !*---------------------------------------------------------------------
