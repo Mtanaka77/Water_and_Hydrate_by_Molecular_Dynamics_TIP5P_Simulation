@@ -81,13 +81,13 @@ To start a simulation of water cluster with the TIP5P code, the adjascent 4x4 hy
 electrostatically, and oxygen pairs are coupled by TIP5P Lennard-Jones potentials.
 
 1. To get an initial state, we make the size of at least a 6x6x6 water cluster for numerical stability.
-Short-range and long-range Coulombic forces are best separated for interactions, anf the short-range 
+Short-range Coulombic and long-range forces are best separated for interactions, where the short-range 
 forces are made to be spatially dumped.
 
 2. Around a given temperature, a dryrun is executed at least for 5 periods that is 10^(-9) seconds.
-The long dryrun is very important !!
+The long dryrun of a simulation is very important !!
 
-3. Then, we apply the electric field E_x= E_0*sin(omega*time) in the x-direction to excite the 
+3. Then, we may be ready to apply the electric field E_x= E_0*sin(omega*time) in the x-direction to excite the 
 electric dipole interactions of water. For the moment, we give the electric field 10 GHz where 
 the electric field E_0 and electric dipole p_0 are of the order of 5x10^(-3) eV.
 
