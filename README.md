@@ -4,8 +4,8 @@ Procedures of water molecules dynamics simulation are shown for the 5-points mol
 This approach is done with five-water molecules with two hydrogens and two L1, L2 hydrogens of dummy sites. 
 The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
-The ice state of freezing due to microwaves, our theory discovery in J.Chem.Phys. 2007 (Ref. 2), remains the same, due to
-the structure of six-membered ice ! 
+The ice state of freezing due to microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
+remains basically the same results due to the structure of six-membered ice ! 
 
 ### Procedure of Water Molecules by 5-Points Method ###
 
