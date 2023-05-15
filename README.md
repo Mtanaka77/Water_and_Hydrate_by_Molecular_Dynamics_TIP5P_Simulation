@@ -90,9 +90,10 @@ the electric field E_0 and electric dipole p_0 are of the order of 5x10^(-3) eV.
 ### To Obtain the Initial Equilibrium for 298 K ###
 
 We will use salt ions of Na(+) and Cl(-) initially as the dryrun to give random noises. 
-The 6x6x6 water clusters have 64 Na(+) and 64 Cl(-) ions, and a run time is t=1700.
-We can see random water clusters. 
-Afterwards, the salt ions are gradually removed, and the dryrun is continued for 5 periods.
+The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions and a run time is t=1700, which is 
+enough for that amount of water. We can see randomized water clusters. 
+Afterwards, the salt ions are gradually removed, and the dryrun for water is continued for 5 periods
+of t=50,000.
 
 The dryrun is shown with color pictures in PDF, "Water_TIP5P_Simulation.pdf".
 The code including salt ions could be slower than the pure water code even if the salt ions are not present
