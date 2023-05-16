@@ -55,7 +55,7 @@ d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
 at the three components {\bf r}_{i} and the position {\bf R}_{i}. The dummy sites are
 determined by algebraic vector operation.
 
-7. Forces by Coulombic interations and Lennard-Jones potentials are calculated using five sites.
+7. Forces by Coulombic interactions and Lennard-Jones potentials are calculated using five sites.
 This is the most time consuming part of the TIP5P code.
 
 8. The correction and normalization by quaternions are made in every 10-step interval. 
