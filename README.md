@@ -105,6 +105,14 @@ The dryrun is shown with color pictures in PDF, "Water_TIP5P_Simulation.pdf".
 The code including salt ions could be slower than the pure water code even if the salt ions are not present
 (due to NEC's compiler ?).
 
+
+### Figures of Simulation by TIP5P Code ###
+
+Molecular dynamics simulation of water and ice are shown using the TIP5P code, 
+and the file is "Water_and_ice_by_TIP5P_code.pdf"..
+Figures in the PDF file are the energy of molecules, 3D scatter plots, pair distribtion functions of oxygen and hidrogen atoms,
+ans cosine distribution in the x=(-1,1) section.
+
 ### References ### 
 
 1. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England, 2003; 
