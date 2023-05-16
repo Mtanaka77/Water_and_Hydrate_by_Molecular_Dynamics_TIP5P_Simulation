@@ -12,15 +12,17 @@ remains basically the same due to the structure of six-membered ice ! (Refer to 
 ### Procedure of Water Molecules by 5-Points Method ###
 
 A. Five sites are oxygen (O), hydrogen 1 and 2 (H), and hydrogen virtual L sites (L). 
-Their charges are 0, 0.241e, 0.241e, -0.241e and -0.241e, respectively. The L1 and L2 are called the dummy sites which have null masses.
+Their charges are 0, 0.241e, 0.241e, -0.241e and -0.241e, respectively. 
+The L1 and L2 are called the dummy sites which have null masses.
 
-B. Separate {\bf R}_{i}, {\bf V}_{i} and {\bf r}_{i,k} for water with i=1-N molecules, and 
-{\bf s}_{i,k}= (x_{i,k},y_{i,k},z_{i,k}) means for the five sites k=1-5. The separation is done at the starting step only, once determined at t=0, they are constant in time.
+B. Separate {\bf R}_{j}, {\bf V}_{j} and {\bf r}_{i} for water with i=1-N, j=1-N/5 molecules, and 
+{\bf s}_{k}= (x_{k},y_{k},z_{k}) means for the five sites k=1-5. The separation is done at the 
+starting step only, once determined at t=0, they are constant in time.
 
 C. The half time step is first executed for a predictor step, and the full time step is made for
 advance of time. 
 
-D. Before the end of one step, the forces are calculated at {\bf r}_{i,k}= {\bf R}_{i} +A^(-1){\bf s}_{k}
+D. Before the end of one step, the forces are calculated at {\bf r}_{i}= {\bf R}_{j} +A^(-1){\bf s}_{k}
 with the three sites of k=1-3, and the L sites are also calculated by algebraic operation.
 
 E. After correction of quatenions, go to the beginning of the cycle.  The leap-frog method is used for the plasmas and waters.
@@ -31,14 +33,14 @@ E. After correction of quatenions, go to the beginning of the cycle.  The leap-f
 Each step of molecular dynamics simulation consistes of tranlation (step 1), rotation (steps 2-4), 
 and adding to the fields (steps 5-8). The step 0 is made only initially. 
 
-0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e,e1,e2,e3)_{j=1,N/3} from the file by 'read(30) e0,e1,e2,e3'.
+0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
 
-1. Summation of five sites of water and make advancement in time, 'd{\bf V}_{i}/dt=\sum_{k=1,5} {\bf F}_{i,k}/m_{i}, 
-d{\bf R}_{i}/dt={\bf V}_{i}' for each of the translation motion.
+1. Summation of five sites of water and make advancement in time, 'd{\bf V}_{j}/dt=\sum_{k=1,5} {\bf F}_{k}/m_{j}, 
+d{\bf R}_{j}/dt={\bf V}_{j}' for each of the translation motion.
 
-2. For the rotation motion 'd{\bf L}_{i}/dt=\sum_{k} (y_{i,k}F_{i,k}^z-z_{i,k}F_{i,k}^y,
-z_{i,k}F_{i,k}^x-x_{i,k}F_{i,k}^z,x_{i,k}F_{i,k}^y-y_{i,k}F_{i,k}^x)' where F_x, F_y, F_z stand for the x,y,z 
-direction of forces. The summation over each molecule is made over the five sites, k=1,5. 
+2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{k} (y_{i}F_{i,k}^z-z_{i}F_{i,k}^y,
+z_{i}F_{i,k}^x-x_{i}F_{i,k}^z,x_{i}F_{i,k}^y-y_{i}F_{i,k}^x)' where F_x, F_y, F_z stand for the x,y,z 
+direction of forces. The summation over each molecule is made over the five sites. 
 
 3. 'omega_{j}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{j,alpha}', 
 for A_{alpha,1}, A_{alpha,2}, A_{alpha,3} and inertia moments Im_{j,alpha} 
@@ -49,10 +51,10 @@ d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
 
 5. Get a new rotation matrix A_{alpha,beta}(e0,e1,e2,e3) in p.205 of Goldstein's book.
 
-6. x_{i}= X_{i} +(A_{11}x_{i}+A_{21}y_{i}+A_{31}z_{i}, 
-   y_{i}= Y_{i} +(A_{12}x_{i}+A_{22}y_{i}+A_{32}z_{i},
-   z_{i}= Z_{i} +(A_{13}x_{i}+A_{23}y_{i}+A_{33}z_{i},
-at the three components {\bf r}_{i} and the position {\bf R}_{i}. The dummy sites are
+6. x_{i}= X_{j} +(A_{11}x_{i}+A_{21}y_{i}+A_{31}z_{i}, 
+   y_{i}= Y_{j} +(A_{12}x_{i}+A_{22}y_{i}+A_{32}z_{i},
+   z_{i}= Z_{j} +(A_{13}x_{i}+A_{23}y_{i}+A_{33}z_{i},
+at the three components {\bf r}_{i} and the position {\bf R}_{j}. The dummy sites are
 determined by algebraic vector operation.
 
 7. Forces by Coulombic interactions and Lennard-Jones potentials are calculated using five sites.
@@ -66,8 +68,6 @@ the code is inaccurate or/and goes overflow.
 
 The equations of A_{ij} and e0,e1,e2,e3(i) are written in the PDF file, "Water_TIP5P_Simulation.pdf".
 Checks of equations of the TIP5P code are also shown.
-
-
 
 ### The Lennard-Jones Potential ###
 
