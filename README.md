@@ -37,8 +37,9 @@ and adding to the fields (steps 5-8). The step 0 is made only initially.
 d{\bf R}_{j}/dt={\bf V}_{j}' for each of the translation motion.
 
 2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{k} (yr_{i}F_{i}^z-zr_{i}F_{i}^y, 
-zr_{i}F_{i}^x-xr_{i}F_{i}^z, xr_{i}F_{i}^y-yr_{i}F_{i}^x)' where xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC, and F_x, F_y, F_z stand for the x,y,z 
-direction of forces. The summation over each molecule is made over the five sites. 
+zr_{i}F_{i}^x-xr_{i}F_{i}^z, xr_{i}F_{i}^y-yr_{i}F_{i}^x)' where xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC, (XC,YC,ZC) are the gravity center, 
+and F_x, F_y, F_z stand for the x,y,z direction of forces. 
+The summation over each molecule is made over the five sites. 
 
 3. 'omega_{j}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{j,alpha}', 
 for A_{alpha,1}, A_{alpha,2}, A_{alpha,3} and inertia moments Im_{j,alpha} 
@@ -54,7 +55,7 @@ d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
    z_{i}= Z_{j} +(A_{13}xr_{i}+A_{23}yr_{i}+A_{33}zr_{i},
 where the three components are (xr,yr,zr)_{i}=(A_{11}*(x_{i}-XC)+A_{12}*(y_{i}-YC)+A_{13}*(z_{i}-ZC), A_{21}*(x_{i}-XC)+A_{22}*(y_{i}-YC)+A_{23}*(z_{i}-ZC),
 A_{31}*(x_{i}-XC)+A_{32}*(y_{i}-YC)+A_{33}*(z_{i}-ZC)), 
-(XC,YC,ZC) are the gravity center. and the position {\bf R}_{j}. 
+and the position {\bf R}_{j}. 
 The dummy sites are determined by algebraic vector operation.
 
 7. Forces by Coulombic interactions and Lennard-Jones potentials are calculated using five sites.
