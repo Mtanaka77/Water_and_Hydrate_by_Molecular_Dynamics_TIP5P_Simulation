@@ -64,6 +64,10 @@ Then, go to the next time step as step 1.
 Note that the choice of a time step is important. For TIP5P case, it may be dt=0.025, else 
 the code is inaccurate or/and goes overflow.
 
+The equations of A_{ij} and e0,e1,e2,e3(i) are written in the PDF file, "Water_TIP5P_Simulation.pdf".
+Checks of equations of the TIP5P code are also shown.
+
+
 
 ### The Lennard-Jones Potential ###
 
@@ -74,9 +78,6 @@ and A=4.17x10^(-8) erg Ang^(12), B=4.24x10^(-11) erg Ang^(6) for TIP4P.
 Other parameters are: r(OH)=0.9572 Ang, Delta(HOH)=104.52 Ang. r(OM)=0.15 Ang is used 
 for the TIP4P case, where the equipartition line of the virtual M sites is on the plane 
 that equally separates the HOH angle. 
-
-The A_{ij} and e0,e1,e2,e3(i) equations are written in the PDF file, "Water_TIP5P_Simulation.pdf".
-Checks of equations of the TIP5P code are also shown.
 
 ### To Start a Run ###
 
