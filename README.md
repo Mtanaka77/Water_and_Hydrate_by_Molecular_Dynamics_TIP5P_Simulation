@@ -30,14 +30,14 @@ E. After correction of quatenions, go to the beginning of the cycle.  The leap-f
 Each step of molecular dynamics simulation consistes of tranlation (step 1), rotation (steps 2-4), 
 and adding to the fields (steps 5-8). The step 0 is made only initially. 
 
-0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
+0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
 
-1. Summation of five sites of water and make advancement in time, 
+1. Summation of five sites of water and make advance in time, 
 'd{\bf V}_{j}/dt=\sum_{k=1,5} {\bf F}_{k}/m_{j}, 
 d{\bf R}_{j}/dt={\bf V}_{j}' for each of the translation motion.
 
-2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{k} (yr_{i}F_{i}^z-zr_{i}F_{i}^y,
-zr_{i}F_{i}^x-xr_{i}F_{i}^z,xr_{i}F_{i}^y-yr_{i}F_{i}^x)' where xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC, and F_x, F_y, F_z stand for the x,y,z 
+2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{k} (yr_{i}F_{i}^z-zr_{i}F_{i}^y, 
+zr_{i}F_{i}^x-xr_{i}F_{i}^z, xr_{i}F_{i}^y-yr_{i}F_{i}^x)' where xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC, and F_x, F_y, F_z stand for the x,y,z 
 direction of forces. The summation over each molecule is made over the five sites. 
 
 3. 'omega_{j}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{j,alpha}', 
@@ -49,15 +49,13 @@ d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
 
 5. Get a new rotation matrix A_{alpha,beta}(e0,e1,e2,e3) in p.205 of Goldstein's book.
 
-6. xr_{i}=A_{11}*(x_{i}-XC)+A_{12}*(y_{i}-YC)+A_{13}*(z_{i}-ZC),
-   yr_{i}=A_{21}*(x_{i}-XC)+A_{22}*(y_{i}-YC)+A_{23}*(z_{i}-ZC),
-   zr_{i}=A_{31}*(x_{i}-XC)+A_{32}*(y_{i}-YC)+A_{33}*(z_{i}-ZC),
-   x_{i}= X_{j} +(A_{11}xr_{i}+A_{21}yr_{i}+A_{31}zr_{i}, 
+6. x_{i}= X_{j} +(A_{11}xr_{i}+A_{21}yr_{i}+A_{31}zr_{i}, 
    y_{i}= Y_{j} +(A_{12}xr_{i}+A_{22}yr_{i}+A_{32}zr_{i},
    z_{i}= Z_{j} +(A_{13}xr_{i}+A_{23}yr_{i}+A_{33}zr_{i},
-at the three components (xr,yr,zr)_{i}, (XC,YC,ZC) are the gravity center.
-and the position {\bf R}_{j}. The dummy sites are
-determined by algebraic vector operation.
+where the three components are (xr,yr,zr)_{i}=(A_{11}*(x_{i}-XC)+A_{12}*(y_{i}-YC)+A_{13}*(z_{i}-ZC), A_{21}*(x_{i}-XC)+A_{22}*(y_{i}-YC)+A_{23}*(z_{i}-ZC),
+A_{31}*(x_{i}-XC)+A_{32}*(y_{i}-YC)+A_{33}*(z_{i}-ZC)), 
+(XC,YC,ZC) are the gravity center. and the position {\bf R}_{j}. 
+The dummy sites are determined by algebraic vector operation.
 
 7. Forces by Coulombic interactions and Lennard-Jones potentials are calculated using five sites.
 This is the most time consuming part of the TIP5P code.
