@@ -22,6 +22,9 @@ starting step only, once determined at t=0, they are constant in time.
 C. The half time step is first executed for a predictor step, and the full time step is made for
 the three sites of k=1-3, and the L sites are also calculated by algebraic operation.
 
+D. Before the end of one step, the forces are calculated at {\bf r}_{i,k}= {\bf R}_{i} +A^(-1){\bf s}_{k}
+with the three sites of k=1-3, and the L sites are also calculated by algebraic operation.
+
 E. After correction of quatenions, go to the beginning of the cycle.  The leap-frog method is used for the plasmas and waters.
 
 
