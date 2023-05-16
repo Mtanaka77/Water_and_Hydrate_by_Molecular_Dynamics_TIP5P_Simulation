@@ -115,10 +115,10 @@ and the current file is "Water_and_ice_by_TIP5P_code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice states that include the energy of molecules, 
 3-dimensional scatter plots, pair distribtion functions of oxygen and hidrogen atoms,
-ans cosine distribution functions in the x=(-1,1) section.
+and cosine distribution functions in the x-direction.
 
-Generally speaking, water is heated by microwaves, where its heating efficiency is highest at 0 Celsius.
-But, below 273 K ice is frozen and not heated by the electric field.
+Generally speaking, water is heated by microwaves where its heating efficiency is highest at 0 Celsius.
+Below 273 K, however, ice is frozen and not heated by the electric field.
 
 ### References ### 
 
