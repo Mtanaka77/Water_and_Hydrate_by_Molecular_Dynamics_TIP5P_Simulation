@@ -75,7 +75,8 @@ Other parameters are: r(OH)=0.9572 Ang, Delta(HOH)=104.52 Ang. r(OM)=0.15 Ang is
 for the TIP4P case, where the equipartition line of the virtual M sites is on the plane 
 that equally separates the HOH angle. 
 
-The A_{ij} and e0,e1,e2,e3(i) equations are written in PDF, "Water_TIP5P_Simulation.pdf".
+The A_{ij} and e0,e1,e2,e3(i) equations are written in the PDF file, "Water_TIP5P_Simulation.pdf".
+Checks of equations of the TIP5P code are also shown.
 
 ### To Start a Run ###
 
