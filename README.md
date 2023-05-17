@@ -41,8 +41,8 @@ d{\bf R}_{j}/dt={\bf V}_{j}' for each of the translation motion.
 
 2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{i} (yr_{i}F_{i}^z-zr_{i}F_{i}^y, 
 zr_{i}F_{i}^x-xr_{i}F_{i}^z, xr_{i}F_{i}^y-yr_{i}F_{i}^x)' where 
-xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC, (XC,YC,ZC) are the gravity center
-of i, and F_x, F_y, F_z stand for the x,y,z direction of forces. 
+xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC where (XC,YC,ZC) are the gravity center
+of the j-th molecule, and F_x, F_y, F_z stand for the x,y,z direction of forces. 
 The summation over each molecule is made over the five sites. 
 
 3. 'omega_{j}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{j,alpha}', 
