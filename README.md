@@ -126,7 +126,7 @@ and cosine distribution functions in the x-direction.
 Generally speaking, water is heated by microwaves where its heating efficiency is highest at 0 Celsius.
 Below 273 K, however, ice is frozen and not heated by the electric field.
 
-### Necessary files ###
+### Necessary Files ###
 
 Files for simulation 
 
