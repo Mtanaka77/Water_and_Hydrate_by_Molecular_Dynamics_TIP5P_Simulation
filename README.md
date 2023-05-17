@@ -16,7 +16,7 @@ Their charges are 0, 0.241e, 0.241e, -0.241e and -0.241e, respectively.
 The L1 and L2 are called the dummy sites which have null masses.
 
 B. Separate {\bf R}_{j}, {\bf V}_{j} and {\bf r}_{i} for water with i=1-N, j=1-N/5 molecules, and 
-{\bf s}_{i}= (x_{i},y_{i},z_{i}) means for the five sites. The separation is done at the 
+{\bf s}_{i}= (x_{i},y_{i},z_{i}) means for the three sites. The separation is done at the 
 starting step only, once determined at t=0, they are constant in time.
 
 C. The half time step is first executed for a predictor step, and the full time step is made for
@@ -61,7 +61,7 @@ where the three components are (xr,yr,zr)_{i}=(A_{11}*(x_{i}-XC)+A_{12}*(y_{i}-Y
 A_{21}*(x_{i}-XC)+A_{22}*(y_{i}-YC)+A_{23}*(z_{i}-ZC),
 A_{31}*(x_{i}-XC)+A_{32}*(y_{i}-YC)+A_{33}*(z_{i}-ZC)), 
 and the position {\bf R}_{j}. 
-The dummy sites are determined by algebraic vector operation.
+The dummy sites are calculated by algebraic vector operation.
 
 7. Forces by Coulombic interactions and Lennard-Jones potentials are calculated using five sites.
 This is the most time consuming part of the TIP5P code.
