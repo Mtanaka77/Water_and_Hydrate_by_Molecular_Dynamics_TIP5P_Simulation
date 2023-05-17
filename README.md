@@ -150,7 +150,8 @@ Below 273 K, however, ice is frozen and not heated by the electric field.
 
 !*   * @wat_radtip507.f03 - radial distribution functions        *
                                                          
-                                                         
+!*
+
 !*    Refs.: 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).   *
 
 !*           2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).   *
@@ -158,7 +159,6 @@ Below 273 K, however, ice is frozen and not heated by the electric field.
 !*           3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995). *
 
 !*           4) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019). *
-
 
 
 ### References ### 
