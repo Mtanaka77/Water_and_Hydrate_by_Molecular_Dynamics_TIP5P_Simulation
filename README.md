@@ -128,7 +128,7 @@ Below 273 K, however, ice is frozen and not heated by the electric field.
 
 ### Necessary files ###
 
-!*   Files for simulation                                        *
+!*   Files for simulation 
 
 !*   1. @p3mtip5p07a.f03 : simulation code                       *
 
@@ -136,11 +136,9 @@ Below 273 K, however, ice is frozen and not heated by the electric field.
 
 !*   3. TIP507_config.start0 : parameter file 2, kstart=0 or 2   *
 
-!*      and/or TIP507_config.start1 : kstart=1 or 3              *
+!*      and/or TIP507_config.start1 : kstart=1 or 3              
 
-!*                                                               *
-
-!*   Post-processing files                                       *
+!*   Post-processing files                                
 
 !*   * @lplotip507.f03 - the final history of energy             *
 
