@@ -35,18 +35,19 @@ and adding to the fields (steps 5-8). The step 0 is made only initially.
 
 0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
 
-1. Summation of five sites of water and make advance in time, 
+1. Summation of five sites of water and to make advance in time, 
 'd{\bf V}_{j}/dt=\sum_{k=1,5} {\bf F}_{k}/m_{j}, 
 d{\bf R}_{j}/dt={\bf V}_{j}' for each of the translation motion.
 
-2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{k} (yr_{i}F_{i}^z-zr_{i}F_{i}^y, 
-zr_{i}F_{i}^x-xr_{i}F_{i}^z, xr_{i}F_{i}^y-yr_{i}F_{i}^x)' where xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC, (XC,YC,ZC) are the gravity center, 
-and F_x, F_y, F_z stand for the x,y,z direction of forces. 
+2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{i} (yr_{i}F_{i}^z-zr_{i}F_{i}^y, 
+zr_{i}F_{i}^x-xr_{i}F_{i}^z, xr_{i}F_{i}^y-yr_{i}F_{i}^x)' where 
+xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC, (XC,YC,ZC) are the gravity center
+of i, and F_x, F_y, F_z stand for the x,y,z direction of forces. 
 The summation over each molecule is made over the five sites. 
 
 3. 'omega_{j}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{j,alpha}', 
-for A_{alpha,1}, A_{alpha,2}, A_{alpha,3} and inertia moments Im_{j,alpha} 
-and the directions alpha=x,y,z.
+for A_{alpha,1}, A_{alpha,2}, A_{alpha,3} and inertia moments Im_{j,alpha} with 
+the directions alpha=x,y,z.
 
 4. 'd{\bf q}_{j}/dt =(1/2)Q(e0,e1,e2,e3)(omega_{j,x),omega_{j,y),omega_{j,z),0), 
 d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
@@ -56,7 +57,8 @@ d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
 6. x_{i}= X_{j} +(A_{11}xr_{i}+A_{21}yr_{i}+A_{31}zr_{i}, 
    y_{i}= Y_{j} +(A_{12}xr_{i}+A_{22}yr_{i}+A_{32}zr_{i},
    z_{i}= Z_{j} +(A_{13}xr_{i}+A_{23}yr_{i}+A_{33}zr_{i},
-where the three components are (xr,yr,zr)_{i}=(A_{11}*(x_{i}-XC)+A_{12}*(y_{i}-YC)+A_{13}*(z_{i}-ZC), A_{21}*(x_{i}-XC)+A_{22}*(y_{i}-YC)+A_{23}*(z_{i}-ZC),
+where the three components are (xr,yr,zr)_{i}=(A_{11}*(x_{i}-XC)+A_{12}*(y_{i}-YC)+A_{13}*(z_{i}-ZC), 
+A_{21}*(x_{i}-XC)+A_{22}*(y_{i}-YC)+A_{23}*(z_{i}-ZC),
 A_{31}*(x_{i}-XC)+A_{32}*(y_{i}-YC)+A_{33}*(z_{i}-ZC)), 
 and the position {\bf R}_{j}. 
 The dummy sites are determined by algebraic vector operation.
@@ -70,7 +72,7 @@ Then, go to the next time step as step 1.
 Note that the choice of a time step is important. For TIP5P case, it may be dt=0.025, else 
 the code is inaccurate or/and goes overflow.
 
-The equations of A_{ij} and e0,e1,e2,e3(i) are written in the PDF file, "Water_TIP5P_Simulation.pdf".
+The equations of A_{ij} and e0(i),e1(i),e2(i),e3(i) are written in the PDF file, "Water_TIP5P_Simulation.pdf".
 Checks of equations of the TIP5P code are also shown.
 
 ### The Lennard-Jones Potential ###
