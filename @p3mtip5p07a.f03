@@ -1,7 +1,19 @@
-!*****************************************************************
+!************************************************** May, 2023 ****
 !*                                                               *
 !*    ## 3-Dimensional ES Periodici Code: 5-Point Water ##       *
 !*    Coulomb forces /realteil/ and /p3m_perform/ subroutines    * 
+!*                                                               *
+!*   Files for simulation                                        *
+!*   1. @p3mtip5p07a.f03 : simulation code                       *
+!*   2. param_tip5p_D07a.h : parameter file 1, be constants      *
+!*   3. TIP507_config.start0 : parameter file 2, kstart=0 or 2   *
+!*      and/or TIP507_config.start1 : kstart=1 or 3              *
+!*                                                               *
+!*   Post-processing files                                       *
+!*   * @lplotip507.f03 - the final history of energy             *
+!*   * @dipol_seqtip507.f03 - dipole Ex field                    *
+!*   * @iceplotip507.f03  - for 3D plot for x,y,z                *
+!*   * @wat_radtip507.f03 - radial distribution functions        *
 !*                                                               *
 !*    Refs.: 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).   *
 !*           2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).   *
@@ -11,6 +23,7 @@
 !*    Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor,       *
 !*                       Chubu University, Japan.                *
 !*    Copyright(C) 2006-2023. All rights reserved.               *
+!* ------------------------------------------------------------  *
 !*                                                               *
 !*    History:                                                   *
 !*     Translation and rotation simulation code.                 *
@@ -21,11 +34,6 @@
 !*                                                               *
 !*     Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020.     *
 !*****************************************************************
-!*                                                               *
-!*    @icecube.f  - initial ice structure                        *
-!*    @dipol_seqT.f  - dipolar Ex field                          *
-!*    @wat_radial.f  - radial distribution functions             *
-!*    @hist.f     - grub only the final history                  *
 !*                                                               *
 !*   1. rectangular box (xmax,ymax,zmax)                         * 
 !*   2. read mhr007.xyz as the h-o-h coordinates input           *
