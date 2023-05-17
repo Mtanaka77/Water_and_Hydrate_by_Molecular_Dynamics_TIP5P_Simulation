@@ -130,33 +130,33 @@ Below 273 K, however, ice is frozen and not heated by the electric field.
 
 !*   Files for simulation 
 
-!*   1. @p3mtip5p07a.f03 : simulation code                       *
+!*   1. @p3mtip5p07a.f03 : simulation code                       
 
-!*   2. param_tip5p_D07a.h : parameter file 1, be constants      *
+!*   2. param_tip5p_D07a.h : parameter file 1, be constants      
 
-!*   3. TIP507_config.start0 : parameter file 2, kstart=0 or 2   *
+!*   3. TIP507_config.start0 : parameter file 2, kstart=0 or 2   
 
 !*      and/or TIP507_config.start1 : kstart=1 or 3              
 
 !*   Post-processing files                                
 
-!*   * @lplotip507.f03 - the final history of energy             *
+!*   * @lplotip507.f03 - the final history of energy             
 
-!*   * @dipol_seqtip507.f03 - dipole Ex field                    *
+!*   * @dipol_seqtip507.f03 - dipole Ex field                    
 
-!*   * @iceplotip507.f03  - for 3D plot for x,y,z                *
+!*   * @iceplotip507.f03  - for 3D plot for x,y,z                
 
-!*   * @wat_radtip507.f03 - radial distribution functions        *
+!*   * @wat_radtip507.f03 - radial distribution functions        
                                                          
 !*
 
-!*    Refs.: 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).   *
+!*    Refs.: 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).   
 
-!*           2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).   *
+!*           2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).   
 
-!*           3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995). *
+!*           3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995). 
 
-!*           4) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019). *
+!*           4) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019). 
 
 
 ### References ### 
