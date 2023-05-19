@@ -88,8 +88,8 @@ that equally separates the HOH angle.
 
 ### To Start a Run ###
 
-To start a simulation of water cluster with the TIP5P code, the adjacent 4x4 hydrogen pairs are summed  
-electrostatically, and oxygen pairs are coupled by TIP5P Lennard-Jones potentials.
+To start a simulation of water cluster with the TIP5P code, the adjacent 4x4 hydrogen pairs 
+are summed electrostatically, and oxygen pairs are coupled by TIP5P Lennard-Jones potentials.
 
 1. To get an initial state, we make the size of at least a 6x6x6 water cluster for numerical stability.
 Short-range Coulombic and long-range forces are best separated for interactions, where the short-range 
