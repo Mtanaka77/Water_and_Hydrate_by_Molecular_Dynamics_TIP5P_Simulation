@@ -118,7 +118,7 @@ The code including salt ions could be slower than the pure water code even if th
 ### Figures of Simulation by TIP5P Code ###
 
 Molecular dynamics simulation of water and ice are shown using the TIP5P code, 
-and the current file is "Water_and_ice_by_TIP5P_code.pdf" in this repository.
+and the current file is "Water_Simulation_by_TIP5P_code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice states that include the energy of molecules, 
 3-dimensional scatter plots, pair distribtion functions of oxygen and hidrogen atoms,
