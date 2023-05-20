@@ -33,6 +33,7 @@
 !*     real*8 in Fortran 2003 / PGF 19 (2019).                   *
 !*                                                               *
 !*     Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020.     *
+!*                                                               *
 !*****************************************************************
 !*                                                               *
 !*   1. rectangular box (xmax,ymax,zmax)                         * 
