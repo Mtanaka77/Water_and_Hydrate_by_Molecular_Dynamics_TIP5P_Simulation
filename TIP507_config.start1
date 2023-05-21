@@ -16,7 +16,7 @@
 # Ortsraum-Cutoff (Ang)...............:   10.000000000000000
 # LJ-Cutoff..1.1224620..>tip5p-Ewald..:    3.476300000000000
 # alpha..by Deserno 1999. 0.245..>new.:    0.217700000000000
-# Applied electric field Ex (V/cm)....: 10000000.00000000000
+# Applied electric field Ex (V/cm)....:  5000000.00000000000
 # Period of applied field (10fs)......:    10000.00000000000
 
 # Velocity rescaling (t<tin)..........:    50.00000000000000 

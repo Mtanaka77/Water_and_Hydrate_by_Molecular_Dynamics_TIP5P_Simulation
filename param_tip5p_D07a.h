@@ -24,14 +24,14 @@
 !     parameter  (kstart=2,suffix2='0b', & ! 120b, kstart=2
 !                          suffix1='0a', & ! TIP501__0
 !                          suffix0='0')    ! 
-!     parameter  (kstart=2,suffix2='0d', & ! 120d, kstart=2
-!                          suffix1='0c', & ! TIP501__0
+!     parameter  (kstart=2,suffix2='0c', & ! 120c, kstart=2
+!                          suffix1='0b', & ! TIP501__0
 !                          suffix0='0')    ! 
-!     parameter  (kstart=1,suffix2='0f', & ! 120f, kstart=1
-!                          suffix1='0e', & ! TIP501__1
+!     parameter  (kstart=1,suffix2='0d', & ! 120d, kstart=1
+!                          suffix1='0c', & ! TIP501__1
 !                          suffix0='1')    ! 
-!     parameter  (kstart=3,suffix2='0g', & ! 120g, kstart=3
-!                          suffix1='0f', & ! TIP501__1, exc>0
+!     parameter  (kstart=3,suffix2='0e', & ! 120e, kstart=3
+!                          suffix1='0d', & ! TIP501__1, exc>0
 !                          suffix0='1')    ! 
 ! /home2, /lv01                          +++++++ short 
       parameter (praefixs='/home/tanakam/MPI_wat5/TIP507',  & ! LXwat3
@@ -49,10 +49,10 @@
 !  Total number is nq0; for mh3: nq0=6210,np0=216
 !                              +++++ null
       parameter  (nq0=6912*5/4,np0=128) ! 8640 atoms by 5-body
-!     parameter  (nq0=6912*5/4,np0=64) ! 8640 atoms by 5-body
+!     parameter  (nq0=6912*5/4,np0=0)
+!     parameter  (nq0=6912*5/4,np0=64)
 !     parameter  (nq0=6912*5/4,np0=8) 
 !     parameter  (nq0=6912*5/4,np0=4)
-!     parameter  (nq0=6912*5/4,np0=0)
 !
       parameter  (npq5=nq0+np0)
       parameter  (npq0=nq0/5+np0)
