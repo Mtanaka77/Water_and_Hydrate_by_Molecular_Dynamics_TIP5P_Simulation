@@ -1,6 +1,7 @@
 ## Molecular Dynamics of Water and Ice by TIP5P Code ##
 
-Procedures of water molecular dynamics simulations are written as the 5-points TIP5P molecules. 
+Procedures of water molecular dynamics simulation are written by the 5-points TIP5P molecules, which was replacing 
+the 3-points SPC/E shake/rattle code. 
 Simulations about molecular dynamics of water and ice are shown at the end of this README.md and/or by PDF files on this repository.
 These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation.
 
