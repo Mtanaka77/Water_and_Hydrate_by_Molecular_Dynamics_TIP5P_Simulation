@@ -29,7 +29,7 @@ with the three sites. The L sites are also calculated by algebraic operation.
 E. After correction of quaternions, go to the beginning of the cycle.  The leap-frog method is used for the plasmas and waters.
 
 
-### Each Step of Molecular Dynamics ###
+### Each Step of Molecular Dynamics Code ###
 
 Each step of molecular dynamics simulation consistes of tranlation (step 1), rotation (steps 2-4), 
 and adding to the fields (steps 5-8). The step 0 is made only initially. 
