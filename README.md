@@ -1,7 +1,7 @@
 ## Molecular Dynamics of Water and Ice by TIP5P Code ##
 
-Procedures of water molecular dynamics simulation are written for the 5-points TIP5P molecules, which was replacing 
-the first-generation 3-points code of SPC/E shake/rattle algorithm (JCP, 2007). 
+Procedures of the molecular dynamics simulation of water and ice are written for the 5-points TIP5P molecules, 
+which was the first-generation 3-points code of SPC/E shake/rattle algorithm (JCP, 2007). 
 This approach is done with five-water molecules with two hydrogens and two L1, L2 hydrogens of dummy sites. 
 The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 Simulations about molecular dynamics of water and ice are shown at the end of this README.md and/or by PDF files on this repository.
