@@ -7,7 +7,7 @@ The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= ep
 Simulations about molecular dynamics of water and ice are shown at the end of this README.md and/or by PDF files on this repository.
 These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation.
 
-The ice state of freezing due to microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
+The ice state of freezing by microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
 remains basically the same due to the structure of six-membered ice ! (Refer to this README.md)  
 
 ### Procedure of Water Molecules by 5-Points Method ###
