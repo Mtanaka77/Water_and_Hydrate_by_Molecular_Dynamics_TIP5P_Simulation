@@ -1,4 +1,4 @@
-## Molecular Dynamics of Water and Ice by TIP5P Code ##
+## Molecular Dynamics Simulation of Water and Ice by TIP5P Code ##
 
 Procedures of the molecular dynamics simulation of water and ice are written for the 5-points TIP5P molecules, 
 which was the first-generation 3-points code of SPC/E shake/rattle algorithm (JCP, 2007). 
