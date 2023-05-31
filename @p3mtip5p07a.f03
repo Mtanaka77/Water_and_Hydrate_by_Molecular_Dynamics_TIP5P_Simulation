@@ -15,14 +15,14 @@
 !*   * @iceplotip507.f03  - for 3D plot for x,y,z                *
 !*   * @wat_radtip507.f03 - radial distribution functions        *
 !*                                                               *
-!*    Refs.: 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).   *
-!*           2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).   *
-!*           3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995). *
-!*           4) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019). *
+!*   Refs.: 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).    *
+!*          2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).    *
+!*          3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995).  *
+!*          4) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019).  *
 !*                                                               *
-!*    Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor        *
+!*   Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor         *
 !*                Graduate School of Chubu University, Japan.    *
-!*    Copyright(C) 2006-2023. All rights reserved.               *
+!*   Copyright(C) 2006-2023. All rights reserved.                *
 !* ------------------------------------------------------------  *
 !*                                                               *
 !*    History:                                                   *
@@ -33,18 +33,6 @@
 !*     real*8 in Fortran 2003 / PGF 19 (2019).                   *
 !*                                                               *
 !*     Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020.     *
-!*                                                               *
-!*****************************************************************
-!*                                                               *
-!*   1. rectangular box (xmax,ymax,zmax)                         * 
-!*   2. read mhr007.xyz as the h-o-h coordinates input           *
-!*      -- @icecube.f, do not foldback !                         *
-!*   3. no cutoff of the lj force at the bottom (attraction)     *
-!*   4. ions are placed at the water molecule position;          *
-!*      -- one water molecule per ion is eliminated.             *
-!*      -- cation radius (Cl: 2.2A) is reduced in early phase.   *
-!*   5. put salt among the water network                         *
-!*      -- Na in a cell center, Cl replaces h2o                  * 
 !*                                                               *
 !************************************************** 02/26/2005 ***
 !
@@ -300,7 +288,7 @@
           write(11,*) "# water #"
           write(11,'(10f8.4)') (ch(i),i=1,30)
 !
-          if(np.ne.0) then
+          if(np.gt.0) then
             write(11,*) "# Methane, or Salt ions..."
             write(11,'(10f8.4)') (ch(i),i=nq+1,nq+np)
           end if
@@ -309,12 +297,12 @@
 !* Restart data of kstart >= 1
 !    these overwrite kstart=0 data, as continuation by FT12...
 !
-      else
+      else if(kstart.ge.1) then
 !
         open (unit=12,file=praefixi//'.12'//suffix1,        & ! read(12)
                              status='old',form='unformatted') !  old
 
-        read(12) it,is,nq,np,if_lj
+        read(12) it,is,nq,np,if_lj            !<- np=0
         read(12) xa,ya,za,vx,vy,vz,ch,am,ep,qch,ag 
         read(12) xg,yg,zg,amm,xr,yr,zr
         read(12) Lgx,Lgy,Lgz,e0,e1,e2,e3,Im
@@ -392,7 +380,7 @@
         open (unit=12,file=praefixe//'.12'//suffix2,        &
                          status='replace',form='unformatted')
 !
-        write(12) it,is,nq,np,if_lj
+        write(12) it,is,nq,np,if_lj           !<- np=0
         write(12) xa,ya,za,vx,vy,vz,ch,am,ep,qch,ag
         write(12) xg,yg,zg,amm,xr,yr,zr
         write(12) Lgx,Lgy,Lgz,e0,e1,e2,e3,Im
@@ -496,7 +484,7 @@
       common/ewald2/  Lewald,dmesh
 !
       real(C_DOUBLE) zcp,zcn,acount,acoion,epslj_p,epslj_n, &
-                     epslj_w,edc,tau_wave
+                     epslj_w,edc,tau_wave,edc1,eps_230
       common/salts/  zcp,zcn,acount,acoion,epslj_p,epslj_n, &
                      epslj_w
       common/ebfild/ edc,tau_wave
@@ -560,7 +548,8 @@
       real(C_DOUBLE) t_wipe
       logical :: first_23=.true.,first_p3m=.true.,  &
                  first_06=.true.,if_tequil=.true.,  &
-                 if_kstart=.true.,if_wipe=.true.
+                 if_kstart=.true.,if_wipe=.true.,   &
+                 if_kstart1=.true.
 !
 !     if(size.gt.64) then
 !       if(io_pe.eq.1) then
@@ -571,6 +560,9 @@
 !
 !*  Initial conditions
 !--------------------------
+!   +++++++++
+      np= 0    !!<-- change from param_tip5p_D07p.h
+!   +++++++++
 !                         +++++++++++ Restart from t=0
       if(kstart.eq.0 .or. kstart.eq.1) then
         t8= - dt          ! keep f(v) result
@@ -591,13 +583,14 @@
           Lgz(j)= 0
           end do
 !
-          do i= 1,npq5
+          do i= 1,npq5  !<- nq0+np0
           fec(i,1)= 0
           fec(i,2)= 0
           fec(i,3)= 0
           end do
 !
         else if(kstart.eq.1) then  !! restart with t=0
+!  if kstart=1 is used... t >= 0
           tequil= 0.d0
 !
           if(io_pe.eq.1) then
@@ -620,16 +613,16 @@
         ymax4  = ymax
         zmax4  = zmax
 !
-        write(13) nq,np,zcp4,zcn4,             &
+        write(13) nq,np,zcp4,zcn4,             &  !<- np=0
                   edc4,tau_w4,xmax4,ymax4,zmax4
 !
-        do i= 1,nq+np
+        do i= 1,nq+np                             !<- np=0, 1,nq
         ch4(i)= ch(i)
         am4(i)= am(i)
         qch4(i)= qch(i)
         end do
 !
-        write(13) ch4,am4,qch4 
+        write(13) ch4,am4,qch4  !<- 1,nq
         close(13)
 !       ***************
 !
@@ -675,7 +668,7 @@
  1000 dth= 0.5d0*dt
 !
       t8= t8 +dt
-      it= it +1   ! starts with it= 1
+      it= it +1   ! kstart=0 with it= 1
 !
       iwrt1= iwrta(t8,dtwr)   !! <-- real8
       iwrt2= iwrtb(t8,dtwr2)  !  different iwrt must be used
@@ -685,7 +678,11 @@
         close(11)   !<- Always close(11) except for diagnosis 
       end if
 !**
+!     tequil= 48850.d0  in TIP506_config.start1
+!
       if(t8.ge.tequil) then
+        if_tequil= .false.
+!
         if(if_tequil .and. io_pe.eq.1) then
           open (unit=11,file=praefixc//'.11'//suffix2,             & 
                 status='unknown',position='append',form='formatted')
@@ -696,16 +693,8 @@
 !
           close(11)
         end if
-!
-        if_tequil= .false.
       end if
 !
-!***************************************************+
-!*  For epsilon > 1 medium, div(epsilon*E)= 4*pi*q  *
-!****************************************************
-!  For 2.5 GHz ice case, the measurement of tan-delta is 
-! isolated to be -5 C(?): eps_2.5GHz= 3, eps_i= 0,003. 
-! compared to eps_+=88 at 273 K
 !
       if(t8.lt.tequil) then
         exc = 0.d0
@@ -715,21 +704,21 @@
       end if
 !
 !
-!     t_init=      1000.d0 !<- mazaru to 10000
-!     t_wipe_sta= 77000.d0 !10000.d0 !<- salt wipe
-!     t_wipe_end= 77000.d0 !13000.d0
+!     t_init=      1000.d0   !<- at kstart=0, in param
+!     t_wipe_sta= 50000.d0   !<- salt wipe, in param 
+!     t_wipe_end= 53000.d0 
       t_wipe= t_wipe_end -t_wipe_sta  
 !*
       if(kstart.eq.0) then
 !
         if(t8.le.t_init) then 
           if(it.eq.1) then
-            do i= nq+1,nq+np 
+            do i= nq+1,nq+np  !<- empty 
             chsav(i)= ch(i) 
             epsav(i)= ep(i)
             end do
 !
-            if(io_pe.eq.1) then
+            if(io_pe.eq.1 .and. np.gt.0) then
             open (unit=11,file=praefixc//'.11'//suffix2,             & 
                   status='unknown',position='append',form='formatted')
             write(11,*) "# t_init is executed"
@@ -753,12 +742,12 @@
           if(if_wipe) then
             if_wipe= .false.
 !
-            do i= nq+1,nq+np 
+            do i= nq+1,nq+np  !<- empty 
             chsav(i)= ch(i) 
             epsav(i)= ep(i)
             end do
 !
-            if(io_pe.eq.1) then
+            if(io_pe.eq.1 .and. np.gt.0) then
             open (unit=11,file=praefixc//'.11'//suffix2,             & 
                   status='unknown',position='append',form='formatted')
             write(11,*) "# t_wipe_sta is executed"
@@ -766,21 +755,32 @@
             end if 
           end if
 !
+          do i= nq+1,nq+np 
           ch(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*chsav(i) !<- decease 
-          ep(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*epsav(i) ! ireru !
-!         ep(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*epsav(i) 
+          ep(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*epsav(i) 
+          end do
 !
         else if(t8.gt.t_wipe_end) then  !<- kstart anything
-          do i= nq+1,nq+np 
+!
+          do i= nq+1,nq+np  !<- empty 
           vx(i)= 0
           vy(i)= 0
           vz(i)= 0
           end do
+!
+          if(io_pe.eq.1 .and. np.gt.0) then
+          if_kstart1= .false.
+          open (unit=11,file=praefixc//'.11'//suffix2,             & 
+                status='unknown',position='append',form='formatted')
+          write(11,*) "# t_wipe_end is ended"
+          close(11)
+          end if 
         end if  
       end if
   230 continue
 !
-!  Only kstart=1, restart with t >=0 and exc > 0
+!   kstart=1, restart with t=0 and exc >0, Read L.600.
+!   kstart=3, general continuation
       if(kstart.eq.1 .or. kstart.eq.3) then 
 !
         if(if_kstart .and. t8.gt.0.d0) then 
@@ -789,8 +789,7 @@
           if(io_pe.eq.1) then
           open (unit=11,file=praefixc//'.11'//suffix2,             &
                 status='unknown',position='append',form='formatted')
-          write(11,*) "# Restart with t >= 0 and exc > 0  t8=",t8
-          write(11,*) "  kstart=",kstart
+          write(11,*) "# Restart with t >= 0 and exc > 0 !"
           close(11)
           end if
         end if 
@@ -806,7 +805,7 @@
 !
 !  Three sites O-H-H are the base water
 !
-      if(it.eq.1) then  !! when a restart time t=0
+      if(kstart.eq.0 .and. it.eq.1) then  !! when a restart time t=0
         if_kstart= .false.
 !
         j= 0
@@ -855,21 +854,18 @@
         end do
       end if
 !
-!  For it>1, all connect information of next long jobs is connected 
+!
+!  For it>1, all information of next long jobs is connected 
 !  in xr-zr, Im(), e0-e3, Lgx-Lgz, A11... of the read(12) 
 !
-!  The initial forces are finite at t8=0 !
-      if(it.eq.1) then
+!  The initial forces are finite at t8= 0 
+      if(kstart.eq.0 .and. it.eq.1) then
 !
         call realteil (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
 !
         npq= nq +np
         call p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
 !
-!     forceV = chi*chj*(erfc/r +2.d0*alpha/sqrtpi)*exp(-ar**2)/r2  q^2/(r*r2)
-!     fec(i,1) = fec(i,1) +forceV1*dx1 +forceV2*dx2 +forceV3*dx3 +...  q^2/r^2
-!     fec -> fec(i,1) +q*E
-!     epsilon=88 -> 104
         do i= 1,nq+np
         fec(i,1)= (fec(i,1) +fek(i,1))/epsilon +qch(i)*exc !<- qch(i)=(O)(H)(H) M M
         fec(i,2)= (fec(i,2) +fek(i,2))/epsilon
@@ -1091,6 +1087,7 @@
 !*  Find forces
 !--------------------
 !
+!  In /realteil/, all nq and np
       call realteil (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
 !
         call clocks (wall_t02,size,cl_first)
@@ -1179,11 +1176,11 @@
           write(11,'( &
            " ******************************************************",/, &
            "   equilibration phase ends at t(10fs) = ",f8.1,/,         &
-           "     applied field: econv*edc = ",1pe11.3,/,              &
+           "     applied field: econv*edc1 = ",1pe11.3,/,              &
            "                 period (10fs) = ",0pf7.1,/,               &
            "     thermal velocity of water (a/10fs)= ",1pe11.3,/,      &
            " ******************************************************",/)') &
-                                         tequil,econv*edc,tau_wave,vth0
+                                         tequil,econv*edc1,tau_wave,vth0
         end if
 !
         if(first_06) then
@@ -1302,14 +1299,14 @@
         open (unit=13,file=praefixc//'.13'//suffix2,               & 
               status='unknown',position='append',form='unformatted')
 !
-        do i= 1,nq+np
+        do i= 1,nq+np  !<- np=0, 1,nq
         x4(i) = xa(i) 
         y4(i) = ya(i)
         z4(i) = za(i)
         end do
 !
         t4= t8
-        write(13) t4,x4,y4,z4  ! must be nq+np
+        write(13) t4,x4,y4,z4  !<- np=0, 1,nq
         close(13)
       end if
 !---------------------------------------------------------------------
@@ -1374,7 +1371,7 @@
 !
         write(23,'(i5,/)') nq+np
 
-        do i= 1,nq+np
+        do i= 1,nq+np                          !<- np=0, 1,nq
         write(23,'(a2,3f12.3)') tip(i),x4(i),y4(i),z4(i) ! H or O
         end do
 !
@@ -1402,7 +1399,7 @@
         end do
 !
         t4= t8
-        write(15) t4,x4,y4,z4
+        write(15) t4,x4,y4,z4     !<- np=0, 1,nq 
         write(15) t4,vx4,vy4,vz4
         close(15)
 !
@@ -1416,7 +1413,7 @@
         open (unit=12,file=praefixe//'.12'//suffix2,        &
                          status='replace',form='unformatted')
 
-        write(12) it,is,nq,np,if_lj 
+        write(12) it,is,nq,np,if_lj                 !<- np=0 
         write(12) xa,ya,za,vx,vy,vz,ch,am,ep,qch,ag 
         write(12) xg,yg,zg,amm,xr,yr,zr
         write(12) Lgx,Lgy,Lgz,e0,e1,e2,e3,Im
@@ -1804,6 +1801,8 @@
 !$OMP END PARALLEL
 !
 !***
+!  Salt case
+!
       do ll= nq+ipar,nq+np,size  !! charges for salt 
       i= ll                      ! nq+1
 !
@@ -1951,6 +1950,7 @@
 !
       r = sqrt(dx**2 +dy**2 +dz**2)
 !
+!   For water
       if(ll.le.nq/5 .and. jp.le.nq/5) then
 !*
         if(r.le.r_cut) then
@@ -1966,10 +1966,10 @@
           e_lj1 = 0
         end if
 !  
-!   All water + salt ions
+!  All water + salt ions
 !   ep(l-4)= epslj_w= 1.0d-14, 4*ep*snt*snt= 4*(ep*1.0d-14)^1/2*snt*snt
-!# Radius of counterion Na+............:    0.9200000000000000
-!# Radius of coion Cl-.................:    1.5890000000000000
+!   # Radius of counterion Na+............:    0.9200000000000000
+!   # Radius of coion Cl-.................:    1.5890000000000000
       else
         rlj = r/(ag(i)+ag(j))
 !
@@ -2098,8 +2098,8 @@
       implicit none
 !
       include    'param_tip5p_D07a.h'
-!     include    'aslfftw3.f03' ! by SX
-      include    'fftw3.f03'    ! by Intel
+      include    'aslfftw3.f03' ! by SX
+!     include    'fftw3.f03'    ! by Intel, or parallel case
 !
 !     integer(C_INT),save :: n_thread
       type(C_PTR),save :: plan, pinv1,pinv2,pinv3
@@ -2161,7 +2161,7 @@
 !       call fftw_plan_with_nthreads (n_thread)
 !
 !  in SX case
-!!      call fftw_plan_with_nthreads (omp_get_max_threads()) ! by SX
+       call fftw_plan_with_nthreads (omp_get_max_threads()) 
 !
 !       call dfftw_plan_dft_r2c_3d  &
         plan= fftw_plan_dft_r2c_3d  &
@@ -3253,7 +3253,6 @@
       else if(if_xyz2) then
 !
         open (unit=17,file='1cx666a.exyz',form='formatted')  ! 273 K 
-!       open (unit=17,file='1cx666b.exyz',form='formatted')  ! 273 K 
       end if
 !
       if(io_pe.eq.1) then
@@ -3618,7 +3617,6 @@
 !       open (unit=30,file='mh3.q',form='formatted')    ! Quarternion
 !       open (unit=30,file='mh3.e',form='formatted')    ! Euler
         open (unit=30,file='1cx666a.q',form='formatted') 
-!       open (unit=30,file='1cx666b.q',form='formatted') 
 !
 !  Format of f18.15,a1 is changed to f8.5,a1,410.4 !!
         read(30,*)
