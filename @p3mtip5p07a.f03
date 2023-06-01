@@ -484,7 +484,7 @@
       common/ewald2/  Lewald,dmesh
 !
       real(C_DOUBLE) zcp,zcn,acount,acoion,epslj_p,epslj_n, &
-                     epslj_w,edc,tau_wave,edc1,eps_230
+                     epslj_w,edc,tau_wave,eps_230
       common/salts/  zcp,zcn,acount,acoion,epslj_p,epslj_n, &
                      epslj_w
       common/ebfild/ edc,tau_wave
@@ -1176,11 +1176,11 @@
           write(11,'( &
            " ******************************************************",/, &
            "   equilibration phase ends at t(10fs) = ",f8.1,/,         &
-           "     applied field: econv*edc1 = ",1pe11.3,/,              &
+           "     applied field: econv*edc = ",1pe11.3,/,              &
            "                 period (10fs) = ",0pf7.1,/,               &
            "     thermal velocity of water (a/10fs)= ",1pe11.3,/,      &
            " ******************************************************",/)') &
-                                         tequil,econv*edc1,tau_wave,vth0
+                                         tequil,econv*edc,tau_wave,vth0
         end if
 !
         if(first_06) then
@@ -1572,7 +1572,7 @@
       do jp= 1,nq/5+np          !!+np
       if(jp.eq.ll) go to 300
 !
-      if(jp.le.nq/5) then       ! there are two possibilities
+!     if(jp.le.nq/5) then       ! there are two possibilities
 !     +++++++++++++++++++++++++++++++++++++
 !     if(abs(ch(j)) .lt. 1.d-5) go to 400
 !     +++++++++++++++++++++++++++++++++++++
@@ -1734,8 +1734,27 @@
                                                     +forceV4*dz4
       e_c_r = e_c_r +e_c_r1 +e_c_r2 +e_c_r3 +e_c_r4
 !
+  300 continue
+      end do
+      end do
+!$OMP END DO
+!$OMP END PARALLEL
 !
-      else if(jp.gt.nq/5) then    ! 2) salt, j= nq+1, i= water
+!
+      if(np.gt.0) then
+!
+!$OMP PARALLEL DEFAULT(NONE)                       &
+!$OMP SHARED(ipar,size,nq,np,xa,ya,za,ch,rcutpme,  &
+!$OMP        alpha,xmax,ymax,zmax)                 &
+!$OMP PRIVATE(ll,jp,i,j,dx1,dy1,dz1,               &
+!$OMP        dx2,dy2,dz2,dx3,dy3,dz3,dx4,dy4,dz4,  &
+!$OMP        forceV1,forceV2,forceV3,forceV4,      &
+!$OMP        r,e_c_r1,e_c_r2,e_c_r3,e_c_r4)        &
+!$OMP REDUCTION(+:fec,e_c_r)
+!$OMP DO SCHEDULE(STATIC,1)
+!
+        do ll= ipar,nq/5,size     !!only charges for water 
+        do jp= nq/5+1,nq/5+np     !!+np
 !       ++++++++
         j= jp -nq/5 +nq 
 !
@@ -1792,13 +1811,11 @@
         fec(i,3) = fec(i,3) +forceV4*dz4 
 !
         e_c_r = e_c_r +e_c_r1 +e_c_r2 +e_c_r3 +e_c_r4
-      end if
-!
-  300 continue
-      end do
-      end do
+        end do
+        end do
 !$OMP END DO
 !$OMP END PARALLEL
+      end if
 !
 !***
 !  Salt case
