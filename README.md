@@ -109,10 +109,7 @@ The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions and a run time is t=1700
 enough for that amount of water. We can see randomized water clusters. 
 Afterwards, the salt ions are gradually removed, and the dryrun for water is continued for 5 periods
 of t=50,000.
-
-The dryrun is shown with color pictures in PDF, "Water_TIP5P_Simulation.pdf".
-The code including salt ions could be slower than the pure water code even if the salt ions are not present
-(due to NEC's compiler ?).
+The dryrun is shown with color pictures in the PDF document, "Water_TIP5P_Simulation.pdf".
 
 
 ### Figures of Simulation by TIP5P Code ###
