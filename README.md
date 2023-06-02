@@ -4,7 +4,7 @@ Microwave heating simulation of water and ice are written for the 5-points TIP5P
 which was formerly the first-generation 3-points code of SPC/E shake/rattle algorithm (JCP, 2007). 
 This approach is done with five-water molecules with two hydrogens and two L1, L2 hydrogens of dummy sites. 
 The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
-Simulations about molecular dynamics of water and ice are shown at the end of this README.md and/or by PDF files on this repository.
+Simulations of molecular dynamics of water and ice are shown at the end of README.md and/or by PDF documents on this repository.
 These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation.
 
 The ice state of freezing by microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
