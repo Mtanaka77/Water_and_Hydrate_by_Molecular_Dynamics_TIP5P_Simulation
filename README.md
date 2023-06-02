@@ -9,7 +9,7 @@ Simulations of molecular dynamics of water and ice are shown at the end of READM
 These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation.   
 
 The ice state of freezing by microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
-remains basically the same due to the structure of six-membered ice ! (Read this README.md)  
+remains basically the same due to the structure of six-membered ice ! 
 Methane hydrate simulations are to be executed by the TIP5P code, like with the SPC/E code (Ref. 3).
 
 
