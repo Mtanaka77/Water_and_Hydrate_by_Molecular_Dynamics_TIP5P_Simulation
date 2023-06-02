@@ -163,11 +163,10 @@ References of Numerical Technique
 ### References ### 
 
 1. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England, 2003; 
-古典力学，吉岡書店，2006.
-![image](https://github.com/Mtanaka77/Molecular_Dynimics_of_Water_by_TI5P/assets/111667711/aacddf22-0d92-4f3c-ae38-e1115261fd58)
+古典力学，吉岡書店 (2006).
  
 2. M. Tanaka and M. Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 1-9 (2007).
 
 3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, 
-arXiv:1909.01024, Cornell University, 2019.
+arXiv:1909.01024, Cornell University (2019).
 
