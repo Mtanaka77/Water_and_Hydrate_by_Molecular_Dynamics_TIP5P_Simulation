@@ -6,10 +6,12 @@ This approach is done with five-water molecules with two hydrogens and two L1, L
 The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
 Simulations of molecular dynamics of water and ice are shown at the end of README.md and/or by PDF documents on this repository.
-These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation. Methane hydrate simulations are to be executed by the TIP5P code, like with the SPC/E code (Ref. 3).  
+These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation.   
 
 The ice state of freezing by microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
-remains basically the same due to the structure of six-membered ice ! (Refer to this README.md)  
+remains basically the same due to the structure of six-membered ice ! (Read this README.md)  
+Methane hydrate simulations are to be executed by the TIP5P code, like with the SPC/E code (Ref. 3).
+
 
 ### Procedure of Water Molecules by 5-Points Method ###
 
