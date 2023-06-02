@@ -4,8 +4,9 @@ Microwave heating simulation of water and ice are written for the 5-points TIP5P
 which was formerly the first-generation 3-points code of SPC/E shake/rattle algorithm (JCP, 2007). 
 This approach is done with five-water molecules with two hydrogens and two L1, L2 hydrogens of dummy sites. 
 The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
+
 Simulations of molecular dynamics of water and ice are shown at the end of README.md and/or by PDF documents on this repository.
-These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation.
+These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulation. Methane hydrate simulations are to be executed by the TIP5P code, like with the SPC/E code (Ref. 3).  
 
 The ice state of freezing by microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
 remains basically the same due to the structure of six-membered ice ! (Refer to this README.md)  
@@ -112,7 +113,7 @@ of t=50,000.
 The dryrun is shown with color pictures in the PDF document, "Water_TIP5P_Simulation.pdf".
 
 
-### Figures of Simulation by TIP5P Code ###
+### Figures of Simulations by TIP5P Code ###
 
 Molecular dynamics simulation of water and ice are shown using the TIP5P code, 
 and the current file is "Water_TIP5P_Simulation.pdf" in this repository.
@@ -162,5 +163,9 @@ References of Numerical Technique
 1. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England, 2003; 
 古典力学，吉岡書店，2006.
 ![image](https://github.com/Mtanaka77/Molecular_Dynimics_of_Water_by_TI5P/assets/111667711/aacddf22-0d92-4f3c-ae38-e1115261fd58)
+ 
+2. M. Tanaka and M. Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 1-9 (2007).
 
-2. M.Tanaka and M.Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 1-9 (2007).
+3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, 
+arXiv:1909.01024, Cornell University, 2019.
+
