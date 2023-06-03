@@ -101,9 +101,10 @@ forces are made to be spatially dumped.
 2. Around a given temperature, a dryrun is executed at least for 5 periods that is 10^(-9) seconds.
 The long dryrun of a simulation is very important !!
 
-3. Then, we may be ready to apply the electric field E_x= E_0*sin(omega*time) in the x-direction to excite the 
+3. Then, we may be ready to apply the electric field E_x= E_0*sin(\omega *time) in the x-direction to excite the 
 electric dipole interactions of water. For the moment, we give the electric field 10 GHz where 
 the electric field E_0 and electric dipole p_0 are of the order of 5x10^(-3) eV.
+The E_0 value can be as small as 5x10^(-4) eV for the 6x6x6 water cluster.. 
 
 ### To Obtain the Initial Equilibrium for 298 K ###
 
