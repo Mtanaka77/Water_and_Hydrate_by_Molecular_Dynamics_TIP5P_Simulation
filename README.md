@@ -109,11 +109,10 @@ The E_0 value can be as small as 5x10^(-4) eV for the 6x6x6 water cluster.
 
 ### To Obtain the Initial Equilibrium for 298 K ###
 
-To give random noises initially to molecules, we will use salt ions of Na(+) and Cl(-) initially as the dryrun. 
+To give initial random noises to molecules, we will use salt ions of Na(+) and Cl(-) initially as the dryrun. 
 The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions and a run time is t=1700, which is 
-enough for that amount of water. We can see randomized water clusters. 
-Afterwards, the salt ions are gradually removed, and the dryrun for water is continued at least for 5 periods
-of t=50,000.
+enough for that amount of water clusters. Afterwards, the salt ions are gradually removed, and 
+the dryrun for water is continued at least for 5 periods of t=50,000.
 The dryrun is shown with color pictures in the PDF document, "Water_TIP5P_Simulation.pdf".
 
 
