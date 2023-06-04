@@ -3,8 +3,7 @@
 Microwave heating of water and ice is studied by molecular dynamics simulations of the 5-point TIP5P code. 
 This is the second generation code to the first one of 3-point SPC/E shake/rattle algorithm (JCP, 2007). 
 There are five-water molecules to calculate positive two hydrogens and negative two L1, L2 hydrogens 
-calledof dummy sites. The fifth site of oxygens is used with Lennard-Jones potential 
-Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
+calledof dummy sites. The fifth oxygen site is to correlate with adjacent molecules with the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
 Simulations of molecular dynamics of water and ice are shown at the end of README.md and/or 
 by PDF documents on this repository. These are "Water_TIP5P_Simulation.pdf" for numerical coding 
