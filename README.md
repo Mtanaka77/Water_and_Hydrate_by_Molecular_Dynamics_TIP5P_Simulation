@@ -113,7 +113,7 @@ To give initial random noises to molecules, we will use salt ions of Na(+) and C
 The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions and a run time is t=1700, which is 
 enough for that amount of water clusters. Afterwards, the salt ions are gradually removed, and 
 the dryrun for water is continued at least for 5 periods of t=50,000.
-The dryrun is shown with color pictures in the PDF document, "Water_TIP5P_Simulation.pdf".
+The simulation run is shown with color pictures in the PDF document, "Molecular_Dynamics_Simulation_of_Water_and_Ice_by TIP5P_Code.pdf".
 
 
 ### Figures of Simulations by TIP5P Code ###
