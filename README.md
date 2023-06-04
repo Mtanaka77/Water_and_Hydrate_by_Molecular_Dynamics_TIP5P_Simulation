@@ -1,7 +1,6 @@
 ## Molecular Dynamics Simulation of Water and Ice by TIP5P Code ##
-
-Microwave heating simulation of water and ice are written for the 5-points TIP5P code, 
-which was formerly the first-generation 3-points code of SPC/E shake/rattle algorithm (JCP, 2007). 
+Microwave heating of water and ice is studied by molecular dynamics simulations of the 5-points code. 
+This is the second generation to the first one of 3-points SPC/E shake/rattle algorithm (JCP, 2007). 
 This approach is done with five-water molecules with two hydrogens and two L1, L2 hydrogens of dummy sites. 
 The fifth site of an oxygen site is used with Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
