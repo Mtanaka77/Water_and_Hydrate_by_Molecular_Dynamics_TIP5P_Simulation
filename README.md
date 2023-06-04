@@ -114,13 +114,13 @@ The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions and a run time is t=1700
 enough for that amount of water clusters. Afterwards, the salt ions are gradually removed, and 
 the dryrun for water is continued at least for 5 periods of t=50,000.
 The simulation run is shown in the next section in the PDF document with color pictures, 
-"Molecular_Dynamics_Simulation_of_Water_and_Ice_by TIP5P_Code.pdf".
+"Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf".
 
 
 ### Figures of Simulations by TIP5P Code ###
 
 Molecular dynamics simulation of water and ice are shown using the TIP5P code, 
-and the current file is "Molecular_Dynamics_Simulation_of_Water_and_Ice_by TIP5P_Code.pdf" in this repository.
+and the current file is "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice states that include the energy of molecules, 
 3-dimensional scatter plots, pair distribtion functions of oxygen and hidrogen atoms,
