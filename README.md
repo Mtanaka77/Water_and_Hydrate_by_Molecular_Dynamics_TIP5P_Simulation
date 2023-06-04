@@ -6,8 +6,9 @@ There are five-water molecules to calculate positive two hydrogens and negative 
 calledof dummy sites. The fifth site of oxygens is used with Lennard-Jones potential 
 Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
-Simulations of molecular dynamics of water and ice are shown at the end of README.md and/or by PDF documents on this repository.
-These are "Water_TIP5P_Simulation.pdf" for numerical coding and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulations.   
+Simulations of molecular dynamics of water and ice are shown at the end of README.md and/or 
+by PDF documents on this repository. These are "Water_TIP5P_Simulation.pdf" for numerical coding 
+and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulations.   
 
 The ice state of freezing by microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
 remains basically the same due to the structure of six-membered ice ! 
