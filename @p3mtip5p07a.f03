@@ -1120,7 +1120,7 @@
         call clocks (wall_t02,size,cl_first)
 !
 !
-!  ice for 230 K, or water for 273 K
+!  ice for 230 K, or water above 273 K
 !  1cx666_ must be changed in /init/.
 !
       do i= 1,nq+np
@@ -1569,7 +1569,7 @@
 !$OMP DO SCHEDULE(STATIC,1)
 !
       do ll= ipar,nq/5,size     !!only charges for water 
-      do jp= 1,nq/5+np          !!+np
+      do jp= 1,nq/5
       if(jp.eq.ll) go to 300
 !
 !     if(jp.le.nq/5) then       ! there are two possibilities
@@ -1742,7 +1742,7 @@
 !
 !
       if(np.gt.0) then
-!
+!* if np > 0
 !$OMP PARALLEL DEFAULT(NONE)                       &
 !$OMP SHARED(ipar,size,nq,np,xa,ya,za,ch,rcutpme,  &
 !$OMP        alpha,xmax,ymax,zmax)                 &
@@ -2117,6 +2117,7 @@
       include    'param_tip5p_D07a.h'
       include    'aslfftw3.f03' ! by SX
 !     include    'fftw3.f03'    ! by Intel, or parallel case
+!                  "call fftw_plan_with_nthreads" must be commented out 
 !
 !     integer(C_INT),save :: n_thread
       type(C_PTR),save :: plan, pinv1,pinv2,pinv3
