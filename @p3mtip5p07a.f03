@@ -312,6 +312,7 @@
         read(12) ekin,eimg,ekn2,etot,vxaq,vxan,vxca, &
                  xani,vdtm,xcat,xwat,ecr,elj,ep3m
         read(12) time
+!
         read(12) iwa,iwb,iwc
         read(12) xmax,ymax,zmax,zcp,zcn
         close(12)
@@ -390,6 +391,7 @@
         write(12) ekin,eimg,ekn2,etot,vxaq,vxan,vxca, &
                   xani,vdtm,xcat,xwat,ecr,elj,ep3m
         write(12) time
+!
         write(12) iwa,iwb,iwc
         write(12) xmax,ymax,zmax,zcp,zcn
         close(12)
@@ -431,7 +433,7 @@
       include  'mpif.h' 
 !
       integer(C_INT) ipar,size,if_lj,nq,np,ncorr,ierr
-      real(C_DOUBLE) wall_t01,wall_t02,wall_t03,wipe
+      real(C_DOUBLE) wall_t01,wall_t02,wall_t03,wall_t04,wipe
       real(C_DOUBLE) wall_time0,wall_time1,wall_time7
 !
       real(C_DOUBLE),dimension(npq5) :: xa,ya,za,ch,am,ep,qch,ag, &
@@ -484,7 +486,7 @@
       common/ewald2/  Lewald,dmesh
 !
       real(C_DOUBLE) zcp,zcn,acount,acoion,epslj_p,epslj_n, &
-                     epslj_w,edc,tau_wave,eps_230
+                     epslj_w,edc,tau_wave
       common/salts/  zcp,zcn,acount,acoion,epslj_p,epslj_n, &
                      epslj_w
       common/ebfild/ edc,tau_wave
@@ -549,24 +551,33 @@
       logical :: first_23=.true.,first_p3m=.true.,  &
                  first_06=.true.,if_tequil=.true.,  &
                  if_kstart=.true.,if_wipe=.true.,   &
-                 if_kstart1=.true.
+                 if_kstart1=.true.,if_iwrt3=.true.
 !
-!     if(size.gt.64) then
+!     if(size.gt.100) then
 !       if(io_pe.eq.1) then
-!         write(06,*) " size= 1-64 must be assumed ! "
+!         write(06,*) " size= 1-100 is assumed ! "
 !       end if
 !       return
 !     end if
 !
+!--------------------------
 !*  Initial conditions
 !--------------------------
-!   +++++++++
-      np= 0    !!<-- change from param_tip5p_D07p.h
-!   +++++++++
-!                         +++++++++++ Restart from t=0
+!   Add pseudo salt if there are true Na, Cl, otherwise np=0
+!   Salt ions if there are special ions here
+!     do i= nq+1,nq+np
+!     xa(i)= ...
+!     end do 
+!   +++++++++++++++++++++++++++++++++++++++++
+      if(kstart.eq.1 .or. kstart.eq.3) then
+        np= 0 
+      end if
+!   +++++++++++++++++++++++++++++++++++++++++
+!
+!        Start            Restart from t=0
       if(kstart.eq.0 .or. kstart.eq.1) then
-        t8= - dt          ! keep f(v) result
-!       ******
+        t8= - dt          ! keep result of f(v)
+!       ********
 !
         is= 0 
         it= 0
@@ -590,7 +601,7 @@
           end do
 !
         else if(kstart.eq.1) then  !! restart with t=0
-!  if kstart=1 is used... t >= 0
+!
           tequil= 0.d0
 !
           if(io_pe.eq.1) then
@@ -705,7 +716,7 @@
 !
 !
 !     t_init=      1000.d0   !<- at kstart=0, in param
-!     t_wipe_sta= 50000.d0   !<- salt wipe, in param 
+!     t_wipe_sta= 50000.d0   !<- salt wipe, in parameter 
 !     t_wipe_end= 53000.d0 
       t_wipe= t_wipe_end -t_wipe_sta  
 !*
@@ -736,8 +747,11 @@
 !  for np=0
       if(temperat.lt.273.d0) go to 230
 !
-      if(kstart.eq.2) then
+!  Pseudo salt is wiped out: 
+!   t_wipe_sta=50000. and t_wipe_end=53000 
 !
+      if(kstart.eq.0 .or. kstart.eq.2) then
+!*
         if(t8.gt.t_wipe_sta) then 
           if(if_wipe) then
             if_wipe= .false.
@@ -760,13 +774,13 @@
           ep(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*epsav(i) 
           end do
 !
-        else if(t8.gt.t_wipe_end) then  !<- kstart anything
+        else if(t8.gt.t_wipe_end) then 
 !
-          do i= nq+1,nq+np  !<- empty 
-          vx(i)= 0
-          vy(i)= 0
-          vz(i)= 0
-          end do
+!         do i= nq+1,nq+np  !<- to empty 
+!         vx(i)= 0
+!         vy(i)= 0
+!         vz(i)= 0
+!         end do
 !
           if(io_pe.eq.1 .and. np.gt.0) then
           if_kstart1= .false.
@@ -804,8 +818,8 @@
 !     and in subroutine /p3m_perform/ (L.2100)
 !
 !  Three sites O-H-H are the base water
-!
-      if(kstart.eq.0 .and. it.eq.1) then  !! when a restart time t=0
+!  Only the simulation starts to define Im(j,1-3) and save them
+      if(kstart.eq.0 .and. it.eq.1) then 
         if_kstart= .false.
 !
         j= 0
@@ -865,9 +879,9 @@
 !
         npq= nq +np
         call p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
-!
+!                                           !<- qch(i)=(O)(H)(H) M M
         do i= 1,nq+np
-        fec(i,1)= (fec(i,1) +fek(i,1))/epsilon +qch(i)*exc !<- qch(i)=(O)(H)(H) M M
+        fec(i,1)= (fec(i,1) +fek(i,1))/epsilon +qch(i)*exc 
         fec(i,2)= (fec(i,2) +fek(i,2))/epsilon
         fec(i,3)= (fec(i,3) +fek(i,3))/epsilon
         end do
@@ -1092,39 +1106,17 @@
 !
         call clocks (wall_t02,size,cl_first)
 !
-      if(.false.) then
-!     if(io_pe.eq.1 .and. iwrt1.eq.0) then
-        open (unit=71,file='fort.71',             & 
-              status='unknown',position='append',form='formatted')
-        s0=0
-        s1=0
-!
-        do i= 1,nq,5
-        s0= s0 + & 
-               ((fec(i,1)+fec(i+1,1)+fec(i+2,1)+fec(i+3,1))**2 &
-               +(fec(i,2)+fec(i+1,2)+fec(i+2,2)+fec(i+3,2))**2 &
-               +(fec(i,3)+fec(i+1,3)+fec(i+2,3)+fec(i+3,3))**2)
-        end do
-!
-        do i= nq+1,nq+np
-        s1= s1 +(fec(i,1)**2 +fec(i,2)**2 +fec(i,3)**2)
-        end do
-!
-        write(71,*) 'rea: t8,s0,s1=',t8,s0,s1
-        close(71)
-      end if
-!
       npq= nq +np
       call p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
 !
-        call clocks (wall_t02,size,cl_first)
+        call clocks (wall_t03,size,cl_first)
 !
 !
 !  ice for 230 K, or water above 273 K
 !  1cx666_ must be changed in /init/.
-!
+!                                    !<- qch(i)=(O)(H)(H) M M
       do i= 1,nq+np
-      fec(i,1)= (fec(i,1) +fek(i,1))/epsilon +qch(i)*exc !<- qch(i)=(O)(H)(H) M M
+      fec(i,1)= (fec(i,1) +fek(i,1))/epsilon +qch(i)*exc 
       fec(i,2)= (fec(i,2) +fek(i,2))/epsilon
       fec(i,3)= (fec(i,3) +fek(i,3))/epsilon
       end do
@@ -1144,7 +1136,7 @@
         end do
       end if
 !
-        call clocks (wall_t03,size,cl_first)
+        call clocks (wall_t04,size,cl_first)
 !
 !* End of the loop
 !*  do not fold back positions: (-l/2, l/2). 
@@ -1268,12 +1260,12 @@
         xwat(is)= sx3/nq1
 !
 !*
-        write(11,'("t=",f9.1,1p7e12.4,2x,5d11.3,2x,3d13.3)') &
+        write(11,'("t=",f9.1,1p7e12.4,2x,5d11.3,2x,4d13.3)') &
                       time(is),ekin0,eimg(is),ekin1,         &
                       ecr(is),elj(is),ep3m(is),etot(is),     &
                       wall_time7,vm,exc,ekin0/nq1,eimg(is)/nq1, &
-                      wall_t03-wall_t01,wall_t02-wall_t01,   &
-                      wall_t03-wall_t02
+                      wall_t04-wall_t01,wall_t02-wall_t01,   &
+                      wall_t03-wall_t02,wall_t04-wall_t03
 !*
         close(11)
 !*
@@ -1423,6 +1415,7 @@
         write(12) ekin,eimg,ekn2,etot,vxaq,vxan,vxca, &
                   xani,vdtm,xcat,xwat,ecr,elj,ep3m
         write(12) time
+!
         write(12) iwa,iwb,iwc
         write(12) xmax,ymax,zmax,zcp,zcn
 !
@@ -1571,11 +1564,6 @@
       do ll= ipar,nq/5,size     !!only charges for water 
       do jp= 1,nq/5
       if(jp.eq.ll) go to 300
-!
-!     if(jp.le.nq/5) then       ! there are two possibilities
-!     +++++++++++++++++++++++++++++++++++++
-!     if(abs(ch(j)) .lt. 1.d-5) go to 400
-!     +++++++++++++++++++++++++++++++++++++
 !
 !  j= 1,6,11... (O-site, no charge) are not calculated here.
 ! --------------------------
@@ -1733,7 +1721,7 @@
       fec(i,3) = fec(i,3) +forceV1*dz1 +forceV2*dz2 +forceV3*dz3 &
                                                     +forceV4*dz4
       e_c_r = e_c_r +e_c_r1 +e_c_r2 +e_c_r3 +e_c_r4
-!
+!*
   300 continue
       end do
       end do
@@ -1754,7 +1742,7 @@
 !$OMP DO SCHEDULE(STATIC,1)
 !
         do ll= ipar,nq/5,size     !!only charges for water 
-        do jp= nq/5+1,nq/5+np     !!+np
+        do jp= nq/5+1,nq/5+np 
 !       ++++++++
         j= jp -nq/5 +nq 
 !
@@ -1820,10 +1808,10 @@
 !***
 !  Salt case
 !
-      do ll= nq+ipar,nq+np,size  !! charges for salt 
-      i= ll                      ! nq+1
+      do ll= ipar+nq,nq+np,size  !! charges for salt 
+      i= ll                      ! i=nq+1
 !
-      do jp= 1,nq/5+np           ! nq/5+1
+      do jp= 1,nq/5+np 
       if(jp.gt.nq/5) then
         if(jp -nq/5.eq.ll-nq) go to 400
       end if
@@ -1897,7 +1885,7 @@
         fec(i,3) = fec(i,3) +forceV1*dz1 
         e_c_r = e_c_r +e_c_r1 
       end if
-!
+!*
   400 continue
       end do
       end do
@@ -1919,7 +1907,7 @@
       r_cut= rcutpme  ! rcutlj  ! in Angstron 
       r_m =  2.1d0    ! 1.8d0 ! 2.1d0 ok at exc= zero, r^12= 134
       addpot1 = epslj_A/r_cut**12 - epslj_B/r_cut**6
-!     e_lj1 = pref_eps*(epslj_A*sn6*sn6 -epslj_B*sn6 -addpot1)
+!       e_lj1 = pref_eps*(epslj_A*sn6*sn6 -epslj_B*sn6 -addpot1)
 !
       rlj_cut= rcutpme/3.166d0  ! 3.16 A 
       rlj_m =  r_m/3.166d0
@@ -3100,7 +3088,7 @@
         nq= 6210  ! 5-point water 6210 atoms, 1242 molecules
         np=  216  ! unified atom, 216 (1080 CH4 atoms)
 !
-!  Pseudo atoms: [1] number of atoms
+!  [1] number of atoms
       else if(if_xyz2) then
         nq=  nq0  ! 1cx666a.exyz <- nq=8640 atoms
         np=  np0  ! Salt ions    <- np=4
@@ -3169,52 +3157,57 @@
       end if
 !
 !++++++++++++++++++++++++++++++++++++++++++++++++++
-!  Pseudo atoms: [2] Properties  2023/2/06
+!  [2] Properties 
 !   np= 2
 !# Radius of counterion Na+............:    0.9200000000000000
 !# Radius of coion Cl-.................:    1.5890000000000000
 !
       if(np.gt.0) then
 !*
-      j= nq1
-      do i= nq+1,nq+np
-      j= j +1
+      if(if_xyz2) then
 !
-      if(j.le.nq1+np/2) then
-        tip(i)= 'Na'
-        ch(i)=  1.d0
-        qch(i)= ch(i)
-        am(i)= massNa
-        ep(i)= 0.0148d0 *(kcal/mol)
-        ag(i)= 0.92d0  ! radius Na+, not diameter
+        j= nq1
+        do i= nq+1,nq+np
+        j= j +1
 !
-        amm(j)= massNa
+        if(j.le.nq1+np/2) then
+          tip(i)= 'Na'
+          ch(i)=  1.d0
+          qch(i)= ch(i)
+          am(i)= massNa
+          ep(i)= 0.0148d0 *(kcal/mol)
+          ag(i)= 0.92d0  ! radius Na+, not diameter
+!
+          amm(j)= massNa
 !*
-      else
-        tip(i)= 'Cl'
-        ch(i)= -1.d0
-        qch(i)= ch(i)
-        am(i)= massCl
-        ep(i)= 0.106d0 *(kcal/mol)
-        ag(i)= 1.589d0 ! radius Cl-
+        else
+          tip(i)= 'Cl'
+          ch(i)= -1.d0
+          qch(i)= ch(i)
+          am(i)= massCl
+          ep(i)= 0.106d0 *(kcal/mol)
+          ag(i)= 1.589d0 ! radius Cl-
 !
-        amm(j)= massCl
-      end if
-      end do
+          amm(j)= massCl
+        end if
+        end do
+!
+      else if(if_xyz1) then
+!*
+        do i= nq+1,nq+np
+        l= l +1
+        ch(l)= 0
+        am(l)= massme      ! 16.d0 /18.d0
+        ep(l)= 1.8915d-14  ! (137/230.9d0) *epslj_w
+        tip(l)= 'Me'
+        end do
+!
+        do j= nq1+1,nq1+np
+        amm(j)= massme
+        end do
 !*
       end if 
-!
-!     do i= nq+1,nq+np
-!     l= l +1
-!     ch(l)= 0
-!     am(l)= massme      ! 16.d0 /18.d0
-!     ep(l)= 1.8915d-14  ! (137/230.9d0) *epslj_w
-!     tip(l)= 'Me'
-!     end do
-!
-!     do j= nq1+1,nq1+np
-!     amm(j)= massme
-!     end do
+      end if 
 !++++++++++++++++++++++++++++++++++++++++++++++++++
 !
       if(io_pe.eq.1) then
@@ -3426,7 +3419,7 @@
       zmax= zmax3
 !
 !+++++++++++++++++++++++++++++++++++++++++++
-!  Pseudo atoms: [3] Positions
+!  [3] Positions
 !   Avoid closed neighbors
 !
       if(np.gt.0) then
@@ -3512,7 +3505,7 @@
 !***************
 !*  Velocity.  *
 !***************
-!* water molecules
+!* Water molecules
 !   Rescaling is advanced...  l.890
 !
       svx= 0
@@ -3553,7 +3546,7 @@
 !
 !
 !+++++++++++++++++++++++++++++++++++++++++++
-!  Pseudo atoms: [4] Velocities
+!  [4] Salt - Velocities
 !
       if(np.gt.0) then
 !*
@@ -3641,7 +3634,6 @@
         read(30,'(a87)') analic
         read(30,'(a5)')  dummy5
         read(30,'(f8.5,a1,f8.1,a1,f8.5)') xmax,dummy1,ymax,dummy1,zmax 
-!       read(30,'(f18.15,a1,f18.15,a1,f18.15)') xmax,dummy1,ymax,dummy1,zmax 
         read(30,'(a5)') dummy5
         read(30,'(i4)') npar1  !! !<- water
 !       read(30,'(i5)') npar1  !! Large system
