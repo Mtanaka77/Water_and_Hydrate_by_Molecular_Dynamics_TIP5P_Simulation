@@ -107,6 +107,7 @@ electric dipole interactions of water. For the moment, we give the electric fiel
 the electric field E_0 and electric dipole p_0 are of the order of 5x10^(-3) eV.
 The E_0 value can be as small as 5x10^(-4) eV for the 6x6x6 water cluster.
 with
+
 ### To Obtain the Initial Equilibrium for 298 K ###
 
 To give initial random noises to molecules, we will use salt ions initially as the dryrun. 
