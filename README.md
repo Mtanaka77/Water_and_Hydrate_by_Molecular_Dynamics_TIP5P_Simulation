@@ -106,12 +106,13 @@ The long dryrun of a simulation is very important !!
 electric dipole interactions of water. For the moment, we give the electric field 10 GHz where 
 the electric field E_0 and electric dipole p_0 are of the order of 5x10^(-3) eV.
 The E_0 value can be as small as 5x10^(-4) eV for the 6x6x6 water cluster.
-with
+
 
 ### To Obtain the Initial Equilibrium for 298 K ###
 
-To give initial random noises to molecules, we will use salt ions initially as the dryrun. 
-The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions, and a run with included salt is t=4700. 
+To give initial random noises to molecules, we will use salt ions as the dryrun. 
+The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions initially, and a run with included salt is done
+for t=1700 to 4700. 
 Then, the salt ions are gradually removed, and the run of water is continued at least for 5 periods 
 of t=50,000 before the real simulation run is started.
 The simulation run is shown in the next section in the PDF document with color pictures, 
