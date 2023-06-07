@@ -111,8 +111,8 @@ with
 
 To give initial random noises to molecules, we will use salt ions initially as the dryrun. 
 The 6x6x6 water clusters use 64 Na(+) and 64 Cl(-) ions, and a run with included salt is t=4700. 
-Then, the salt ions are gradually removed, and the run of water is continued at least for 5 periods of t=50,000,
-before the real simulation run is started.
+Then, the salt ions are gradually removed, and the run of water is continued at least for 5 periods 
+of t=50,000 before the real simulation run is started.
 The simulation run is shown in the next section in the PDF document with color pictures, 
 "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf".
 
