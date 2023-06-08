@@ -563,12 +563,12 @@
 !--------------------------
 !*  Initial conditions
 !--------------------------
-!   Add pseudo salt if there are true Na, Cl, otherwise np=0
-!   Salt ions if there are special ions here
+!   Add pseudo salt as Na and Cl are temporally added.
+!   Real salt can be added but separately.
 !     do i= nq+1,nq+np
 !     xa(i)= ...
 !     end do 
-!   +++++++++++++++++++++++++++++++++++++++++
+!   +++++++++ for this run ++++++++++++++++++
       if(kstart.eq.1 .or. kstart.eq.3) then
         np= 0 
       end if
@@ -679,7 +679,7 @@
  1000 dth= 0.5d0*dt
 !
       t8= t8 +dt
-      it= it +1   ! kstart=0 with it= 1
+      it= it +1 
 !
       iwrt1= iwrta(t8,dtwr)   !! <-- real8
       iwrt2= iwrtb(t8,dtwr2)  !  different iwrt must be used
@@ -715,9 +715,9 @@
       end if
 !
 !
-!     t_init=      1000.d0   !<- at kstart=0, in param
-!     t_wipe_sta= 50000.d0   !<- salt wipe, in parameter 
-!     t_wipe_end= 53000.d0 
+!     t_init=     1000.d0   !<- at kstart=0, in param
+!     t_wipe_sta= 1700.d0   !<- salt wipe, in parameter 
+!     t_wipe_end= 4700.d0 
       t_wipe= t_wipe_end -t_wipe_sta  
 !*
       if(kstart.eq.0) then
@@ -748,7 +748,7 @@
       if(temperat.lt.273.d0) go to 230
 !
 !  Pseudo salt is wiped out: 
-!   t_wipe_sta=50000. and t_wipe_end=53000 
+!   t_wipe_sta=1700. and t_wipe_end=4700 
 !
       if(kstart.eq.0 .or. kstart.eq.2) then
 !*
@@ -756,7 +756,7 @@
           if(if_wipe) then
             if_wipe= .false.
 !
-            do i= nq+1,nq+np  !<- empty 
+            do i= nq+1,nq+np  !<- when t_wipe_sta is started
             chsav(i)= ch(i) 
             epsav(i)= ep(i)
             end do
@@ -773,17 +773,21 @@
           ch(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*chsav(i) !<- decease 
           ep(i)= max(1.d0 -(t8-t_wipe_sta)/t_wipe,0.d0)*epsav(i) 
           end do
+        end if
 !
-        else if(t8.gt.t_wipe_end) then 
+!  Pseudo salt has been removed
+!  Real salt can be added
+        if(t8.gt.t_wipe_end) then 
 !
-!         do i= nq+1,nq+np  !<- to empty 
-!         vx(i)= 0
-!         vy(i)= 0
-!         vz(i)= 0
-!         end do
+          do i= nq+1,nq+np  !<- to empty 
+          vx(i)= 0
+          vy(i)= 0
+          vz(i)= 0
+          end do
 !
           if(io_pe.eq.1 .and. np.gt.0) then
           if_kstart1= .false.
+!
           open (unit=11,file=praefixc//'.11'//suffix2,             & 
                 status='unknown',position='append',form='formatted')
           write(11,*) "# t_wipe_end is ended"
@@ -1806,10 +1810,10 @@
       end if
 !
 !***
-!  Salt case
+!  Salt case: xa(i) with i= ll > nq
 !
-      do ll= ipar+nq,nq+np,size  !! charges for salt 
-      i= ll                      ! i=nq+1
+      do ll= nq+ipar,nq+np,size  !! charges for salt 
+      i= ll 
 !
       do jp= 1,nq/5+np 
       if(jp.gt.nq/5) then
