@@ -1105,10 +1105,10 @@
 !*  Find forces
 !--------------------
 !
+        call clocks (wall_t02,size,cl_first)
+!
 !  In /realteil/, all nq and np
       call realteil (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
-!
-        call clocks (wall_t02,size,cl_first)
 !
       npq= nq +np
       call p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
