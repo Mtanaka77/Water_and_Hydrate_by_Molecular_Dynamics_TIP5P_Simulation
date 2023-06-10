@@ -113,6 +113,7 @@ The E_0 value can be as small as 5x10^(-4) eV for the 6x6x6 water cluster.
 To give uniform random noises to molecules, an equilibration takes extremely a long time of periods.
 Thus, we try to use salt ions where 6x6x6 water clusters are fully strengthend with 64 Na(+) and 64 Cl(-) ions 
 at t=1000, and waited by t=1700.  
+
 Then, the salt ions are gradually removed by t=4700, and only water molecules are continued at least for 
 5 periods of t=50,000 before the real simulation run is again started from t=0.
 The simulation run is shown in the next section in the PDF document with color pictures, 
