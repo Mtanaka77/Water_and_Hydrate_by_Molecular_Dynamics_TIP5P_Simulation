@@ -90,10 +90,10 @@ Other parameters are: r(OH)=0.9572 Ang, Delta(HOH)=104.52 Ang. r(OM)=0.15 Ang is
 for the TIP4P case, where the equipartition line of the virtual M sites is on the plane 
 that equally separates the HOH angle. 
 
-### To Start a Run ###
+### In Order to Start a Run ###
 
-To start a simulation of water cluster with the TIP5P code, the adjacent 4x4 hydrogen pairs 
-are summed electrostatically, and oxygen pairs are coupled by TIP5P Lennard-Jones potentials.
+To start a simulation of water cluster with the TIP5P code, the adjacent 4x4 hydrogen pairs of molecules 
+are summed electrostatically, and also the oxygen pairs are coupled by TIP5P Lennard-Jones potentials.
 
 1. To get an initial state, we make the size of at least a 6x6x6 water cluster for numerical stability.
 Short-range Coulombic and long-range forces are best separated for interactions, where the short-range 
