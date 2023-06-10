@@ -97,7 +97,7 @@ are summed electrostatically, and also the oxygen pairs are coupled by TIP5P Len
 
 1. To get an initial state, we make the size of at least a 6x6x6 water cluster for numerical stability.
 Short-range Coulombic and long-range forces are best separated for interactions, where the short-range 
-forces are made to be spatially dumped.
+forces for r>r_LJ ranges are made to be spatially dumped.
 
 2. Around a given temperature, a dryrun is executed at least for 5 periods that is 10^(-9) seconds.
 The long dryrun of a simulation is very important !!
