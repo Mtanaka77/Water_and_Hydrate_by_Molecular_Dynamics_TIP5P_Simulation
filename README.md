@@ -5,8 +5,8 @@ This is the second generation code to the first one of 3-point SPC/E shake/rattl
 There are five-water molecules to calculate positive two hydrogens H1, H2 and negative two hydrogens L1, L2 
 called dummy sites. The fifth oxygen site is to correlate with adjacent molecules with the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
-Simulations of molecular dynamics of water and ice are shown at the end of README.md and/or 
-by PDF documents on this repository. These are "Water_TIP5P_Simulation.pdf" for numerical coding 
+Simulations of molecular dynamics of water and ice are shown at README.md and PDF documents on this repository. 
+These are "Water_TIP5P_Simulation.pdf" for numerical coding 
 and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulations.   
 
 The ice state of freezing by microwaves, which is our theory discovery in J.Chem.Phys. 2007 (Ref. 2), 
