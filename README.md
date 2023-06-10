@@ -119,9 +119,9 @@ The simulation run is shown in the next section in the PDF document with color p
 "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf".
 
 
-### Figures of Simulations by TIP5P Code ###
+### Figures of TIP5P-Code Simulations ###
 
-Molecular dynamics simulation of water and ice are shown using the TIP5P code, 
+Molecular dynamics simulations of water and ice are shown by using the TIP5P code, 
 and the current file is "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice states that include the energy of molecules, 
@@ -131,7 +131,7 @@ and cosine distribution functions in the x-direction.
 Generally speaking, water is heated by microwaves where its heating efficiency is highest at 0 Celsius.
 Below 273 K, however, ice is frozen and not heated by the electric field.
 
-### Necessary Files ###
+### Necessary Files of the Repository ###
 
 Files for simulation 
 
