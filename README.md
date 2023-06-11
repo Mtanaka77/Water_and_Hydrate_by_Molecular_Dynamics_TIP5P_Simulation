@@ -13,8 +13,8 @@ The ice state of freezing by microwaves, which is our theory discovery in J.Chem
 remains basically the same due to the structure of six-membered ice ! 
 
 Methane hydrate simulations are to be executed by the TIP5P code, like with the SPC/E code (Ref. 3).
-But, methane is known as environmentally hazardous material much more than carbon dioxide.
-The methane that is mined and burnt on earth should be back to the interior of the deep earth.
+As natural resorces, however, methane is known environmentally to be a hazardous substance much more than carbon dioxide.
+The methane that is mined and burnt in air should be confined back to the interior of the deep earth.
 
 ### Procedure of Water Molecules by 5-Points Method ###
 
