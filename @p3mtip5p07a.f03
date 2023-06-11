@@ -551,7 +551,7 @@
       logical :: first_23=.true.,first_p3m=.true.,  &
                  first_06=.true.,if_tequil=.true.,  &
                  if_kstart=.true.,if_wipe=.true.,   &
-                 if_kstart1=.true.,if_iwrt3=.true.
+                 if_kstart1=.true.
 !
 !     if(size.gt.100) then
 !       if(io_pe.eq.1) then
