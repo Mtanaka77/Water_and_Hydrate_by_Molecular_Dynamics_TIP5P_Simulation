@@ -547,7 +547,7 @@
       integer(C_INT) npq,cl_first 
       integer(C_INT) i_barrier,root
 !
-      real(C_DOUBLE) t_wipe
+      real(C_DOUBLE) t_wipe,ekm
       logical :: first_23=.true.,first_p3m=.true.,  &
                  first_06=.true.,if_tequil=.true.,  &
                  if_kstart=.true.,if_wipe=.true.,   &
@@ -1273,9 +1273,13 @@
 !*
         close(11)
 !*
-!  At 273 K, the average energy of (ekin+eimg)/2 becomes 2.85d-1
+!  At 298 K, the average energy, 400 K is... 
+        if(is.eq.100) then
+          ekm= (ekin(is) +eimg(is))/nq1
+        end if
+        
         i_barrier= 0
-        if((ekin(is)+eimg(is))/2.d0.gt.2.85d-1) then
+        if((ekin(is)+eimg(is))/nq1 .gt. 1.3d0*ekm) then
           i_barrier= 1
         end if
 !**
