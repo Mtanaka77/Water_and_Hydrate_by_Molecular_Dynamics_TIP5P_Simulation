@@ -120,9 +120,9 @@ molecules are continued at least for 5 periods of t=50,000 before the real simul
 The simulation run is shown in the next section in the PDF document with color pictures, 
 "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf".
 
-It is noted in the simulation that we impose NVE condition so that the box size is constant.
+It is noted that we impose NVE condition in the simulation so that the box size is constant.
 In the water heating of our experiment, however, the system volume is open and an energy may 
-come in from the outside system. It may be possible to have rapid heating of hot bubbling water.
+come in from the surrounding system. It is possible to have rapid heating of hot bubbling water.
 
 ### Figures of TIP5P-Code Simulations ###
 
