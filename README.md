@@ -121,8 +121,8 @@ The simulation run is shown in the next section in the PDF document with color p
 "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf".
 
 It is noted that we impose the NVE condition in the simulation so that the box size is constant.
-In the water heating of our experiment, however, the system volume is open and an energy may 
-go out to the surrounding system. It is possible to have rapid heating of hot bubbling water.
+In the water heating of our daily experiment, however, the system volume is open and an energy  
+goes out to the surrounding system. It is possible to have rapid heating of hot bubbling water.
 
 ### Figures of TIP5P-Code Simulations ###
 
