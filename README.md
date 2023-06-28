@@ -121,7 +121,7 @@ The simulation run is shown in the next section in the PDF document with color p
 "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf".
 
 It is noted that we impose the NVE condition in the simulation so that the box size is constant.
-In the water heating of our daily experiment, however, the system volume is open and an energy  
+In the water heating of our daily experiment, however, the system is open and an energy  
 goes out to the surrounding system. It is possible to have rapid heating of hot bubbling water.
 
 ### Figures of TIP5P-Code Simulations ###
@@ -130,8 +130,8 @@ Molecular dynamics simulations of water and ice are shown by using the TIP5P cod
 and the current file is "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice states that include the energy of molecules, 
-3-dimensional scatter plots, pair distribtion functions of oxygen and hidrogen atoms,
-and cosine distribution functions in the x-direction.
+3-dimensional scatter plots, pair distribtion functions of oxygen and hidrogen atoms, and 
+cosine distribution functions in the x-direction.
 
 Generally speaking, water is heated by microwaves where its heating efficiency is highest at 0 Celsius.
 Below 273 K, however, ice is frozen and not heated by the electric field.
