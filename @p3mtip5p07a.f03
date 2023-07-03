@@ -1,13 +1,12 @@
 !************************************************** May, 2023 ****
 !*                                                               *
 !*   ## Molecular Dynamics of Water and Ice by TIP5P Code ##     *
-!*      - Microwaves heating, ice below 273 K is not melted      * 
+!*      - Microwaves heating, ice below T=273 K not melted       * 
 !*                                                               *
-!*   Files for simulation                                        *
-!*   1. @p3mtip5p07a.f03 : simulation code                       *
-!*   2. param_tip5p_D07a.h : parameter file, physical constants  *
-!*   3. TIP507_config.start0 : parameter file, kstart=0 or 2     *
-!*      or TIP507_config.start1 : kstart=1 or 3                  *
+!*   Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor         *
+!*                      Graduate School, Chubu University, Japan *
+!*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
+!*   Copyright(C) 2006-2023. All rights reserved.                *
 !*                                                               *
 !*   Reference                                                   * 
 !*   1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).           *
@@ -15,22 +14,22 @@
 !*   3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995).         *
 !*   4) M.Tanaka and M.Sato, J.Chem.Phys,. 126, 034509 (2007).   *
 !*   5) M.Tanaka, Comput.Phys.Comm., vol.241, 56 (2019).         *
-!*                                                               *
-!*   Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor         *
-!*                Graduate School of Chubu University, Japan.    *
-!*                                                               *
-!*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
-!*   Copyright(C) 2006-2023. All rights reserved.                *
 !* ------------------------------------------------------------  *
 !*                                                               *
-!*    Histories:                                                 *
+!*   Files for this simulation                                   *
+!*   1. @p3mtip5p07a.f03 : simulation code                       *
+!*   2. param_tip5p_D07a.h : parameter file, physical constants  *
+!*   3. TIP507_config.start0 : parameter file, kstart=0 or 2     *
+!*      or TIP507_config.start1 : kstart=1 or 3                  *
+!*                                                               *
+!*   Histories:                                                  *
 !*     translation and rotation simulation code.                 *
 !*     4-point Coulomb, and epslj_A,B due to tip5p.              * 
 !*      prefactor (realteil), and pref_eps (Lennard-Jones)       *
 !*      epslj_A,B for water, ep(i) for hybrid molecules.         *
 !*     real*8 in Fortran 2003 / PGF 19 (2019).                   *
 !*                                                               *
-!*    Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020.      *
+!*     Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020.     *
 !*                                                               *
 !************************************* First code: 02/26/2005 ****
 !*                                                               *
@@ -71,8 +70,8 @@
 !*   * @wat_radtip507.f03 - pair distribution functions          *
 !*                                                               *
 !*****************************************************************
-!  FT11 is opened at L.85 and closed at L.690; afterwards it is
-!  open/close statements when write's statement is called.
+!  FT11 is opened at L.85 and closed at L.690. Afterwards it is
+!  by open/close statements when write's action is called.
 !
       program es3d_tip5
 !
