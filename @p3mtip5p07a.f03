@@ -2194,7 +2194,7 @@
 !       call fftw_plan_with_nthreads (n_thread)
 !
 !  for NEC SX 
-       call fftw_plan_with_nthreads (omp_get_max_threads()) 
+!!     call fftw_plan_with_nthreads (omp_get_max_threads()) 
 !
 !       call dfftw_plan_dft_r2c_3d  &  ! FX100
         plan= fftw_plan_dft_r2c_3d  &
