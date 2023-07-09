@@ -70,6 +70,10 @@
 !*   * @wat_radtip507.f03 - pair distribution functions          *
 !*                                                               *
 !*****************************************************************
+!  Only parallel fortran 2003: 
+!     mpif90 -mcmodel=medium -fpic @p3mtip5p07a.f03  &
+!      -I/opt/fftw-3.3.10/include -L/opt/fftw-3.3.10/lib -lfftw3 
+!
 !  FT11 is opened at L.85 and closed at L.690. Afterwards it is
 !  by open/close statements when write's action is called.
 !
@@ -2603,33 +2607,33 @@
       intcaf(2, i+mintpol) = 0.50d0*(0.5d0 + x)**2
       end do
 !
-      else if (ip0.eq.4) then
-      do i= -mintpol, mintpol
-      x= i/(2.d0*dinterpol)
-      intcaf(0, i+mintpol) = &
-                             ( 1.d0+x*( -6.d0+x*( 12.d0-x* 8.d0)))/48.d0
-      intcaf(1, i+mintpol) = &
-                             (23.d0+x*(-30.d0+x*(-12.d0+x*24.d0)))/48.d0
-      intcaf(2, i+mintpol) = &
-                             (23.d0+x*( 30.d0+x*(-12.d0-x*24.d0)))/48.d0
-      intcaf(3, i+mintpol) = & 
-                             ( 1.d0+x*(  6.d0+x*( 12.d0+x* 8.d0)))/48.d0
-      end do
+!     else if (ip0.eq.4) then
+!     do i= -mintpol, mintpol
+!     x= i/(2.d0*dinterpol)
+!     intcaf(0, i+mintpol) = &
+!                            ( 1.d0+x*( -6.d0+x*( 12.d0-x* 8.d0)))/48.d0
+!     intcaf(1, i+mintpol) = &
+!                            (23.d0+x*(-30.d0+x*(-12.d0+x*24.d0)))/48.d0
+!     intcaf(2, i+mintpol) = &
+!                            (23.d0+x*( 30.d0+x*(-12.d0-x*24.d0)))/48.d0
+!     intcaf(3, i+mintpol) = & 
+!                            ( 1.d0+x*(  6.d0+x*( 12.d0+x* 8.d0)))/48.d0
+!     end do
 !
-      else if (ip0.eq.5) then
-      do i= -mintpol, mintpol
-      x= i/(2.d0*dinterpol)
-      intcaf(0, i+mintpol) = &
-               (  1.d0+x*( -8.d0+x*(  24.d0+x*(-32.d0+x*16.d0))))/384.d0
-      intcaf(1, i+mintpol) = &
-               ( 19.d0+x*(-44.d0+x*(  24.d0+x*( 16.d0-x*16.d0))))/ 96.d0
-      intcaf(2, i+mintpol) = &
-               (115.d0+x*        x*(-120.d0+x*        x*48.d0))  /192.d0
-      intcaf(3, i+mintpol) = &
-               ( 19.d0+x*( 44.d0+x*(  24.d0+x*(-16.d0-x*16.d0))))/ 96.d0
-      intcaf(4, i+mintpol) = &
-               (  1.d0+x*(  8.d0+x*(  24.d0+x*( 32.d0+x*16.d0))))/384.d0
-      end do
+!     else if (ip0.eq.5) then
+!     do i= -mintpol, mintpol
+!     x= i/(2.d0*dinterpol)
+!     intcaf(0, i+mintpol) = &
+!              (  1.d0+x*( -8.d0+x*(  24.d0+x*(-32.d0+x*16.d0))))/384.d0
+!     intcaf(1, i+mintpol) = &
+!              ( 19.d0+x*(-44.d0+x*(  24.d0+x*( 16.d0-x*16.d0))))/ 96.d0
+!     intcaf(2, i+mintpol) = &
+!              (115.d0+x*        x*(-120.d0+x*        x*48.d0))  /192.d0
+!     intcaf(3, i+mintpol) = &
+!              ( 19.d0+x*( 44.d0+x*(  24.d0+x*(-16.d0-x*16.d0))))/ 96.d0
+!     intcaf(4, i+mintpol) = &
+!              (  1.d0+x*(  8.d0+x*(  24.d0+x*( 32.d0+x*16.d0))))/384.d0
+!     end do
 !
 !     else if (ip0.eq.6) then
 !     do 600 i= -mintpol, mintpol
