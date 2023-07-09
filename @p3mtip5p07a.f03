@@ -2134,8 +2134,7 @@
 !
       include    'param_tip5p_D07a.h'
 !     include    'aslfftw3.f03' ! by SX
-      include    'fftw3.f03'    ! by Intel, or parallel case
-!                  "call fftw_plan_with_nthreads" must be commented out 
+      include    'fftw3.f03'    ! by Intel, or parallel code
 !
 !     integer(C_INT),save :: n_thread
       type(C_PTR),save :: plan, pinv1,pinv2,pinv3
@@ -2197,8 +2196,8 @@
 !       ddd= fftw_init_threads (ierror)
 !       call fftw_plan_with_nthreads (n_thread)
 !
-!  for NEC SX 
-!!     call fftw_plan_with_nthreads (omp_get_max_threads()) 
+!  for NEC SX -> Parallel code is the same at all  7.09.2023 
+!!      call fftw_plan_with_nthreads (omp_get_max_threads()) 
 !
 !       call dfftw_plan_dft_r2c_3d  &  ! FX100
         plan= fftw_plan_dft_r2c_3d  &
