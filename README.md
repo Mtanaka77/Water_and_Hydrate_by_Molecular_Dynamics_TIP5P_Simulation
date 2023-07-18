@@ -3,9 +3,10 @@
 Microwave heating of water and ice states is studied by molecular dynamics simulations.
 We use the 5-point atoms of water molecules called the TIP5P-Ewald summation algorithm. 
 This is the second generation to the first one of 3-point SPC/E shake/rattle algorithm (JCP, 2007). 
-There is a four-water molecule to calculate positive two hydrogens q_H1, q_H2 and negative 
-two hydrogens q_L1, q_L2. The fifth oxygen site called the dummy site q_O=0 is to correlate 
-with adjacent molecules with the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
+There is a four-water molecule to calculate positive two hydrogens q_H= 0.241e and negative 
+two hydrogens q_L= -0.241e with e the electron charge. 
+The fifth oxygen site called the dummy site q_O=0 is to correlate with adjacent molecules 
+with the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
 Simulations of molecular dynamics of water and ice are shown at README.md and PDF documents on this repository. 
 These are "Water_TIP5P_Simulation.pdf" for numerical coding 
