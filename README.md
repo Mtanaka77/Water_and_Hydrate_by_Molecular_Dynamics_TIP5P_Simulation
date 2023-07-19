@@ -10,8 +10,8 @@ using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).
 
 Molecular dynamics simulations of water and ice are shown at README.md and PDF documents 
 on this repository. These are "Water_TIP5P_Simulation.pdf" for numerical coding 
-and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics simulations.   
-The freezing ice state by microwaves, which is our theory discovery in J.Chem.Phys. 
+and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics 
+simulations. The freezing ice state by microwaves, which is our theory discovery in J.Chem.Phys. 
 2007 (Ref. 2), remains basically the same due to the structure of six-membered ice ! 
 
 Methane hydrate simulations are to be executed by the TIP5P code, like with the 
