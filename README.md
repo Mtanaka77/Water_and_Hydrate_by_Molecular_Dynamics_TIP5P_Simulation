@@ -15,9 +15,9 @@ simulations. The freezing ice state by microwaves, which is our theory discovery
 2007 (Ref. 2), remains basically the same due to the structure of six-membered ice ! 
 
 Methane hydrate simulations are executed by the TIP5P algorithm, like with the 
-SPC/E algorithm (Ref. 3). As natural resources, however, methane is known environmentally 
-a substance of 20-60 times much more harzardous than carbon dioxide. The methane that is 
-once mined and burnt in air should be confined back to the deep earth interior.
+SPC/E algorithm (Ref. 3). As natural resources, however, methane is environmentally known 
+as 20-60 times more harzardous material than carbon dioxide. Methane that is 
+once mined and made burnt in air should be confined back to the deep earth interior.
 
 ### Procedure of Water Molecules by 5-Points Method ###
 
