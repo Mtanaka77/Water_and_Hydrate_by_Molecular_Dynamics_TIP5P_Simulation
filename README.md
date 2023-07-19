@@ -14,7 +14,7 @@ and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physi
 simulations. The freezing ice state by microwaves, which is our theory discovery in J.Chem.Phys. 
 2007 (Ref. 2), remains basically the same due to the structure of six-membered ice ! 
 
-Methane hydrate simulations are to be executed by the TIP5P code, like with the 
+Methane hydrate simulations are executed by the TIP5P algorithm, like with the 
 SPC/E algorithm (Ref. 3). As natural resources, however, methane is known environmentally 
 a substance of 20-60 times much more harzardous than carbon dioxide. The methane that is 
 once mined and burnt in air should be confined back to the deep earth interior.
