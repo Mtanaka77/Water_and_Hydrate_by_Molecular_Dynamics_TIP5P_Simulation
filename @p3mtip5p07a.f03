@@ -3003,7 +3003,7 @@
       integer(C_INT)   io_pe,i,j,k,l
       common/sub_proc/ io_pe
 !
-      real(C_DOUBLE) DNINT,shift,vmax1,dgaus2,svx,svy,svz,amas, &
+      real(C_DOUBLE) shift,vmax1,dgaus2,svx,svy,svz,amas, &
                      xnum0,ynum0,znum0,e00,e10,e20,e30,rr
       real(C_float)  ranff
 !
@@ -3038,17 +3038,6 @@
 !  The third term
       econv    = t_unit**2*e_unit /(w_unit*a_unit *299.98d0)
 !
-!     pref_eps0 = scale_c *48.d0*a_unit/e_unit**2     ! eps/r
-!        t^2*e^2/(w*a^3) *48 a/e^2 = 48 t^2/(w*a^2)= 48*pref_eps
-!     rlj = r/(ag(i)+ag(j))
-!     if(rlj.le.rlj_cut) then
-!       rlj0= dmax1(rlj,rlj_m)  ! if rlj > rlj_m 
-!       rsi = 1.d0/rlj0**2
-!       snt = rsi*rsi*rsi
-!       epsav = sqrt(ep(i)*ep(j))
-!       ccel  = 48*pref_eps*epsav* snt*(snt -0.5d0)/r**2
-!       e_lj1 =  4*pref_eps*epsav* (snt*(snt -1.d0) -addpot)
-!
 !  Affinity
 !    C  1.27 eV
 !    Cl 3.61 eV
@@ -3059,7 +3048,7 @@
 !   KJoule/mol = 1.d10 erg/6.02d23 = 1.66d-14 erg
 !        cf. Phys.Fluid 2012
 !
-      epslj_w = 1.02d-14 ! 2.189d-14 ! (kjoule/mol) in erg
+      epslj_w = 1.02d-14   ! (kjoule/mol) in erg
 !!    awat = 3.166d0 /2.d0 ! for hybrid LJ
 !
 !  phi= A/r^12 -B/r^6 -> d.phi/dr= -12A/r^13 +6B/r^7= 0
@@ -3221,7 +3210,7 @@
           amm(j)= massCl
         end if
         end do
-!
+!*
       else if(if_xyz1) then
 !*
         do i= nq+1,nq+np
@@ -3242,14 +3231,12 @@
 !
       if(io_pe.eq.1) then
         do i= nq+1,nq+np
-!       if(i.le.nq+np) then
         write(11,'(" i, ch, am, ep, qch,ag(MM)=",i5,1p5d12.5)') &
                                  i,ch(i),am(i),ep(i),qch(i),ag(i)
-!       end if
         end do
 !
         write(11,*)
-        write(11,*) "L.3130: nq=",nq
+        write(11,*) "L.3230: nq=",nq
         write(11,*) " this l is=",l
 ! 
         write(11,*)
@@ -3294,6 +3281,7 @@
       else if(if_xyz2) then
 !
         open (unit=17,file='1cx666a.exyz',form='formatted')  ! 273 K 
+!
       end if
 !
       if(io_pe.eq.1) then
@@ -3438,35 +3426,31 @@
         end do
       end if
 !
-      read(17,*)
-      read(17,'(a8,3f15.5)') vector1,xmax1,ymax1,zmax1
-      read(17,'(a8,3f15.5)') vector2,xmax2,ymax2,zmax2
-      read(17,'(a8,3f15.5)') vector3,xmax3,ymax3,zmax3
-  380 format(a8,3f15.5)
-!
-      xmax= xmax1
-      ymax= ymax2
-      zmax= zmax3
-!
 !+++++++++++++++++++++++++++++++++++++++++++
-!  [3] Positions
+!  [3] Positions: Methane or water salt 
 !   Avoid closed neighbors
 !
       if(np.gt.0) then
 !**
 !  Methane
-!     do i= nq+1,nq+np
-!     read(17,'(a4,3f15.5)') tip1,xc1,yc1,zc1          ! C
-!     read(17,'(a4,3f15.5)') tip2,xh1,yh1,zh1          ! C
-!     read(17,'(a4,3f15.5)') tip3,xh2,yh2,zh2          ! C
-!     read(17,'(a4,3f15.5)') tip4,xh3,yh3,zh3          ! C
-!     read(17,'(a4,3f15.5)') tip5,xh4,yh4,zh4          ! C
+      if(if_xyz1) then
 !
-!     xa(i)= xc1      
-!     ya(i)= yc1      
-!     za(i)= zc1      
-!     end do
+      do i= nq+1,nq+np
+      read(17,'(a4,3f15.5)') tip1,xc1,yc1,zc1          ! C
+      read(17,'(a4,3f15.5)') tip2,xh1,yh1,zh1          ! C
+      read(17,'(a4,3f15.5)') tip3,xh2,yh2,zh2          ! C
+      read(17,'(a4,3f15.5)') tip4,xh3,yh3,zh3          ! C
+      read(17,'(a4,3f15.5)') tip5,xh4,yh4,zh4          ! C
+!
+      xa(i)= xc1      
+      ya(i)= yc1      
+      za(i)= zc1      
+      end do
+      end if
 !*
+!
+      if(if_xyz2) then
+!
       do i= nq+1,nq+np
   650 xa(i)= xmax*ranff(0.)
       ya(i)= ymax*ranff(0.)
@@ -3482,9 +3466,11 @@
       end do
 !
       end do
+      end if
 !*
+!
       if(io_pe.eq.1) then
-        write(11,*) '# Salt i=nq+1,nq+np'
+        write(11,*) '# Salt or CH4: i=nq+1,nq+np'
 !
         do i= nq+1,nq+np
         write(11,'(i6,3f10.2)') i,xa(i),ya(i),za(i)
@@ -3494,8 +3480,18 @@
       end if
 !**
       end if
-!+++++++++++++++++++++++++++++++++++++++++++
 !
+!
+      read(17,*)
+      read(17,'(a8,3f15.5)') vector1,xmax1,ymax1,zmax1
+      read(17,'(a8,3f15.5)') vector2,xmax2,ymax2,zmax2
+      read(17,'(a8,3f15.5)') vector3,xmax3,ymax3,zmax3
+  380 format(a8,3f15.5)
+!
+      xmax= xmax1
+      ymax= ymax2
+      zmax= zmax3
+!+
       if(io_pe.eq.1) then
         write(11,*) "1:",xmax1,ymax1,zmax1
         write(11,*) "2:",xmax2,ymax2,zmax2
@@ -3511,10 +3507,6 @@
         write(11,*) "   np(salt)=",np
         write(11,*)
 !
-        write(11,*) " xmax1=",xmax1
-        write(11,*) "....................."
-        write(11,*)
-!
         write(11,*) "L.3400: tip     ch     am      ep      ag"
         do i= 1,10
         write(11,'(a2,3x,1p4d12.5)') tip(i),ch(i),am(i),ep(i),ag(i)
@@ -3522,11 +3514,11 @@
         end do
 !
         if(np.gt.0) then
-        do i= nq+1,nq+np
-        write(11,'(a2,3x,1p4d12.5)') tip(i),ch(i),am(i),ep(i),ag(i)
-        end do
+          do i= nq+1,nq+np
+          write(11,'(a2,3x,1p4d12.5)') tip(i),ch(i),am(i),ep(i),ag(i)
+          end do
 !
-        write(11,*)
+          write(11,*)
         end if
 !*
         write(11,*) "Water atoms (before correction)=",nq
