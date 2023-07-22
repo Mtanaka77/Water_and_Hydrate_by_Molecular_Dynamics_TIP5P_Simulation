@@ -10,7 +10,7 @@ negative two hydrogens q_L= -0.241e with e the electron charge.
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
 using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
 
-Molecular dynamics simulations of water and ice are shown at README.md and PDF documents 
+Description of molecular dynamics simulations of water and ice is shown at README.md and PDF documents 
 on this repository. These are "Water_TIP5P_Simulation.pdf" for numerical coding 
 and "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf" for physics 
 simulations. The freezing ice state by microwaves, which is our theory discovery in J.Chem.Phys. 
