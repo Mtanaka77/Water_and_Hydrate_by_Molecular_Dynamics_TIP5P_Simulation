@@ -1,6 +1,6 @@
 ## Molecular Dynamics Simulation of Water and Ice by TIP5P Code ##
 
-### Prolog of Water and Ice Simulation ###
+### Prolog of Water and Ice Dynamics Simulation ###
 
 Microwave heating of the water and ice states is studied by molecular dynamics simulations.
 We use the 5-point atoms of water molecules called the TIP5P-Ewald summation algorithm. 
