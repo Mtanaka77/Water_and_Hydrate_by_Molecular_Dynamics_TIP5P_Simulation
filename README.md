@@ -8,11 +8,13 @@ This is the second generation to the first one of 3-point SPC/E shake/rattle alg
 A four-water molecule is specified to calculate positive two hydrogens q_H= 0.241e and 
 negative two hydrogens q_L= -0.241e with e the electron charge. 
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
-using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1). 
+using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).  
 
-The fortran code by MPI is given in the file @p3mtip5p07a.f03 and param.h. 
+The fortran code by MPI is given in the file @p3mtip5p07a.f03 with param_tip5D07a.h and
+TIP507_config.start0. 
 Its description of the code is shown at README.md and also PDF documents of this repository. 
-The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for physics simulation  "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf". 
+The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics 
+simulation run by "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf". 
 The freezing ice state by microwaves, which is our theory discovery in J.Chem.Phys. 
 2007 (Ref. 2), remains basically the same due to the structure of six-membered ice ! 
 
