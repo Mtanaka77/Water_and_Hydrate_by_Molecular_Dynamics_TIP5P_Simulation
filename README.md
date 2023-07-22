@@ -10,8 +10,8 @@ negative two hydrogens q_L= -0.241e with e the electron charge.
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
 using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).  
 
-The fortran code by MPI is given in the file @p3mtip5p07a.f03 with param_tip5D07a.h and
-TIP507_config.start0. 
+The fortran code by MPI is given in the file @p3mtip5p07a.f03 with two additional files 
+param_tip5D07a.h and TIP507_config.start0. 
 Its description of the code is shown at README.md and also PDF documents of this repository. 
 The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics 
 simulation run by "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf". 
