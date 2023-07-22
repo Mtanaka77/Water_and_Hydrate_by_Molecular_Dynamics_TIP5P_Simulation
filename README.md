@@ -20,9 +20,9 @@ The freezing ice state by microwaves, which is our theory discovery in J.Chem.Ph
 
 Methane hydrate simulations are executed by switching the if_xyz1 case of the TIP5P algorithm, 
 like with the SPC/E algorithm (Ref. 3). 
-As natural resources, however, methane is environmentally known as 20-60 times more hazardous 
-material than carbon dioxide. Methane hydrate that is once mined and be burnt in air should be 
-confined back to the deep earth interior.
+As natural resources, however, it is noted that methane is environmentally known as 20-60 times 
+more hazardous material than carbon dioxide. Methane hydrate that is once mined and be burnt in air 
+should be confined back to the deep earth interior.
 
 ### Procedure of Water Molecules by 5-Points Method ###
 
