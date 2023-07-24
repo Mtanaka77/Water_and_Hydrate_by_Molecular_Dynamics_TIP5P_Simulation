@@ -50,9 +50,8 @@ and adding to the fields (steps 5-8). The step 0 is made only initially.
 
 0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
 
-The package of generating hydrogen-disordered ice structures is shown at https://pypi.python.org/pypi/GenIce/ 
-by the author Dr. M. Matsumoto. Crystal types of structures (1c, 1h, etc) are installed from  
-https://github.com/vitroid/GenIce/.
+The package of generating hydrogen-disordered ice structures is shown at https://pypi.python.org/pypi/GenIce/ by 
+the author Dr. M. Matsumoto. Crystal types of structures (1c, 1h, etc) are installed from https://github.com/vitroid/GenIce/.
 
 1. Summation of five sites of water and to make advance in time, o.
 'd{\bf V}_{j}/dt=\sum_{k=1,5} {\bf F}_{k}/m_{j}, 
