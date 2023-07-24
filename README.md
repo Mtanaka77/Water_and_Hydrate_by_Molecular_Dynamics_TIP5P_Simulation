@@ -48,7 +48,7 @@ E. After correction of quaternions, go to the beginning of the cycle.  The leap-
 Each step of molecular dynamics simulation consistes of tranlation (step 1), rotation (steps 2-4), 
 and adding to the fields (steps 5 to 8). The step 0 is made only initially. 
 
-0. Read the positions (x,y,z)_{i=1,N}, and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
+0. Read positions (x,y,z)_{i=1,N} by 'read(17) x,y,z', and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
 
 * The package of generating hydrogen-disordered ice structures is installed from  https://pypi.python.org/pypi/GenIce/ by 
 the author Dr. M. Matsumoto. Crystal type of structures (1c, 1h, etc) is shown at https://github.com/vitroid/GenIce/.
