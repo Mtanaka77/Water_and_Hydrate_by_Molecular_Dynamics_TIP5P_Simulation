@@ -4,19 +4,18 @@
 
 Microwave heating of the water and ice states is studied by molecular dynamics simulations.
 We use the 5-point atoms of water molecules called the TIP5P-Ewald summation algorithm. 
-This is the second generation to the first one of 3-point SPC/E shake/rattle algorithm (JCP, 2007). 
+This is the second generation to the first one of 3-point SPC/E shake/rattle algorithm (JCP, 2007, Ref. 1). 
 A four-water molecule is specified to calculate positive two hydrogens q_H= 0.241e and 
 negative two hydrogens q_L= -0.241e with e the electron charge. 
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
-using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).  
+using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 2).  
 
 The fortran code by MPI is given in the file @p3mtip5p07a.f03 with two additional files 
 param_tip5D07a.h and TIP507_config.start0. 
 Its description of the code is shown at README.md and also PDF documents of this repository. 
 The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics 
 simulation run by "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf". 
-The freezing ice state by microwaves, which is our theory discovery in J.Chem.Phys. 
-2007 (Ref. 2), remains basically the same due to the structure of six-membered ice ! 
+The freezing ice state by microwaves, which is our theory discovery in JCP 2007 (Ref. 1), remains basically the same due to the structure of six-membered ice ! 
 
 Methane hydrate simulations are executed by switching the if_xyz1 case of the TIP5P algorithm, 
 like with the SPC/E algorithm (Ref. 3). 
@@ -51,7 +50,7 @@ and adding to the fields (steps 5 to 8). The step 0 is made only initially.
 0. Read positions (x,y,z)_{i=1,N} by 'read(17) x,y,z', and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
 
 * The package of generating hydrogen-disordered ice structures is installed from  https://pypi.python.org/pypi/GenIce/ by 
-the author Dr. M. Matsumoto. Crystal type of structures (1c, 1h, etc) is shown at https://github.com/vitroid/GenIce/.
+the author Dr. M. Matsumoto. Crystal type of structures (1c, 1h, etc) is shown at https://github.com/vitroid/GenIce/ (Reh. 4).
 
 1. Summation of five sites of water and to make advance in time, o.
 'd{\bf V}_{j}/dt=\sum_{k=1,5} {\bf F}_{k}/m_{j}, 
@@ -181,12 +180,12 @@ References of Numerical Technique
 
 
 ### References ### 
-
-1. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England (2003); 
-古典力学，吉岡書店 (2006).
  
-2. M. Tanaka and M. Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 1-9 (2007).
+1. M. Tanaka and M. Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 (2007).
 
-3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, 
-arXiv:1909.01024, Cornell University, USA (2019).
+2. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England (2003); 古典力学，吉岡書店 (2006).
 
+3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, arXiv:1909.01024, Cornell University, USA (2019).
+
+4. M. Matsumoto, T. Yagasaki, and H. Tanaka,"GenIce: Hydrogen-Disordered Ice
+Generator", J. Comput. Chem. 39, 61-64 (2017).
