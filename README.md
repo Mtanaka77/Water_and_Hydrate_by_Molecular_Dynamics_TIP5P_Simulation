@@ -17,7 +17,7 @@ param_tip5D07a.h and TIP507_config.start0.
 Its description of the code is shown at README.md and also PDF documents of this repository. 
 The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics 
 simulation run by "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf". 
-The freezing ice state by microwaves, which is our theory discovery in JCP 2007 (Ref. 1), remains basically the same due to the structure of six-membered ice ! 
+The freezing ice state by microwaves, which is our theory discovery in JCP 2007 (Ref. 2), remains basically the same due to the structure of six-membered ice ! 
 
 Methane hydrate simulations are executed by switching the if_xyz1 case of the TIP5P algorithm, 
 like with the SPC/E algorithm (Ref. 3). 
@@ -52,7 +52,7 @@ and adding to the fields (steps 5 to 8). The step 0 is made only initially.
 0. Read positions (x,y,z)_{i=1,N} by 'read(17) x,y,z', and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
 
 * The package of generating hydrogen-disordered ice structures is installed from  https://pypi.python.org/pypi/GenIce/ by 
-the author Dr. M. Matsumoto. Crystal type of structures (1c, 1h, etc) is shown at https://github.com/vitroid/GenIce/ (Reh. 4).
+the author Dr. M. Matsumoto. Crystal type of structures (1c, 1h, etc) is shown at https://github.com/vitroid/GenIce/ (Ref. 4).
 
 1. Summation of five sites of water and to make advance in time, o.
 'd{\bf V}_{j}/dt=\sum_{k=1,5} {\bf F}_{k}/m_{j}, 
