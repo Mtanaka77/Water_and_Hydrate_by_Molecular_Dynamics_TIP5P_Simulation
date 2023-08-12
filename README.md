@@ -1,6 +1,6 @@
 ## Molecular Dynamics Simulation of Water and Ice by TIP5P Code ##
 
-### Summary of Dynamics Simulation of Water and Ice ###
+### Summary of Molecular Dynamics Simulation of Water and Ice ###
 
 Microwave heating of water and ice states is studied by molecular dynamics simulations.
 We use the 5-point atoms of water molecules called the TIP5P-Ewald summation algorithm. 
@@ -9,6 +9,7 @@ and negative two hydrogens q_L= -0.241e with e the electron charge.
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
 using the Lennard-Jones potential 
 Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).    
+
 This is the second generation to the first one of 3-point SPC/E shake/rattle algorithm (JCP, 2007, Ref. 2). 
 
 The fortran code by MPI is given in the file @p3mtip5p07a.f03 with two additional files 
