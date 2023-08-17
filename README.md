@@ -17,7 +17,8 @@ param_tip5D07a.h and TIP507_config.start0.
 Its description of the code is shown at README.md and also PDF documents of this repository. 
 The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics 
 simulation run by "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf". 
-The freezing ice state by microwaves, which is our theory discovery in JCP 2007 (Ref. 2), remains basically the same due to the structure of six-membered ice ! 
+The freezing ice state by microwaves, which is our theory discovery in JCP 2007 mentioned 
+above, remains basically the same due to the structure of six-membered ice ! 
 
 Methane hydrate simulations are executed by switching the if_xyz1 case of the TIP5P algorithm, 
 like with the SPC/E algorithm (Ref. 3). 
