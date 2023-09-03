@@ -8,7 +8,7 @@ The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent 
 using the Lennard-Jones potential 
 Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).    
 
-This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). 
+This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). The new results for the TIP5P code are shown in PDF files below.
 
 The fortran code by MPI is given in the file @p3mtip5p07a.f03 with two additional files 
 param_tip5D07a.h and TIP507_config.start0. 
