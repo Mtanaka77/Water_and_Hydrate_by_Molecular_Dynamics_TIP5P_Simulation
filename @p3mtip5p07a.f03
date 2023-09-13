@@ -1,7 +1,7 @@
 !************************************************** May, 2023 ****
 !*                                                               *
 !*   ## Molecular Dynamics of Water and Ice by TIP5P Code ##     *
-!*      - Microwave heating, ice below T=273 K not melted        * 
+!*     - Microwave heating, ice below T=273 K not melted         * 
 !*                                                               *
 !*   Author/Maintainer: Motohiko Tanaka, Ph.D., Professor        *
 !*                 Graduate School of Chubu University, Japan    *
@@ -17,6 +17,8 @@
 !* ------------------------------------------------------------  *
 !*                                                               *
 !*   Files for this simulation                                   *
+!*      @p3mtip5p  code name                                     *
+!*              07a run name and sequential number (a,b,c...)    *
 !*   1. @p3mtip5p07a.f03 : simulation code                       *
 !*   2. param_tip5p_D07a.h : parameter file, physical constants  *
 !*   3. TIP507_config.start0 : parameter file, kstart=0 or 2     *
