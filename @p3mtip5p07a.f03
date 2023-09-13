@@ -4,6 +4,7 @@
 !*     - Microwave heating, ice below T=273 K not melted         * 
 !*                                                               *
 !*   Author/Maintainer: Motohiko Tanaka, Ph.D., Nagoya, Japan    *
+!*   http://www1.m4.mediacat.ne.jp/dphysique/                    *
 !*                                                               *
 !*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
 !*   Copyright(C) 2006-2023. All rights reserved.                *
