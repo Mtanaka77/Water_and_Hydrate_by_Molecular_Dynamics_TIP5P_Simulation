@@ -18,11 +18,14 @@
 !*                                                               *
 !*   Files for this simulation                                   *
 !*      @p3mtip5p  code name                                     *
-!*              07a run name and sequential number (a,b,c...)    *
+!*              07a  run name and sequential number (a,b,c...)   *
+!*                                                               *
 !*   1. @p3mtip5p07a.f03 : simulation code                       *
 !*   2. param_tip5p_D07a.h : parameter file, physical constants  *
 !*   3. TIP507_config.start0 : parameter file, kstart=0 or 2     *
 !*      or TIP507_config.start1 : kstart=1 or 3                  *
+!*   4. 1cx666a.exyz, 1cx666a.q for water                        *   
+!*      or mh3.exyz, mh3.q for methane hydrate                   *  
 !*                                                               *
 !*   Histories:                                                  *
 !*     translation and rotation simulation code.                 *
@@ -3274,7 +3277,7 @@
 !*  use ice(ic) maker iceic.c by m.matsumoto     *
 !*************************************************
 !  kstart= 0 is continued below
-!  both 1cx444_.exyz and 1cx444_.q must be changed !
+!  both 1cx666_.exyz and 1cx666_.q must be changed !
 !
       if(if_xyz1) then
 !
