@@ -17,7 +17,7 @@
 !* ------------------------------------------------------------  *
 !*                                                               *
 !*   Files for this simulation                                   *
-!*      @p3mtip5p  code name                                     *
+!*      @p3mtip5p  code name (p3m + tip5p)                       *
 !*              07a  run name and sequential number (a,b,c...)   *
 !*                                                               *
 !*   1. @p3mtip5p07a.f03 : simulation code                       *
