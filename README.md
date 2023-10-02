@@ -1,6 +1,6 @@
 ## Molecular Dynamics Simulation of Water and Ice by TIP5P Code ##
 
-We will study the microwave heating of water and ice by means of molecular dynamics of the TIP5P code (if_xyz2=.true.), or that of collapse of methane hydrate (if_xyz1=.true.).
+We will study the microwave heating of water and ice by means of molecular dynamics of the TIP5P code (with if_xyz2=.true.), or that of collapse of methane hydrate by the same code (with if_xyz1=.true.).
 
 The 5-point molecules for water and ice are used known as the TIP5P-Ewald summation algorithm. 
 A four-water molecule is specified to calculate positive two hydrogens q_H= 0.241e 
@@ -19,9 +19,9 @@ simulation run by "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.
 The freezing ice state by microwaves, which is our theory discovery in JCP 2007 mentioned 
 above, remains basically the same due to the structure of six-membered ice ! 
 
-Methane hydrate is simulated by switching if_xyz1=.true. of the TIP5P algorithm, 
-like with the SPC/E algorithm (Ref. 3). It runs up to T= 1.7 x 10^-8 s with 
-E_x = 3. x 10^7 V/cm, which suddenly is terminated due to collapse of methane hydrate.
+Methane hydrate is simulated by switching to if_xyz1=.true. of the TIP5P algorithm, 
+like with the SPC/E algorithm (Ref. 3). It runs up to T= 1.7 x 10^(-8) s with 
+E_x = 3. x 10^7 V/cm, which is terminated suddenly due to collapse of methane hydrate.
 As natural resources, however, it is noted that methanes are environmentally as 20-60 times 
 more hazardous materials than carbon dioxide. Methane hydrates that are mined and become burnt 
 in air should be confined back to the deep earth interior.
