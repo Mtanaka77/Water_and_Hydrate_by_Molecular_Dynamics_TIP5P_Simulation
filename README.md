@@ -1,4 +1,4 @@
-## Molecular Dynamics Simulation of Water and Ice by TIP5P Code ##
+## Water and Methane Hydrate by Molecular Dynamics TIP5P Code ## 
 
 We will study the microwave heating of water and ice by means of molecular dynamics of the TIP5P code (with if_xyz2=.true.), or that of collapse of methane hydrate by the same code (with if_xyz1=.true.).
 
