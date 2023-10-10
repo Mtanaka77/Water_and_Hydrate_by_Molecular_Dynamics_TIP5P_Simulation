@@ -20,6 +20,7 @@ like with the SPC/E code (Ref. 3). We need the initial coordinate file mh3.exyz 
 It runs up to T= 1.7 x 10^(-8) s with E_x = 3. x 10^7 V/cm, which is terminated suddenly due to 
 collapse of methane hydrate. Energy and scatter plots of molecules are shown in 
 "Water_and_hydrate_molecules_by_TIP5P_code.pdf".
+
 As natural resources, however, it is noted that methanes are environmentally as 20-60 times 
 more hazardous materials than carbon dioxide. Methane hydrates that are mined and burnt in air should be confined back to the deep earth interior.
 
