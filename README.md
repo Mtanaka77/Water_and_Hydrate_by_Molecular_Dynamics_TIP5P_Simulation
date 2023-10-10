@@ -11,12 +11,15 @@ using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).
 This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). The new results for the TIP5P code are shown in PDF files below.
 
 The fortran code with MPI is given in the file @p3mtip5p07a.f03 with additional files as  
-param_tip5D07a.h, TIP507_config.start0, and initial coordinates 1cx666a.exyz and quaternions 1cx666a.q. Its description of the code is shown at README.md and also PDF documents of this repository. The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics simulation run by "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_code.pdf". 
+param_tip5D07a.h, TIP507_config.start0, and initial coordinates 1cx666a.exyz and quaternions 1cx666a.q. Its description of the code is shown at README.md and also PDF documents of this repository. The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics simulation run by "Water_and_hydrate_molecules_by_TIP5P_code.pdf". 
 The freezing ice state by microwaves, which is our theory discovery in JCP 2007 mentioned 
 above, remains basically the same due to the structure of six-membered ice ! 
 
 Methane hydrate is simulated by switching to if_xyz1=.true. of the TIP5P code, 
-like with the SPC/E code (Ref. 3). We need the initial coordinate file mh3.exyz and quaternions mh3.q. It runs up to T= 1.7 x 10^(-8) s with E_x = 3. x 10^7 V/cm, which is terminated suddenly due to collapse of methane hydrate.
+like with the SPC/E code (Ref. 3). We need the initial coordinate file mh3.exyz and quaternions mh3.q. 
+It runs up to T= 1.7 x 10^(-8) s with E_x = 3. x 10^7 V/cm, which is terminated suddenly due to 
+collapse of methane hydrate. Energy and scatter plots of molecules are shown in 
+"Water_and_hydrate_molecules_by_TIP5P_code.pdf".
 As natural resources, however, it is noted that methanes are environmentally as 20-60 times 
 more hazardous materials than carbon dioxide. Methane hydrates that are mined and burnt in air should be confined back to the deep earth interior.
 
