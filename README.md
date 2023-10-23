@@ -137,14 +137,15 @@ to the surrounding system. It is possible to have rapid heating of hot bubbling 
 ### Figures of TIP5P-Code Simulations ###
 
 Molecular dynamics simulations of water and ice, and/or methane hydrate, are shown by using the TIP5P code, 
-and the current file is "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf" in this repository.
+and the current file is "Water_and_hydrate_by_molecular_dynamics_TIP5P_code.pdf" in this repository.
 
-Figures in the color PDF file are water and ice states that include the energy of molecules, 
-3-dimensional scatter plots, pair distribtion functions of oxygen and hidrogen atoms, and 
+Figures in the color PDF file are water and ice and/or methane hydrate that include the energy of molecules, 
+3-dimensional scatter plots, pair distribtion functions of oxygen and hydrogen atoms, and 
 cosine distribution functions in the x-direction.
 
 Generally speaking, water is heated by microwaves where its heating efficiency is highest at 0 Celsius.
 Below 273 K, however, ice is frozen and not heated by the electric field.
+Methane hydrate that is excited by microwaves application is eventually collapsed. 
 
 ### Necessary Files of the Repository ###
 
