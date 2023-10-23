@@ -136,7 +136,7 @@ to the surrounding system. It is possible to have rapid heating of hot bubbling 
 
 ### Figures of TIP5P-Code Simulations ###
 
-Molecular dynamics simulations of water and ice are shown by using the TIP5P code, 
+Molecular dynamics simulations of water and ice, and/or methane hydrate, are shown by using the TIP5P code, 
 and the current file is "Molecular_Dynamics_Simulation_of_Water_and_Ice_by_TIP5P_Code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice states that include the energy of molecules, 
