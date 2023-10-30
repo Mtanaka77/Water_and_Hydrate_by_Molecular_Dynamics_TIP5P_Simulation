@@ -28,6 +28,7 @@ should be confined again back to the deep interior of the earth.
 ### Procedure of Water Molecules by Five-Points Model ###
 
 The important points of the five-body molecules are summarized.
+(LaTeX is used for this and the next section.)
 
 A. Five sites are one oxygen (O), hydrogen of H1 and H2 (H), and 
 negative hydrogen virtual sites of L1 and L2 (L). 
