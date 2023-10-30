@@ -27,67 +27,110 @@ should be confined again back to the deep interior of the earth.
 
 ### Procedure of Water Molecules by 5-Points Method ###
 
-A. Five sites are oxygen (O), hydrogen 1 and 2 (H), and hydrogen virtual L sites (L). 
-Their charges are 0, 0.241e, 0.241e, -0.241e and -0.241e, respectively. 
-The L1 and L2 are called the dummy sites which have null masses.
+The important points of the five-body molecules are summarized.
 
-B. Separate {\bf R}_{j}, {\bf V}_{j} and {\bf r}_{i} for water with i=1-N, j=1-N/5 molecules, and 
-{\bf s}_{i}= (x_{i},y_{i},z_{i}) means for the three sites. The separation is done at the 
-starting step only, once determined at t=0, they are constant in time.
+A. Five sites are one oxygen (O), hydrogen of H1 and H2 (H), and 
+negative hydrogen virtual sites of L1 and L2 (L). 
+Their charges are $0$, $0.241 e$,  $0.241 e$, $-0.241 e$ and $-0.241 e$, respectively. The L1 and L2 are called the dummy sites.
 
-C. The half time step is first executed for a predictor step, and the full time step is made for
-the three sites of k=1-3, and the L sites are also calculated by algebraic operation.
+B. Separate the translational part $\bm{R}_{j}$, $\bm{V}_{j}$ for molecules ($j= 1,N/5$), where the rotation part $\bm{r}_{i}= (x_{i}, y_{i}, z_{i})$  ($i= 1,N$) for atoms is used  for the five sites.
+The separation is done at the starting step only;
+once determined at $t=0$, they become constant in time.
 
-D. Before the end of one step, the forces are calculated at {\bf r}_{i}= {\bf R}_{j} +A^(-1){\bf s}
-with the three sites. The L sites are also calculated by algebraic operation.
+C. The half time step for the molecules is first executed for a predictor step, and
+the full time step is made for advance of time.
 
-E. After correction of quaternions, go to the beginning of the cycle.  The leap-frog method is used for the plasmas and waters.
+D. Before the end of the step, the forces are calculated by atom positions, where the dummy L sites are calculated by algebraic vector operation.
 
+E. After correction of quaternions, the kinetic and Coulombic energies are calculated, 
+and go to the beginning of the cycle. The leap-frog method is used for the plasmas and water. 
 
 ### Each Step of Molecular Dynamics Simulation Code ###
 
-Each step of molecular dynamics simulation consists of tranlation (step 1), rotation (steps 2-4), and adding to the fields (steps 5 to 8). The step 0 is made only initially. 
+Each step of the cycle corresponds to (i) translational motion (Step 1), 
+(ii) rotational motion (Step 2-4), and (iii) addition of the fields (Step 5-8).
 
-0. Read positions (x,y,z)_{i=1,N} by 'read(17) x,y,z', and quaternions (e0,e1,e2,e3)_{j=1,N/5} from the file by 'read(30) e0,e1,e2,e3'.
+0) Read positions $(x,y,z)$ and quaternions from files by 
+$ ``read(17) \ x_{i},y_{i},z_{i} "$ ($i=1,N$), where the dummy sites are obtained 
+by algebraic operation, and  
+$ ``read(30) \ e_{0j},e_{1j}, e_{2j}, e_{3j} ``$ ($j=1,N/5$).
+This step is executed only at the first time.
 
-* The package of generating hydrogen-disordered ice structures is installed from  https://pypi.python.org/pypi/GenIce/ by the author Dr. M. Matsumoto. Crystal type of structures (1c, 1h, hydrate, etc) is shown at https://github.com/vitroid/GenIce/ (Ref. 4).
+1) The position $\bm{R}_{j}$ and velocity $\bm{V}_{j} $ of each molecule ($j=1,N/5$) are advanced by summation over five sites of forces $\bm{F}_{k}$ for the translational motion
+$(k=1,N)$,
+\begin{equation}
+d\bm{V}_{j}/dt= (1/m_{j})\sum_{k=1}^{5} \bm{F}_{k}, \ \ 
+d\bm{R}_{j}/dt= \bm{V}_{j}.
+\end{equation}
 
-1. Summation of five sites of water and to make advance in time, o.
-'d{\bf V}_{j}/dt=\sum_{k=1,5} {\bf F}_{k}/m_{j}, 
-d{\bf R}_{j}/dt={\bf V}_{j}' for each of the translation motion.
+2) Next 2)-5) steps are made for half a time steps $\Delta t_{1}=\Delta t/2$ by prediction, 
+and then for a full time step $\Delta t_{2}= \Delta t$ by correction.
+The angular momentum of rotational motion is calculated by summation over the torque of five sites at a time step $\Delta t_{1}$ or $\Delta t_{2}$,
+\begin{equation}
+ d\bm{L}_{j}/d\Delta t_{n}= \sum_{k=1}^{5}(y_{k}F_{k}^{z} -z_{k}F_{k}^{y},
+z_{k}F_{k}^{x} -x_{k}F_{k}^{z}, x_{k}F_{k}^{y} -y_{k}F_{k}^{x})
+\end{equation}
 
-2. For the rotation motion 'd{\bf L}_{j}/dt=\sum_{i} (yr_{i}F_{i}^z-zr_{i}F_{i}^y, 
-zr_{i}F_{i}^x-xr_{i}F_{i}^z, xr_{i}F_{i}^y-yr_{i}F_{i}^x)', where 
-xr_{i}=x_{i}-XC, yr_{i}=y_{i}-YC, zr_{i}=z_{i}-ZC and (XC,YC,ZC) are the gravity center
-of the j-th molecule. F_x, F_y, F_z stand for the x,y,z direction of forces. 
-The summation over each molecule is made over the five sites. 
+3) The angular frequency $\omega_{j,\alpha}$ is connected to the angular mementum 
+and inertia moment $Im_{j,\alpha}$ with $\alpha= x,y,z$ and the matrix 
+$A_{\alpha,\beta}$ by,
+\begin{equation} 
+\omega_{j,\alpha}= (A_{\alpha 1}L_{x} +A_{\alpha 2}L_{y} +A_{\alpha 3}L_{z})/
+Im_{j,\alpha}
+\end{equation}
 
-3. 'omega_{j}=(A_{alpha,1)L_{x}+A_{alpha,2)L_{y}+A_{alpha,3)L_{z})/Im_{j,alpha}', 
-for A_{alpha,1}, A_{alpha,2}, A_{alpha,3} and inertia moments Im_{j,alpha} with 
-the directions alpha=x,y,z.
+\begin{equation}
+\begin{matrix}
+A_{11}= e_{0}^2 +e_{1}^2 -e_{2}^2 -e_{3}^2, &
+A_{12}= 2(e_{1}e_{2} +e_{0}e_{3}),&
+A_{13}= 2(e_{1}e_{3} -e_{0}e_{2}),\\
+%
+A_{21}= 2(e_{1}e_{2} -e_{0}e_{3}),&
+A_{22}= e_{0}^2 -e_{1}^2 +e_{2}^2 -e_{3}^2, &
+A_{23}= 2(e_{2}e_{3} +e_{0}e_{1}),\\
+%
+A_{31}= 2(e_{1}e_{3} +e_{0}e_{2}),&
+A_{32}= 2(e_{2}e_{3} -e_{0}e_{1}),&
+A_{33}= e_{0}^2 -e_{1}^2 -e_{2}^2 +e_{3}^2, 
+\end{matrix}
+\end{equation}
 
-4. 'd{\bf q}_{j}/dt =(1/2)Q(e0,e1,e2,e3)(omega_{j,x),omega_{j,y),omega_{j,z),0), 
-d{\bf q}_{j}/dt of Q and omega's have four components found in Goldstein's book.
+4) The time derivative of quaternion $\bm{q}_{j}$ is given by the angular frequency by,
+\begin{equation} 
+d\bm{q}_{j}/d\Delta t_{n}= (1/2) \Delta \tau_{k} 
+\begin{pmatrix}
+-e_{1} \omega_x -e_{2} \omega_y -e_{3} \omega_z \\
+e_{0} \omega_x -e_{3} \omega_y +e_{2} \omega_z \\
+e_{3} \omega_x +e_{0} \omega_y -e_{1} \omega_z \\
+-e_{2} \omega_x +e_{1} \omega_y +e_{0} \omega_z
+\end{pmatrix}
+\end{equation}
 
-5. Get a new rotation matrix A_{alpha,beta}(e0,e1,e2,e3) in p.205 of Goldstein's book.
+5) Get a rotational matrix $ A_{\alpha \beta}(e_{0},e_{1},e_{2},e_{3})$
+in half a time steps for prediction and go back to Step 2.
+In the correction step it is made for a full time step and go to Step 6.
 
-6. x_{i}= X_{j} +(A_{11}xr_{i}+A_{21}yr_{i}+A_{31}zr_{i}, 
-   y_{i}= Y_{j} +(A_{12}xr_{i}+A_{22}yr_{i}+A_{32}zr_{i},
-   z_{i}= Z_{j} +(A_{13}xr_{i}+A_{23}yr_{i}+A_{33}zr_{i},
-where the three components are (xr,yr,zr)_{i}=(A_{11}*(x_{i}-XC)+A_{12}*(y_{i}-YC)+A_{13}*(z_{i}-ZC), 
-A_{21}*(x_{i}-XC)+A_{22}*(y_{i}-YC)+A_{23}*(z_{i}-ZC),
-A_{31}*(x_{i}-XC)+A_{32}*(y_{i}-YC)+A_{33}*(z_{i}-ZC)), 
-and the position {\bf R}_{j}. 
-The dummy sites are calculated by algebraic vector operation.
+6) The three sites $\bm{r}_{i}$ and the position $\bm{R}_{j}$ are connected by,
+\begin{equation}
+  \bm{r}_{i}= \bm{R}_{j} +
+%
+     \begin{pmatrix}
+     A_{11}  & A_{21}  & A_{31} \\
+     A_{12}  & A_{22}  & A_{32} \\
+     A_{13}  & A_{23}  & A_{33} % \nonumber
+     \end{pmatrix}
+%
+     \begin{pmatrix}    
+     x_{i} \\ y_{i} \\ z_{i} % \nonumber
+     \end{pmatrix}
+\end{equation}
+The position of dummy sites are calulated from known three sites by algebraic operation.
 
-7. Forces by Coulombic interactions and Lennard-Jones potentials are calculated using five sites.
-This is the most time consuming part of the TIP5P code.
+7) The forces of positions are calculated from Coulombic and Lennard-Jones potentials using the five sites. 
 
-8. The correction and normalization by quaternions are made in every 10-step interval. 
-Then, go to the next time step as step 1.
+8) Correction to a normalization of quaternions is made at every 10 steps. Go to the new time step Step 1.  
 
-Note that the choice of a time step is important. For TIP5P case, it may be dt=0.025, else 
-the code is inaccurate or/and goes overflow.
+Note that a time step is important and it will be $\Delta t= 0.025 \tau$ or less by the time advancing scheme; otherwise the code will be inaccurate or go to overflow. 
 
 The equations of A_{ij} and e0(i),e1(i),e2(i),e3(i) are written in the PDF file, "Water_TIP5P_Simulation.pdf".
 Checks of equations of the TIP5P code are also shown.
