@@ -1,8 +1,8 @@
-## Water and Hydrate by Molecular Dynamics TIP5P Code ## 
+## Water and Hydrate of Molecular Dynamics by TIP5P Model ## 
 
 We are studying the microwave heating of water and ice by means of molecular dynamics TIP5P code (with if_xyz2=.true.), and that of the collapse of methane hydrate by the same code (with if_xyz1=.true.).
 
-The 5-point molecules for water are used known as the TIP5P-Ewald summation algorithm. 
+The five-point molecules for water are used known as the TIP5P-Ewald model. 
 A four-water molecule is specified to calculate positive two hydrogens q_H= 0.241e 
 and negative two hydrogens q_L= -0.241e with e the electron charge. 
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
@@ -25,7 +25,7 @@ As natural resources, however, it is noted that methanes are environmentally as 
 more hazardous materials than carbon dioxide. Methane hydrates that will be mined and burnt in air 
 should be confined again back to the deep interior of the earth.
 
-### Procedure of Water Molecules by 5-Points Method ###
+### Procedure of Water Molecules by Five-Points Model ###
 
 The important points of the five-body molecules are summarized.
 
@@ -113,13 +113,11 @@ In the correction step it is made for a full time step and go to Step 6.
 6) The three sites $\bm{r}_{i}$ and the position $\bm{R}_{j}$ are connected by,
 \begin{equation}
   \bm{r}_{i}= \bm{R}_{j} +
-%
      \begin{pmatrix}
      A_{11}  & A_{21}  & A_{31} \\
      A_{12}  & A_{22}  & A_{32} \\
      A_{13}  & A_{23}  & A_{33} % \nonumber
      \end{pmatrix}
-%
      \begin{pmatrix}    
      x_{i} \\ y_{i} \\ z_{i} % \nonumber
      \end{pmatrix}
@@ -162,7 +160,6 @@ electric dipole interactions of water. For the moment, we give the electric fiel
 the electric field E_0 and electric dipole p_0 are of the order of 5x10^(-3) eV.
 The E_0 value can be as small as 5x10^(-4) eV for the 6x6x6 water cluster.
 
-
 ### To Obtain the Initial Equilibrium for 298 K ###
 
 To give uniform random noises to molecules, an equilibration takes extremely a long time of periods.
@@ -177,9 +174,9 @@ It is noted that we impose the NVE ensemble simulation so that the box size is c
 In the water heating of our daily experiment, however, the system is open and an energy goes out 
 to the surrounding system. It is possible to have rapid heating of hot bubbling water.
 
-### Figures of TIP5P-Code Simulations ###
+### Figures of TIP5P-Model Simulations ###
 
-Molecular dynamics simulations of water and ice, and/or methane hydrate, are shown by using the TIP5P code, 
+Molecular dynamics simulations of water and ice, and/or methane hydrate, are shown by using the TIP5P model, 
 and the current file is "Water_and_hydrate_by_molecular_dynamics_TIP5P_code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice and/or methane hydrate that include the energy of molecules, 
