@@ -68,7 +68,7 @@ d\bm{R}_{j}/dt= \bm{V}_{j}.
 and then for a full time step $\Delta t_{2}= \Delta t$ by correction.
 The angular momentum of rotational motion is calculated by summation over the torque of five sites at a time step $\Delta t_{1}$ or $\Delta t_{2}$,
 \begin{equation}
- d\bm{L}_{j}/d\Delta t_{n}= \sum_{k=1}^{5}(y_{k}F_{k}^{z} -z_{k}F_{k}^{y},
+ d\bm{L}_{j}/dt_{n}= \sum_{k=1}^{5}(y_{k}F_{k}^{z} -z_{k}F_{k}^{y},
 z_{k}F_{k}^{x} -x_{k}F_{k}^{z}, x_{k}F_{k}^{y} -y_{k}F_{k}^{x})
 \end{equation}
 
@@ -98,7 +98,7 @@ A_{33}= e_{0}^2 -e_{1}^2 -e_{2}^2 +e_{3}^2,
 
 4) The time derivative of quaternion $\bm{q}_{j}$ is given by the angular frequency by,
 \begin{equation} 
-d\bm{q}_{j}/d\Delta t_{n}= (1/2) \Delta \tau_{k} 
+d\bm{q}_{j}/dt_{n}= (1/2) \Delta t_{n} 
 \begin{pmatrix}
 -e_{1} \omega_x -e_{2} \omega_y -e_{3} \omega_z \\
 e_{0} \omega_x -e_{3} \omega_y +e_{2} \omega_z \\
