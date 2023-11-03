@@ -234,5 +234,5 @@ References of Numerical Technique
 Generator", J. Comput. Chem. 39, 61-64 (2017).
 
 5. M. Tanaka, Molecular dynamics simulation of microwave heating and collapse of methane hydrate by
-TIP5P-Ewald water model, https://arxiv.org/pdf/2311.01128.pdf, 2023).
+TIP5P-Ewald water model, https://arxiv.org/pdf/2311.01128.pdf, USA (2023).
 
