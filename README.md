@@ -9,7 +9,7 @@ The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent 
 using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).    
 
 This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). The new results for the TIP5P code are shown below and
-in the arXiv paper (https://arxiv.org/pdf/2311.01128.pdf, 2023).
+in the arXiv Library at https://arxiv.org/pdf/2311.01128.pdf (2023).
 
 The fortran code with MPI is given in the file @p3mtip5p07a.f03 with additional files as  
 param_tip5D07a.h, TIP507_config.start0, and initial coordinates 1cx666a.exyz and quaternions 1cx666a.q. Its description of the code is shown at README.md and also PDF documents of this repository. The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics simulation run by "Water_and_hydrate_molecules_by_TIP5P_code.pdf". 
@@ -233,6 +233,6 @@ References of Numerical Technique
 4. M. Matsumoto, T. Yagasaki, and H. Tanaka,"GenIce: Hydrogen-Disordered Ice
 Generator", J. Comput. Chem. 39, 61-64 (2017).
 
-5. M. Tanaka, Molecular dynamics simulation of microwave heating and collapse of methane hydrate by
-TIP5P-Ewald water model, https://arxiv.org/pdf/2311.01128.pdf, USA (2023).
+5. M. Tanaka, Molecular dynamics simulation of methane hydrate by TIP5P-Ewald water model,
+https://arxiv.org/pdf/2311.01128.pdf, Cornell University Library, USA (2023).
 
