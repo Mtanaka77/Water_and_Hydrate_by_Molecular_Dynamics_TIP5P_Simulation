@@ -1,10 +1,10 @@
 !************************************************** May, 2023 ****
 !*                                                               *
 !*   ## Molecular Dynamics of Water and Ice by TIP5P Code ##     *
-!*     - Microwave heating, ice below T=273 K not melted         * 
+!*      - Microwaves heating, ice below T=273 K not melted       * 
 !*                                                               *
-!*   Author/Maintainer: Motohiko Tanaka, Ph.D., Nagoya, Japan    *
-!*                                                               *
+!*   Author/Maintainer: Motohiko Tanaka, Ph.D.,Professor         *
+!*                      Graduate School, Chubu University, Japan *
 !*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
 !*   Copyright(C) 2006-2023. All rights reserved.                *
 !*                                                               *
@@ -17,47 +17,40 @@
 !* ------------------------------------------------------------  *
 !*                                                               *
 !*   Files for this simulation                                   *
-!*      @p3mtip5p  code name (p3m + tip5p)                       *
-!*              07a  run name and sequential number (a,b,c...)   *
-!*                                                               *
 !*   1. @p3mtip5p07a.f03 : simulation code                       *
 !*   2. param_tip5p_D07a.h : parameter file, physical constants  *
 !*   3. TIP507_config.start0 : parameter file, kstart=0 or 2     *
-!*      or continuation TIP507_config.start1 : kstart=1 or 3     *
-!*   4. Initial molecules (exyz and quaternion)                  *             
-!*      1cx666a.exyz, 1cx666a.q for water                        *   
-!*      or mh3.exyz, mh3.q for methane hydrate                   *  
-!*      Refer to if_xyz1 or if_xyz2 in subroutine /init/         *
+!*      or TIP507_config.start1 : kstart=1 or 3                  *
 !*                                                               *
 !*   Histories:                                                  *
-!*     Translation and rotation of molecules                     *
-!*      5-point hydregen and oxygen pairs                        * 
-!*      prefactor (realteil) and pref_eps (Lennard-Jones)        *
+!*     translation and rotation simulation code.                 *
+!*     4-point Coulomb, and epslj_A,B due to tip5p.              * 
+!*      prefactor (realteil), and pref_eps (Lennard-Jones)       *
 !*      epslj_A,B for water, ep(i) for hybrid molecules.         *
+!*     real*8 in Fortran 2003 / PGF 19 (2019).                   *
 !*                                                               *
 !*     Fujitsu FX100 by Feb.2020, NEC-Aurora from July 2020.     *
 !*                                                               *
 !************************************* First code: 02/26/2005 ****
 !*                                                               *
-!*  1. >>> run's name is given by param_tip5p_D07a.h             *
+!*  1 >>> run's name is given by param_tip5p_D07a.h              *
 !*                                                               *
-!*  2. >>> Run parameters are given in TIP07_config.start0, or 1 *
+!*  2 >>> Run parameters are given in TIP07_config.start0, or 1  *
 !*       which is read by /read_conf/.                           *
 !*                                                               *
-!*  3. >>> Start, Restart and continue runs.                     *
+!*  3 >>> Start, Restart and continue runs.                      *
 !*                                                               *
-!*   Physical units:                                             *
+!*   units:                                                      *
 !*    t_unit= 0.0100d-12          ! 0.01 ps                      *
 !*    a_unit= 1.0000d-08          ! 1 Ang                        *
 !*    w_unit= 1.6605d-24*18.      ! H2O is the unit              *
 !*    e_unit= 4.8033d-10          ! esu                          *
 !*                                                               *
-!*     ^  dv    t^2 e^2   qq'   12 t^2 eps   r0       1 r0       *
-!*     m ---- = -------- ---- + ------ --- [(--)^12 - -(--)^6]   * 
-!*        dt     ma^3    r^2     ma^2   r    r        2 r        *
+!*     ^  dv    t^2 e^2   qq'   12 t^2 eps   r0        r0        *
+!*     m ---- = -------- ---- + ------ --- [(--)^12 - (--)^6]    * 
+!*        dt     ma^3    r^2     ma^2   r    r         r         *
 !*                                                               *
 !*   Subroutines:                                                *
-!*                                                               *
 !*     run_md - read_conf                                        *
 !*              init - initial loading, use read(17), read(30)   *
 !*              read(12)                                         *
@@ -65,13 +58,12 @@
 !*                calculate_meshift, etc.                        *
 !*              moldyn - pre-steps  kstart=0,2, or kstart=1,3    *
 !*                     - long 1000 loop                          *
-!*                       -> realteil - forces_5                  *
-!*                       -> p3m_perform                          *
-!*                       -> make files for write(13), write(23)  *
+!*                       - realteil - forces_5                   *
+!*                       - p3m_perform                           *
+!*                     - make files for write(13),write(23)      *
 !*              write(12) for preparation of the next restart    *
 !*                                                               *
 !*   Post-processing programs:                                   *
-!*                                                               *
 !*   * @lplotip507.f03 - the final history of energies           *
 !*   * @dipol_seqtip507.f03 - dipole Ex field                    *
 !*   * @iceplotip507.f03  -   3D scatter plots for x,y,z         *
@@ -103,7 +95,7 @@
       call mpi_comm_rank (mpi_comm_world,rank,ierror)
       call mpi_comm_size (mpi_comm_world,size,ierror)
 !
-      ipar = 1 + rank               !! pe #= 1,2,3...
+      ipar = 1 + rank           !! ipar pe # = 1,2,3...
 !
       io_pe = 0
       if(ipar.eq.1) io_pe = 1 
@@ -112,8 +104,7 @@
       if(io_pe.eq.1) then
         open (unit=11,file=praefixc//'.11'//suffix2,form='formatted')
 !
-        write(11,*) "rank=",rank    ! FT11 is used
-        write(11,*) "size=",size
+        write(11,*) "rank, size=",rank,size    ! FT11 is used
 !
 !     Not closing FT11 up to L.700
       end if
@@ -263,7 +254,6 @@
 !
 !**************************************************************
 !*  rbmax: maximum bond length for /sprmul/.
-!
 !     rbmax= 1.5
 !
 !  All pe's are executed
@@ -303,11 +293,11 @@
 !
 !     nq= nq0  !<-- param
 !     np= np0  !<-- param
-!    ---------------------------------------------------
+!    -----------------------------------------------------
       call init (xa,ya,za,ch,am,ep,qch,ag,vx,vy,vz,amm, &
                  e0,e1,e2,e3,A11,A12,A13,A21,A22,A23,   &
                  A31,A32,A33,nq,np)
-!    ---------------------------------------------------
+!    -----------------------------------------------------
 !** 
       if(kstart.eq.0) then
 !* A new run: kstart=0
@@ -358,7 +348,7 @@
       end if
 !
 !  Equation of motion:
-!  from L.280, call to /init/ of L.2830
+!  "call init" of L.280 to subroutine at L.2920
 !                                       ^erg   
 !*     ^  dv    t^2 e^2   qq'   48 t^2 eps   r0       1  r0   
 !*     m ---- = -------- ---- + ------ --- [(--)^12 - --(--)^6]
@@ -372,7 +362,7 @@
       dmesh  = float(mesh)   ! <--- param_wat
 !
 !  -------------------------------
-!  This order and definition are essential !!
+!  This order of definitions is essential !!
 !
       call interpol_charge_assign_function (intcaf)
       call calculate_meshift (meshift)
@@ -575,7 +565,7 @@
       integer(C_INT) npq,cl_first 
       integer(C_INT) i_barrier,root
 !
-      real(C_DOUBLE) t_wipe
+      real(C_DOUBLE) t_wipe,ekm
       logical :: first_23=.true.,first_p3m=.true.,  &
                  first_06=.true.,if_tequil=.true.,  &
                  if_kstart=.true.,if_wipe=.true.,   &
@@ -613,7 +603,7 @@
 !     iwrt1= iwrta(t8,dtwr)
         iwa=  -1
         iwb=  -1
-        iwc=  0  ! not (-1) as the first call
+        iwc=  0  ! iwc=0 as the first call
 !
         if(kstart.eq.0) then
           do j= 1,nq1
@@ -628,7 +618,7 @@
           fec(i,3)= 0
           end do
 !
-        else if(kstart.eq.1) then  !! restart with t=0
+        else if(kstart.eq.1) then  !! Restart with t=0
 !
           tequil= 0.d0
 !
@@ -638,7 +628,7 @@
         end if
       end if
 !
-!* table creation at restart
+!* Table creation at restart
 !-------------------------------------------------------
       if(io_pe.eq.1) then
         open (unit=13,file=praefixc//'.13'//suffix2,     &
@@ -738,8 +728,8 @@
       if(t8.lt.tequil) then
         exc = 0.d0
       else
-        exc = econv *edc *sin(2.d0*pi*(t8 -tequil)/tau_wave)  &
-                             *(1.d0 -exp(-(t8 -tequil)/200.d0)) 
+        exc = econv*edc *sin(2.d0*pi*(t8 -tequil)/tau_wave)  &
+                            *(1.d0 -exp(-(t8 -tequil)/200.d0)) 
       end if
 !
 !
@@ -823,7 +813,6 @@
           end if 
         end if  
       end if
-!
   230 continue
 !
 !   kstart=1, restart with t=0 and exc >0, Read L.600.
@@ -845,8 +834,9 @@
 !***********************************************************
 !*  Main Loop                                              *
 !***********************************************************
-!  Separation of R and s_k {j=1; i=1,2,3}
-!   (xr,yr,zr) = A*(xr,yr,zr)
+!  Separation of R{j} and r_k{i=1,2,3}
+!   (xa,ya,za) = (X,Y,Z) + Sum_i A*(xr,yr,zr)
+!
 !  *prefactor* is added in /realteil/ (L.1700, 1770)
 !     and in subroutine /p3m_perform/ (L.2100)
 !
@@ -936,12 +926,12 @@
       j= j +1       ! for j
 !
       dtm= dt/amm(j) 
-      vx(j)= vx(j) + &
-                   (fec(i,1)+fec(i+1,1)+fec(i+2,1)+fec(i+3,1)+fec(i+4,1))*dtm
-      vy(j)= vy(j) + & 
-                   (fec(i,2)+fec(i+1,2)+fec(i+2,2)+fec(i+3,2)+fec(i+4,2))*dtm
-      vz(j)= vz(j) + & 
-                   (fec(i,3)+fec(i+1,3)+fec(i+2,3)+fec(i+3,3)+fec(i+4,3))*dtm
+      vx(j)= vx(j) + (fec(i,1)+fec(i+1,1)+fec(i+2,1)+fec(i+3,1)    &
+                                                    +fec(i+4,1))*dtm
+      vy(j)= vy(j) + (fec(i,2)+fec(i+1,2)+fec(i+2,2)+fec(i+3,2)    &
+                                                    +fec(i+4,2))*dtm 
+      vz(j)= vz(j) + (fec(i,3)+fec(i+1,3)+fec(i+2,3)+fec(i+3,3)    &
+                                                    +fec(i+4,3))*dtm 
 !
       xg1= (16*xa(i) +xa(i+1) +xa(i+2))/18.d0  ! --> x(n)
       yg1= (16*ya(i) +ya(i+1) +ya(i+2))/18.d0
@@ -1008,13 +998,13 @@
 !  prediction of e0(n+1/2): q(n+1/2)= q(n) +dth*Q(n)*omg(n)
 !  Rotation matrix A_ij^(n+1/2) by e0(j),e1(j),...
       pe01= e0(j) +(dth/2.d0)*(  &
-                 -e1(j)*omg_x1 -e2(j)*omg_y1 -e3(j)*omg_z1 )
+                            -e1(j)*omg_x1 -e2(j)*omg_y1 -e3(j)*omg_z1 )
       pe11= e1(j) +(dth/2.d0)*(  &
-                  e0(j)*omg_x1 -e3(j)*omg_y1 +e2(j)*omg_z1 )
+                             e0(j)*omg_x1 -e3(j)*omg_y1 +e2(j)*omg_z1 )
       pe21= e2(j) +(dth/2.d0)*(  &
-                  e3(j)*omg_x1 +e0(j)*omg_y1 -e1(j)*omg_z1 )
+                             e3(j)*omg_x1 +e0(j)*omg_y1 -e1(j)*omg_z1 )
       pe31= e3(j) +(dth/2.d0)*(  &
-                 -e2(j)*omg_x1 +e1(j)*omg_y1 +e0(j)*omg_z1 )
+                            -e2(j)*omg_x1 +e1(j)*omg_y1 +e0(j)*omg_z1 )
 !
       A11(j)= pe01**2 +pe11**2 -pe21**2 -pe31**2 
       A12(j)= 2*(pe11*pe21 +pe01*pe31) 
@@ -1042,14 +1032,10 @@
       omg_z(j)= omg_z1
 !
 !  Then, e0(n) -> e0(n+1)
-      e0(j)= e0(j) +(dt/2.d0)*(  &
-                -pe11*omg_x1 -pe21*omg_y1 -pe31*omg_z1 )
-      e1(j)= e1(j) +(dt/2.d0)*(  &  
-                 pe01*omg_x1 -pe31*omg_y1 +pe21*omg_z1 )
-      e2(j)= e2(j) +(dt/2.d0)*(  &
-                 pe31*omg_x1 +pe01*omg_y1 -pe11*omg_z1 )
-      e3(j)= e3(j) +(dt/2.d0)*(  &
-                -pe21*omg_x1 +pe11*omg_y1 +pe01*omg_z1 )
+      e0(j)= e0(j) +(dt/2.d0)*( -pe11*omg_x1 -pe21*omg_y1 -pe31*omg_z1 )
+      e1(j)= e1(j) +(dt/2.d0)*(  pe01*omg_x1 -pe31*omg_y1 +pe21*omg_z1 )
+      e2(j)= e2(j) +(dt/2.d0)*(  pe31*omg_x1 +pe01*omg_y1 -pe11*omg_z1 )
+      e3(j)= e3(j) +(dt/2.d0)*( -pe21*omg_x1 +pe11*omg_y1 +pe01*omg_z1 )
 !
       A11(j)= e0(j)**2 +e1(j)**2 -e2(j)**2 -e3(j)**2 
       A12(j)= 2*(e1(j)*e2(j) +e0(j)*e3(j)) 
@@ -1082,7 +1068,7 @@
 !       xr(i)= A11(j)*xr1 +A12(j)*yr1 +A13(j)*zr1
 !       xa(i)= xg(j) +A11(j)*xr(i) +A21(j)*yr(i) +A31(j)*zr(i)
 ! 
-!  outside the triangle plane
+!  Outside the triangle plane
       xxa= xa(i+2) -xa(i+1)
       yya= ya(i+2) -ya(i+1)
       zza= za(i+2) -za(i+1)
@@ -1139,10 +1125,10 @@
 !  In /realteil/, all nq and np
       call realteil (xa,ya,za,ch,ep,ag,fec,ipar,size,if_LJ,nq,np)
 !
-        call clocks (wall_t03,size,cl_first)
-!
       npq= nq +np
       call p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
+!
+        call clocks (wall_t03,size,cl_first)
 !
 !
 !  ice for 230 K, or water above 273 K
@@ -1200,12 +1186,12 @@
         if(is.eq.1) then
           write(11,'( &
            " ******************************************************",/, &
-           "   equilibration phase ends at t(10fs) = ",f8.1,/,         &
-           "     applied field: econv*edc = ",1pe11.3,/,              &
+           "   Equilibration phase ends at t(10fs) = ",f8.1,/,         &
+           "     applied field: econv*edc = ",1p2d11.3,/,              &
            "                 period (10fs) = ",0pf7.1,/,               &
-           "     thermal velocity of water (a/10fs)= ",1pe11.3,/,      &
+           "     thermal velocity of water (a/10fs)= ",1pd11.3,/,      &
            " ******************************************************",/)') &
-                                         tequil,econv*edc,tau_wave,vth0
+                                      tequil,edc,econv*edc,tau_wave,vth0
         end if
 !
         if(first_06) then
@@ -1214,14 +1200,14 @@
           write(11,'(/,"  time:      e_kin.W     e_img.W     e_kin(M) ", &
                    "   e_c_r       e_lj        e_p3m       e_tot      ", &
                    "   walltm     vm         exc        <ekin>     <eimg>", &
-                   "         cpu0        cpu1        cpu2")') 
+                   "          cpu0         cpu1         cpu2         ", &
+                   "cou3")') 
         end if
 !
         s0= 0
         si= 0
         sr= 0
         vm= 0
-        s1= 0
 !
         do j= 1,nq1
         s0= s0 +0.5d0*amm(j)*(vx(j)**2 +vy(j)**2 +vz(j)**2)
@@ -1234,15 +1220,19 @@
         vm= max(sqrt(vsq),vm)
         end do
 !
+        ekin0= s0
+        eimg2= si
+        omg_bar= sqrt(sr)/nq1
+!
+        s1= 0
+!
+!
         do j= nq1+1,nq1+np
         vsq= vx(j)**2 +vy(j)**2 +vz(j)**2
         s1= s1 +0.5d0*amm(j)*vsq
         end do
 !
-        ekin0= s0
-        eimg2= si
         ekin1= s1
-        omg_bar= sqrt(sr)/nq1
 !
         time(is)= t8
         vdtm(is)= vm
@@ -1253,7 +1243,7 @@
         ecr (is) = e_c_r
         elj (is) = e_lj 
         ep3m(is) = e_coulomb_p3m 
-        etot(is) = s0 +eimg2 +s1 +ecr(is)+elj(is)+ep3m(is)
+        etot(is) = s0 +si +s1 +ecr(is)+elj(is)+ep3m(is)
 !
         svx1= 0
         svx2= 0
@@ -1302,15 +1292,20 @@
 !*
         close(11)
 !*
-!  At 273 K, the average energy of (ekin+eimg)/2 becomes 2.85d-1
+!  At 298 K, the average energy, 400 K is... 
         i_barrier= 0
-        if((ekin(is)+eimg(is))/2.d0.gt.2.85d-1) then
+        
+        if(is.eq.100) then
+          ekm= (ekin(is) +eimg(is))/nq1
+!       
+        else if(is.gt.100 .and. &
+                (ekin(is)+eimg(is))/nq1 .gt. 1.3d0*ekm) then
           i_barrier= 1
         end if
 !**
       end if
 !
-      root= 1      !  i_barrier is BCASTED from root
+      root= 1      !  i_barrier is BCASTed from root
       call MPI_BCAST (i_barrier,1,mpi_integer,root,mpi_comm_world,ierr)
       if(i_barrier.eq.1) go to 2000
 !
@@ -1324,14 +1319,14 @@
         open (unit=13,file=praefixc//'.13'//suffix2,               & 
               status='unknown',position='append',form='unformatted')
 !
-        do i= 1,nq+np  !<- np=0, 1,nq
+        do i= 1,nq+np  !<- 1,nq  np=0
         x4(i) = xa(i) 
         y4(i) = ya(i)
         z4(i) = za(i)
         end do
 !
         t4= t8
-        write(13) t4,x4,y4,z4  !<- np=0, 1,nq
+        write(13) t4,x4,y4,z4 
         close(13)
       end if
 !---------------------------------------------------------------------
@@ -1348,7 +1343,7 @@
                 status='unknown',position='append',form='formatted')
         end if
 !
-!  Full particlres of npq5= nq0 +np0 !
+!  Full particlres of npq5= nq0 +np0 
         do i= 1,nq,5
         x4(i) = xa(i) 
         y4(i) = ya(i)
@@ -1396,7 +1391,7 @@
 !
         write(23,'(i5,/)') nq+np
 
-        do i= 1,nq+np                          !<- np=0, 1,nq
+        do i= 1,nq+np                          !<- 1,nq  np=0
         write(23,'(a2,3f12.3)') tip(i),x4(i),y4(i),z4(i) ! H or O
         end do
 !
@@ -1424,7 +1419,7 @@
         end do
 !
         t4= t8
-        write(15) t4,x4,y4,z4     !<- np=0, 1,nq 
+        write(15) t4,x4,y4,z4 
         write(15) t4,vx4,vy4,vz4
         close(15)
 !
@@ -1469,7 +1464,7 @@
 !                  ++++++++++
       wall_time7 = wall_time1 - wall_time0  ! starting wall_time0
 !
-!  in every ncorr steps, there will be an exit to /2000/
+!  In every ncorr steps, there will be an exit to /go to 2000/
       if(mod(it,ncorr).eq.0) then
         if(t8.gt.tmax) go to 2000
         if((wall_time7/60.d0).gt.cptot) go to 2000  ! min.
@@ -1775,7 +1770,7 @@
 !$OMP DO SCHEDULE(STATIC,1)
 !
         do ll= ipar,nq/5,size     !!only charges for water 
-        do jp= nq/5+1,nq/5+np 
+        do jp= nq/5+1,nq/5+np     ! jp > nq/5
 !       ++++++++
         j= jp -nq/5 +nq 
 !
@@ -1998,6 +1993,7 @@
 !
           ccel  = 12*pref_eps*(epslj_A*sn6*sn6 -0.5d0*epslj_B*sn6)/(r*r)
           e_lj1 =    pref_eps*(epslj_A*sn6*sn6 -epslj_B*sn6 -addpot1)
+!
           e_lj11= e_lj11 +e_lj1
         else
           ccel  = 0
@@ -2019,6 +2015,7 @@
           epsav = sqrt(ep(i)*ep(j))
           ccel  = 48*pref_eps* epsav*snt*(snt -0.5d0)/(r*r)
           e_lj1 =  4*pref_eps* epsav*(snt*(snt -1.d0) -addpot2)
+!
           e_lj22= e_lj22 +e_lj1
         else 
           ccel  = 0
@@ -2106,20 +2103,20 @@
 !cccccccccccccc   p3m (fortran 77)  ccccccccccccccccccccccccccccccccccc
 !                                 26.10.1999 
 !                                     Motohiko Tanaka, Christian Holm
-!  calling sequences:
+!  Calling sequences:
 !
 !     call  p3m_init (length,alpha,mesh0,ip)
 !     call  p3m_perform (coox,cooy,cooz,q,fx,fy,fz,e_coulomb_p3m)
 !
 !/*---------------------------------------------------------------------
-! subunit:  p3m_v2.f  (fortran 90)
+! Subunit:  p3m_v2.f  (fortran 90)
 ! 
-!       version   20.10.1999 (ch) 
-!       corrected 26.10.1999 (mt)
+!       Version   20.10.1999 (ch) 
+!       Corrected 26.10.1999 (mt)
 !                 23.06.2000 (mt)
 !
-! version:  20 january 1999
-! author:   Markus Deserno
+! Version:  20 january 1999
+! Author:   Markus Deserno
 !
 !    Brillouin is now a parameter
 !    maxinterpol --> mintpol
@@ -2136,9 +2133,8 @@
       implicit none
 !
       include    'param_tip5p_D07a.h'
-      include    'aslfftw3.f03' ! by SX
-!     include    'fftw3.f03'    ! by Intel, or parallel case
-!                  "call fftw_plan_with_nthreads" must be commented out 
+!     include    'aslfftw3.f03' ! by SX
+      include    'fftw3.f03'    ! by Intel, or parallel code
 !
 !     integer(C_INT),save :: n_thread
       type(C_PTR),save :: plan, pinv1,pinv2,pinv3
@@ -2194,20 +2190,21 @@
       if(first_p3m) then
         first_p3m= .false.
 !
+!  for Fujitsu FX100
 !       ierror= 0
 !       n_thread= 1 ! 8 
 !       ddd= fftw_init_threads (ierror)
 !       call fftw_plan_with_nthreads (n_thread)
 !
-!  in SX case
-       call fftw_plan_with_nthreads (omp_get_max_threads()) 
+!  for NEC SX -> Parallel code is the same at all  7.09.2023 
+!!      call fftw_plan_with_nthreads (omp_get_max_threads()) 
 !
-!       call dfftw_plan_dft_r2c_3d  &
+!       call dfftw_plan_dft_r2c_3d  &  ! FX100
         plan= fftw_plan_dft_r2c_3d  &
                 (mesh,mesh,mesh,qq,qq_c,FFTW_ESTIMATE)
 !                   n0,m0,l0 ---------> (n0/2+1) complex
 !
-!       call dfftw_plan_dft_c2r_3d  &
+!       call dfftw_plan_dft_c2r_3d  &  ! FX100
         pinv1= fftw_plan_dft_c2r_3d  &
                 (mesh,mesh,mesh,phi_x_c,phi_x,FFTW_ESTIMATE)
         pinv2= fftw_plan_dft_c2r_3d  &
@@ -2324,7 +2321,7 @@
 !
 !
       fft_scale2= mesh**3  
-!     call dfftw_execute_dft_r2c (plan,qq,qq_c)
+!     call dfftw_execute_dft_r2c (plan,qq,qq_c)  ! FX100
       call fftw_execute_dft_r2c (plan,qq,qq_c)
 !
 !
@@ -2347,7 +2344,7 @@
       end do 
       end do 
 !
-!     call dfftw_execute_dft_c2r (pinv,phi_x_c,phi_x)
+!     call dfftw_execute_dft_c2r (pinv,phi_x_c,phi_x)  ! FX100
       call fftw_execute_dft_c2r (pinv1,phi_x_c,phi_x)
       call fftw_execute_dft_c2r (pinv2,phi_y_c,phi_y)
       call fftw_execute_dft_c2r (pinv3,phi_z_c,phi_z)
@@ -2609,33 +2606,33 @@
       intcaf(2, i+mintpol) = 0.50d0*(0.5d0 + x)**2
       end do
 !
-      else if (ip0.eq.4) then
-      do i= -mintpol, mintpol
-      x= i/(2.d0*dinterpol)
-      intcaf(0, i+mintpol) = &
-                             ( 1.d0+x*( -6.d0+x*( 12.d0-x* 8.d0)))/48.d0
-      intcaf(1, i+mintpol) = &
-                             (23.d0+x*(-30.d0+x*(-12.d0+x*24.d0)))/48.d0
-      intcaf(2, i+mintpol) = &
-                             (23.d0+x*( 30.d0+x*(-12.d0-x*24.d0)))/48.d0
-      intcaf(3, i+mintpol) = & 
-                             ( 1.d0+x*(  6.d0+x*( 12.d0+x* 8.d0)))/48.d0
-      end do
+!     else if (ip0.eq.4) then
+!     do i= -mintpol, mintpol
+!     x= i/(2.d0*dinterpol)
+!     intcaf(0, i+mintpol) = &
+!                            ( 1.d0+x*( -6.d0+x*( 12.d0-x* 8.d0)))/48.d0
+!     intcaf(1, i+mintpol) = &
+!                            (23.d0+x*(-30.d0+x*(-12.d0+x*24.d0)))/48.d0
+!     intcaf(2, i+mintpol) = &
+!                            (23.d0+x*( 30.d0+x*(-12.d0-x*24.d0)))/48.d0
+!     intcaf(3, i+mintpol) = & 
+!                            ( 1.d0+x*(  6.d0+x*( 12.d0+x* 8.d0)))/48.d0
+!     end do
 !
-      else if (ip0.eq.5) then
-      do i= -mintpol, mintpol
-      x= i/(2.d0*dinterpol)
-      intcaf(0, i+mintpol) = &
-               (  1.d0+x*( -8.d0+x*(  24.d0+x*(-32.d0+x*16.d0))))/384.d0
-      intcaf(1, i+mintpol) = &
-               ( 19.d0+x*(-44.d0+x*(  24.d0+x*( 16.d0-x*16.d0))))/ 96.d0
-      intcaf(2, i+mintpol) = &
-               (115.d0+x*        x*(-120.d0+x*        x*48.d0))  /192.d0
-      intcaf(3, i+mintpol) = &
-               ( 19.d0+x*( 44.d0+x*(  24.d0+x*(-16.d0-x*16.d0))))/ 96.d0
-      intcaf(4, i+mintpol) = &
-               (  1.d0+x*(  8.d0+x*(  24.d0+x*( 32.d0+x*16.d0))))/384.d0
-      end do
+!     else if (ip0.eq.5) then
+!     do i= -mintpol, mintpol
+!     x= i/(2.d0*dinterpol)
+!     intcaf(0, i+mintpol) = &
+!              (  1.d0+x*( -8.d0+x*(  24.d0+x*(-32.d0+x*16.d0))))/384.d0
+!     intcaf(1, i+mintpol) = &
+!              ( 19.d0+x*(-44.d0+x*(  24.d0+x*( 16.d0-x*16.d0))))/ 96.d0
+!     intcaf(2, i+mintpol) = &
+!              (115.d0+x*        x*(-120.d0+x*        x*48.d0))  /192.d0
+!     intcaf(3, i+mintpol) = &
+!              ( 19.d0+x*( 44.d0+x*(  24.d0+x*(-16.d0-x*16.d0))))/ 96.d0
+!     intcaf(4, i+mintpol) = &
+!              (  1.d0+x*(  8.d0+x*(  24.d0+x*( 32.d0+x*16.d0))))/384.d0
+!     end do
 !
 !     else if (ip0.eq.6) then
 !     do 600 i= -mintpol, mintpol
@@ -3666,7 +3663,7 @@
         read(30,*)
         read(30,'(a87)') analic
         read(30,'(a5)')  dummy5
-        read(30,'(f8.5,a1,f8.1,a1,f8.5)') xmax,dummy1,ymax,dummy1,zmax 
+        read(30,'(f8.5,a1,f8.5,a1,f8.5)') xmax,dummy1,ymax,dummy1,zmax 
         read(30,'(a5)') dummy5
         read(30,'(i4)') npar1  !! !<- water
 !       read(30,'(i5)') npar1  !! Large system
