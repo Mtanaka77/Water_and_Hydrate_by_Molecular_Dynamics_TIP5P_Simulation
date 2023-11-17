@@ -8,8 +8,8 @@ and negative two hydrogens q_L= -0.241e with e the electron charge.
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
 using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).    
 
-This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). The new results for the TIP5P code are shown below and
-in the arXiv Library at https://arxiv.org/abs/2311.01128.pdf (2023).
+This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). The new results for the TIP5P-Ewald model are shown below and
+the PDF in the arXiv Library at https://arxiv.org/abs/2311.01128 (2023).
 
 The fortran code with MPI is given in the file @p3mtip5p07a.f03 with additional files as  
 param_tip5D07a.h, TIP507_config.start0, and initial coordinates 1cx666a.exyz and quaternions 1cx666a.q. Its description of the code is shown at README.md and also PDF documents of this repository. The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics simulation run by "Water_and_hydrate_molecules_by_TIP5P_code.pdf". 
