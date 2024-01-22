@@ -6,15 +6,13 @@
       logical        if_xyz1,if_xyz2,if_obsv
 !
 ! /home2, or /lv01 for photon
-      character     praefixs*29,praefixc*24,praefixe*24, &
-                    praefixi*24,suffix2*2,suffix1*2,suffix0*1
-!     character*4   praefixs*31,praefixc*29,praefixe*29, &
-!                   praefixi*29,suffix2*2,suffix1*2,suffix0*1
+!     character     praefixs*29,praefixc*24,praefixe*24, &
+!                   praefixi*24,suffix2*2,suffix1*2,suffix0*1
+      character*4   praefixs*29,praefixc*29,praefixe*29, &
+                    praefixi*29,suffix2*2,suffix1*2,suffix0*1
 !
-      real(C_DOUBLE) epsilon
       real(C_DOUBLE) t_init,t_wipe_sta,t_wipe_end
 !
-      parameter  (epsilon=80.d0/88.d0)  ! 298 K relative to 273 K
       parameter  (t_init=1000.d0,t_wipe_sta=1700.d0,  &
                   t_wipe_end=4700.d0)
 !
@@ -38,10 +36,6 @@
                  praefixi='/data/sht/tanakam/tip507',      &
                  praefixc='/data/sht/tanakam/tip507',      &
                  praefixe='/data/sht/tanakam/tip507')
-!     parameter (praefixs='/lv01/mtanaka/MPI_wat3/TIP601', &
-!                praefixi='/lv01/mtanaka/MPI_wat3/tip601', &
-!                praefixc='/lv01/mtanaka/MPI_wat3/tip601', &
-!                praefixe='/lv01/mtanaka/MPI_wat3/tip601')
       parameter (if_xyz1=.false., if_xyz2=.true.,          &
                  if_obsv=.false.)  !! if .false,, save to a file 
 !

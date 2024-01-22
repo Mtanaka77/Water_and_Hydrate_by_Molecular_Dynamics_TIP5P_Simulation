@@ -914,9 +914,9 @@
         call p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
 !                                           !<- qch(i)=(O)(H)(H) M M
         do i= 1,nq+np
-        fec(i,1)= (fec(i,1) +fek(i,1))/epsilon +qch(i)*exc
-        fec(i,2)= (fec(i,2) +fek(i,2))/epsilon
-        fec(i,3)= (fec(i,3) +fek(i,3))/epsilon
+        fec(i,1)= fec(i,1) +fek(i,1) +qch(i)*exc
+        fec(i,2)= fec(i,2) +fek(i,2)
+        fec(i,3)= fec(i,3) +fek(i,3)
         end do
       end if
 !
@@ -1149,9 +1149,9 @@
 !  1cx666_ must be changed in /init/.
 !                                    !<- qch(i)=(O)(H)(H) M M
       do i= 1,nq+np
-      fec(i,1)= (fec(i,1) +fek(i,1))/epsilon +qch(i)*exc
-      fec(i,2)= (fec(i,2) +fek(i,2))/epsilon
-      fec(i,3)= (fec(i,3) +fek(i,3))/epsilon
+      fec(i,1)= fec(i,1) +fek(i,1) +qch(i)*exc
+      fec(i,2)= fec(i,2) +fek(i,2)
+      fec(i,3)= fec(i,3) +fek(i,3)
       end do
 !
 !* Correction
