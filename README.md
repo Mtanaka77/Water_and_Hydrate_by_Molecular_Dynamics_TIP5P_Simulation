@@ -1,6 +1,6 @@
-## Water and Hydrate of Molecular Dynamics by TIP5P Model ## 
+## Molecular Dynamics of Water and Ice by the TIP5P Model ## 
 
-We are studying the microwave heating of water and ice by means of molecular dynamics TIP5P model (with if_xyz2=.true.), and that of the collapse of methane hydrate by the same code (with if_xyz1=.true.).
+We are studying the microwave heating of water and ice by means of the molecular dynamics TIP5P model (with if_xyz2=.true.), and that of the collapse of methane hydrate by the same code (with if_xyz1=.true.).
 
 The five-point molecules for water are used known as the TIP5P-Ewald model. 
 A four-water molecule is specified to calculate positive two hydrogens q_H= 0.241e 
