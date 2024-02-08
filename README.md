@@ -19,7 +19,7 @@ Methane hydrate is simulated by switching to if_xyz1=.true. of the TIP5P code,
 like with the SPC/E code (Ref. 3). We need the initial coordinate file mh3.exyz and quaternions mh3.q. 
 It runs up to t= 1.7 x 10^(-8) s with E_x = 3. x 10^7 V/cm, which is terminated suddenly due to 
 collapse of methane hydrate. Energies and scatter plots of molecules, the distribution of cosine's 
-in the x-direction are shown in the PDF file "MDTip5pWater-7.pdf" (https://arxiv.org/abs/2311.01182).
+in the x-direction are shown in the PDF file "MDTip5pWater-7.pdf", the new version at https://arxiv.org/abs/2311.01182v7 (2024).
 
 As natural resources, however, the methanes are 60 times environmentally more hazardous 
 materials than carbon dioxide. Methane hydrates that will be mined and then burnt in air 
