@@ -17,12 +17,12 @@ above, remains basically the same due to the structure of six-membered ice !
 
 Methane hydrate is simulated by switching to if_xyz1=.true. of the TIP5P code, 
 like with the SPC/E code (Ref. 3). We need the initial coordinate file mh3.exyz and quaternions mh3.q. 
-It runs up to T= 1.7 x 10^(-8) s with E_x = 3. x 10^7 V/cm, which is terminated suddenly due to 
+It runs up to t= 1.7 x 10^(-8) s with E_x = 3. x 10^7 V/cm, which is terminated suddenly due to 
 collapse of methane hydrate. Energies and scatter plots of molecules, the distribution of cosine's 
-in the x-direction are shown in the final part of "Water_and_hydrate_molecules_by_TIP5P_code.pdf".
+in the x-direction are shown in the PDF file "MDTip5pWater-7.pdf" (https://arxiv.org/abs/2311.01182).
 
-As natural resources, however, it is noted that methanes are environmentally as 20-60 times 
-more hazardous materials than carbon dioxide. Methane hydrates that will be mined and burnt in air 
+As natural resources, however, the methanes are 60 times environmentally more hazardous 
+materials than carbon dioxide. Methane hydrates that will be mined and then burnt in air 
 should be confined again back to the deep interior of the earth.
 
 ### Procedure of Water Molecules by Five-Points Model ###
