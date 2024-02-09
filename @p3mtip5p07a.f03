@@ -1,12 +1,12 @@
 !************************************************** May, 2023 ****
 !*                                                               *
 !*   ## Molecular Dynamics of Water and Ice by TIP5P Code ##     *
-!*     - Microwave heating, ice below T=273 K not melted         * 
+!*     - Microwave heating, ice below T=273 K is not melted      * 
 !*                                                               *
 !*   Author/Maintainer: Motohiko Tanaka, Ph.D., Nagoya, Japan    *
 !*                                                               *
 !*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
-!*   Copyright(C) 2006-2023. All rights reserved.                *
+!*   Copyright(C) 2006-2024. All rights reserved.                *
 !*                                                               *
 !*   Reference                                                   * 
 !*   1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).           *
@@ -3244,15 +3244,15 @@
 !++++++++++++++++++++++++++++++++++++++++++++++++++
 !
       if(io_pe.eq.1) then
+        if(np.gt.0) then
         do i= nq+1,nq+np
-!       if(i.le.nq+np) then
         write(11,'(" i, ch, am, ep, qch,ag(MM)=",i5,1p5d12.5)') &
                                  i,ch(i),am(i),ep(i),qch(i),ag(i)
-!       end if
         end do
+        end if
 !
         write(11,*)
-        write(11,*) "L.3130: nq=",nq
+        write(11,*) "L.3250: nq=",nq
         write(11,*) " this l is=",l
 ! 
         write(11,*)
@@ -3429,7 +3429,7 @@
       iww= iww +5
       if(iww.ge.nwaTIP5) go to 373
       go to 370
-
+!
   373 nq= i - 1
       if(io_pe.eq.1) then
         write(11,*) "L.3280, this value is nq=",nq
@@ -3441,35 +3441,47 @@
         end do
       end if
 !
+!  [3a] Positions
+!   MH: CH4
+!
+      if(if_xyz1) then
+!**
+!  Methane
+      do i= nq+1,nq+np
+      read(17,'(a4,3f15.5)') tip1,xc1,yc1,zc1          ! C
+      read(17,'(a4,3f15.5)') tip2,xh1,yh1,zh1          ! H
+      read(17,'(a4,3f15.5)') tip3,xh2,yh2,zh2          ! H
+      read(17,'(a4,3f15.5)') tip4,xh3,yh3,zh3          ! H
+      read(17,'(a4,3f15.5)') tip5,xh4,yh4,zh4          ! H
+!
+      xa(i)= xc1      
+      ya(i)= yc1      
+      za(i)= zc1      
+      end do
+!
+      if(io_pe.eq.1) then
+        write(11,*) "final MH: nq+np=",nq+np
+      end if
+!***
+      end if
+!
       read(17,*)
       read(17,'(a8,3f15.5)') vector1,xmax1,ymax1,zmax1
       read(17,'(a8,3f15.5)') vector2,xmax2,ymax2,zmax2
       read(17,'(a8,3f15.5)') vector3,xmax3,ymax3,zmax3
+!     read(17,'(a8,3f15.5)') vector4,xmax3,ymax3,zmax3  ! dummy
   380 format(a8,3f15.5)
 !
       xmax= xmax1
       ymax= ymax2
       zmax= zmax3
-!
-!+++++++++++++++++++++++++++++++++++++++++++
-!  [3] Positions
-!   Avoid closed neighbors
-!
-      if(np.gt.0) then
-!**
-!  Methane
-!     do i= nq+1,nq+np
-!     read(17,'(a4,3f15.5)') tip1,xc1,yc1,zc1          ! C
-!     read(17,'(a4,3f15.5)') tip2,xh1,yh1,zh1          ! C
-!     read(17,'(a4,3f15.5)') tip3,xh2,yh2,zh2          ! C
-!     read(17,'(a4,3f15.5)') tip4,xh3,yh3,zh3          ! C
-!     read(17,'(a4,3f15.5)') tip5,xh4,yh4,zh4          ! C
-!
-!     xa(i)= xc1      
-!     ya(i)= yc1      
-!     za(i)= zc1      
-!     end do
 !*
+!+++++++++++++++++++++++++++++++++++++++++++
+!  [3b] Positions
+!   Additional salt ions
+!
+      if(if_xyz2 .and. np.gt.0) then
+!**
       do i= nq+1,nq+np
   650 xa(i)= xmax*ranff(0.)
       ya(i)= ymax*ranff(0.)
@@ -3658,9 +3670,14 @@
         end if
 !
 ! +++++++
-!       open (unit=30,file='mh3.q',form='formatted')    ! Quarternion
+      if(if_xyz1) then
+        open (unit=30,file='mh3.q',form='formatted')    ! Quarternion
 !       open (unit=30,file='mh3.e',form='formatted')    ! Euler
+!
+      else if(if_xyz2) then
         open (unit=30,file='1cx666a.q',form='formatted') 
+!
+      end if
 !
 !  Format of f18.15,a1 is changed to f8.5,a1,410.4 !!
         read(30,*)
@@ -3672,7 +3689,11 @@
 !       read(30,'(i5)') npar1  !! Large system
 !
         if(io_pe.eq.1) then
+        if(if_xyz1) then
           write(11,*) "1cx666a.q"
+        else if(if_xyz2) then
+          write(11,*) "1cx666a.q"
+        end if
         end if
 !
 !  in Goldstein book: like a= cos(tht/2) cos((phi+psi)/2)
