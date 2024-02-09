@@ -227,11 +227,11 @@ References of Numerical Technique
  
 2. M. Tanaka and M. Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 (2007).
 
-3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, arXiv:1909.01024, Cornell University, USA (2019).
+3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, https://arxiv.org/abs/1909.01024, Cornell University, USA (2019).
 
 4. M. Matsumoto, T. Yagasaki, and H. Tanaka,"GenIce: Hydrogen-Disordered Ice
 Generator", J. Comput. Chem. 39, 61-64 (2017).
 
-5. M. Tanaka, Molecular dynamics simulation of methane hydrate by TIP5P-Ewald water model,
-https://arxiv.org/abs/2311.01128, Cornell University Library, USA (2023).
+5. M. Tanaka, Molecular dynamics simulation of methane hydrate by means of the TIP5P-Ewald model,
+https://arxiv.org/abs/2311.01182, Cornell University Library, USA (2023).
 
