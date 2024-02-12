@@ -597,9 +597,9 @@
 !     xa(i)= ...
 !     end do 
 !   +++++++++ for this run ++++++++++++++++++
-      if(kstart.eq.1 .or. kstart.eq.3) then
-        np= 0 
-      end if
+!!    if(kstart.eq.1 .or. kstart.eq.3) then
+!!      np= 0 
+!!    end if
 !   +++++++++++++++++++++++++++++++++++++++++
 !
 !        Start            Restart from t=0
@@ -704,6 +704,7 @@
 !  dt = 0.025d0 in read_conf 
 !  the first time is t8= 0. (it= 1)
 !
+!  Start 1000, and goto 1000
  1000 dth= 0.5d0*dt
 !
       t8= t8 +dt
@@ -742,7 +743,6 @@
                              *(1.d0 -exp(-(t8 -tequil)/200.d0)) 
       end if
 !
-!
 !     t_init=     1000.d0   !<- at kstart=0, in param
 !     t_wipe_sta= 1700.d0   !<- salt wipe, in parameter 
 !     t_wipe_end= 4700.d0 
@@ -751,6 +751,7 @@
       if(kstart.eq.0) then
 !
         if(t8.le.t_init) then 
+!       +++++++++++++++++++++  L.600: if i>nq
           if(it.eq.1) then
             do i= nq+1,nq+np  !<- empty 
             chsav(i)= ch(i) 
@@ -784,6 +785,7 @@
           if(if_wipe) then
             if_wipe= .false.
 !
+!           +++++++++++++++++++++  L.600: if i>nq
             do i= nq+1,nq+np  !<- when t_wipe_sta is started
             chsav(i)= ch(i) 
             epsav(i)= ep(i)
@@ -807,6 +809,7 @@
 !  Real salt can be added
         if(t8.gt.t_wipe_end) then 
 !
+!         +++++++++++++++++++++  L.600: if i>nq
           do i= nq+1,nq+np  !<- to empty 
           vx(i)= 0
           vy(i)= 0
@@ -952,7 +955,12 @@
       zg(j)= zg1 +dt*vz(j)
 !
 !  Rotation:
-!  (1) Prediction on a half time steps
+!  (1) Prediction on a half time steps by rr1,...,rr5
+!     Torqx1 = (yr1*fec(i,  3) -zr1*fec(i,  2)   &
+!              +yr2*fec(i+1,3) -zr2*fec(i+1,2)   &
+!              +yr3*fec(i+2,3) -zr3*fec(i+2,2)   &
+!              +yr4*fec(i+3,3) -zr4*fec(i+3,2)   &
+!              +yr5*fec(i+4,3) -zr5*fec(i+4,2))
 !
       xr1= xa(i) -xg1 
       yr1= ya(i) -yg1
@@ -975,38 +983,42 @@
       zr5= za(i+4) -zg1
 !
       Torqx1 = & 
-               (yr1*fec(i,  3) -zr1*fec(i,  2)   &
-               +yr2*fec(i+1,3) -zr2*fec(i+1,2)   &
-               +yr3*fec(i+2,3) -zr3*fec(i+2,2)   &
-               +yr4*fec(i+3,3) -zr4*fec(i+3,2)   &
-               +yr5*fec(i+4,3) -zr5*fec(i+4,2))
+               (yr1*fec(i,  3) -zr1*fec(i,  2)   & ! O
+               +yr2*fec(i+1,3) -zr2*fec(i+1,2)   & ! H1
+               +yr3*fec(i+2,3) -zr3*fec(i+2,2)   & ! H2
+               +yr4*fec(i+3,3) -zr4*fec(i+3,2)   & ! L1
+               +yr5*fec(i+4,3) -zr5*fec(i+4,2))    ! L2
 !
       Torqy1 = & 
-               (zr1*fec(i,  1) -xr1*fec(i,  3)   &
-               +zr2*fec(i+1,1) -xr2*fec(i+1,3)   &
-               +zr3*fec(i+2,1) -xr3*fec(i+2,3)   &
-               +zr4*fec(i+3,1) -xr4*fec(i+3,3)   &
-               +zr5*fec(i+4,1) -xr5*fec(i+4,3))
+               (zr1*fec(i,  1) -xr1*fec(i,  3)   & ! O
+               +zr2*fec(i+1,1) -xr2*fec(i+1,3)   & ! H1
+               +zr3*fec(i+2,1) -xr3*fec(i+2,3)   & ! H2
+               +zr4*fec(i+3,1) -xr4*fec(i+3,3)   & ! L1
+               +zr5*fec(i+4,1) -xr5*fec(i+4,3))    ! L2
 !
       Torqz1 = & 
-               (xr1*fec(i,  2) -yr1*fec(i,  1)   &
-               +xr2*fec(i+1,2) -yr2*fec(i+1,1)   &
-               +xr3*fec(i+2,2) -yr3*fec(i+2,1)   &
-               +xr4*fec(i+3,2) -yr4*fec(i+3,1)   &
-               +xr5*fec(i+4,2) -yr5*fec(i+4,1))
+               (xr1*fec(i,  2) -yr1*fec(i,  1)   & ! O
+               +xr2*fec(i+1,2) -yr2*fec(i+1,1)   & ! H1
+               +xr3*fec(i+2,2) -yr3*fec(i+2,1)   & ! H2
+               +xr4*fec(i+3,2) -yr4*fec(i+3,1)   & ! L1
+               +xr5*fec(i+4,2) -yr5*fec(i+4,1))    ! L2
 !
 !  Trial move on a half time steps 
       LLgx1= Lgx(j) +Torqx1*dth  ! Lgx(n-1/2),Torqx(n) -> LLgx(n)
       LLgy1= Lgy(j) +Torqy1*dth
       LLgz1= Lgz(j) +Torqz1*dth
 !
-!  omg_x(n) = L_P/Im(j,1-3) = A*L_R/Im(j,1-3) 
+!  omg_x(n) = L_P/Im(j,1) = (A_ij*L_R)/Im(j,1)
+!  omg_y(n) = L_P/Im(j,2) = (A_ij*L_R)/Im(j,2)
+!  omg_z(n) = L_P/Im(j,3) = (A_ij*L_R)/Im(j,3)
+!  
       omg_x1= (A11(j)*LLgx1 +A12(j)*LLgy1 +A13(j)*LLgz1)/Im(j,1)
       omg_y1= (A21(j)*LLgx1 +A22(j)*LLgy1 +A23(j)*LLgz1)/Im(j,2)
       omg_z1= (A31(j)*LLgx1 +A32(j)*LLgy1 +A33(j)*LLgz1)/Im(j,3)
 !
-!  prediction of e0(n+1/2): q(n+1/2)= q(n) +dth*Q(n)*omg(n)
+!  Prediction of e0(n+1/2): q(n+1/2)= q(n) +dth*Q(n)*omg(n)
 !  Rotation matrix A_ij^(n+1/2) by e0(j),e1(j),...
+!   in each pe01, mixes omg_x1, omg_y1, omg_z1
       pe01= e0(j) +(dth/2.d0)*(  &
                  -e1(j)*omg_x1 -e2(j)*omg_y1 -e3(j)*omg_z1 )
       pe11= e1(j) +(dth/2.d0)*(  &
@@ -1082,7 +1094,7 @@
 !       xr(i)= A11(j)*xr1 +A12(j)*yr1 +A13(j)*zr1
 !       xa(i)= xg(j) +A11(j)*xr(i) +A21(j)*yr(i) +A31(j)*zr(i)
 ! 
-!  outside the triangle plane
+!  Outside the triangle plane by virtual sites
       xxa= xa(i+2) -xa(i+1)
       yya= ya(i+2) -ya(i+1)
       zza= za(i+2) -za(i+1)
@@ -1116,7 +1128,9 @@
 !* End of the long i-loop
 !
 !  i >= nq+1 (co/counter ions) are counted.
+!     +++++++++++++++++++++  L.600: if i>nq
       j= nq1
+!
       do i= nq+1,nq+np
       j= j +1
 !
@@ -1173,6 +1187,7 @@
 !
 !* End of the loop
 !*  do not fold back positions: (-l/2, l/2). 
+!   +++++++++++++++++++++  L.600: if i>nq, goto 1000
 !
 !------------------------------
 !*  Diagnosis section.
@@ -1481,6 +1496,7 @@
         go to 2000
       end if
       go to 1000
+!     ++++++++++
 !
  2000 continue
 !**
@@ -3117,6 +3133,9 @@
       end if
 !
 !  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+!!    if(kstart.eq.1 .or. kstart.eq.3) then  ! L.601: np= 0
+!!      np= 0                                ! parm.h must declare np=0
+!!    end if
       if(if_xyz1) then
         nq= 6210  ! 5-point water 6210 atoms, 1242 molecules
         np=  216  ! unified atom, 216 (1080 CH4 atoms)
