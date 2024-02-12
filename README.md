@@ -52,9 +52,9 @@ Each step of the cycle corresponds to (i) translational motion (Step 1),
 (ii) rotational motion (Step 2-4), and (iii) addition of the fields (Step 5-8).
 
 0) Read positions $(x,y,z)$ and quaternions from files by 
-$ ``read(17) \ x_{i},y_{i},z_{i} "$ ($i=1,N$), where the dummy sites are obtained 
+$``read(17) \ x_{i},y_{i},z_{i}"$ ($i=1,N$), where the dummy sites are obtained 
 by algebraic operation, and  
-$ ``read(30) \ e_{0j},e_{1j}, e_{2j}, e_{3j} ``$ ($j=1,N/5$).
+$``read(30) \ e_{0j},e_{1j}, e_{2j}, e_{3j}``$ ($j=1,N/5$).
 This step is executed only at the first time.
 
 1) The position $\bm{R}_{j}$ and velocity $\bm{V}_{j} $ of each molecule ($j=1,N/5$) are advanced by summation over five sites of forces $\bm{F}_{k}$ for the translational motion
@@ -131,8 +131,7 @@ The position of dummy sites are calulated from known three sites by algebraic op
 
 Note that a time step is important and it will be $\Delta t= 0.025 \tau$ or less by the time advancing scheme; otherwise the code will be inaccurate or go to overflow. 
 
-The equations of A_{ij} and e0(i),e1(i),e2(i),e3(i) are written in the PDF file, "Water_TIP5P_Simulation.pdf".
-Checks of equations of the TIP5P code are also shown.
+The equations of A_{ij} and e0(i),e1(i),e2(i),e3(i) are written in the PDF file, "Water_TIP5P_Simulation.pdf". Checks of equations of the TIP5P code are also shown.
 
 ### The Lennard-Jones Potential ###
 
@@ -177,7 +176,7 @@ to the surrounding system. It is possible to have rapid heating of hot bubbling 
 
 ### Figures of TIP5P-Model Simulations ###
 
-Molecular dynamics simulations of water and ice, and/or methane hydrate, are shown by using the TIP5P model, 
+Molecular dynamics simulations of water and ice, and/or methane hydrate, are shown by using the TIP5P-Ewald model, 
 and the current file is "Water_and_hydrate_by_molecular_dynamics_TIP5P_code.pdf" in this repository.
 
 Figures in the color PDF file are water and ice and/or methane hydrate that include the energy of molecules, 
@@ -186,7 +185,7 @@ cosine distribution functions in the x-direction.
 
 Generally speaking, water is heated by microwaves where its heating efficiency is highest at 0 Celsius.
 Below 273 K, however, ice is frozen and not heated by the electric field.
-Methane hydrate that is excited by microwaves application is eventually collapsed. 
+Methane hydrate that is excited by microwaves application is heated and eventually collapsed. 
 
 ### Necessary Files of the Repository ###
 
@@ -199,6 +198,8 @@ Files for simulation
 !*   3. TIP507_config.start0 : parameter file 2, kstart=0 or 2   
 
 !*      and/or TIP507_config.start1 : kstart=1 or 3              
+
+!*   4. Initial files of water : 1c666a.exyz and 1c666a.q
 
 Post-processing files                                
 
@@ -227,11 +228,11 @@ References of Numerical Technique
  
 2. M. Tanaka and M. Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 (2007).
 
-3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, https://arxiv.org/abs/1909.01024, Cornell University, USA (2019).
+3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, https://arxiv.org/1909.01024, Cornell University, USA (2019).
 
 4. M. Matsumoto, T. Yagasaki, and H. Tanaka,"GenIce: Hydrogen-Disordered Ice
 Generator", J. Comput. Chem. 39, 61-64 (2017).
 
 5. M. Tanaka, Molecular dynamics simulation of methane hydrate by means of the TIP5P-Ewald model,
-https://arxiv.org/abs/2311.01182, Cornell University Library, USA (2023).
+https://arxiv.org/2311.01182, Cornell University Library, USA (2023).
 
