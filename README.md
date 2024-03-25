@@ -8,7 +8,7 @@ and negative two hydrogens q_L= -0.241e with e the electron charge.
 The fifth oxygen atom called the dummy site q_O=0 is to correlate with adjacent molecules 
 using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).    
 
-This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). The new results by the 5-body rotation coordinate system and TIP5P-Ewald model are shown below and the PDF in the arXiv Library: https://arxiv.org/abs/2311.01182 (2023).
+This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm to study the microwave heating of water and ice  (JCP, 2007, Ref. 2). The new results by the 5-body rotation coordinate system and TIP5P-Ewald model are shown below and the PDF in the arXiv Library: https://arxiv.org/abs/2311.01182 (2023, 2024).
 
 The fortran code with MPI is given in the file @p3mtip5p07a.f03 with additional files as  
 param_tip5D07a.h, TIP507_config.start0, and initial coordinates 1cx666a.exyz and quaternions 1cx666a.q. Its description of the code is shown at README.md and also PDF documents of this repository. The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics simulation run by "Water_and_hydrate_molecules_by_TIP5P_code.pdf". 
@@ -19,11 +19,11 @@ Methane hydrate is simulated by switching to if_xyz1=.true. of the TIP5P code,
 like with the SPC/E code (Ref. 3). We need the initial coordinate file mh3.exyz and quaternions mh3.q. 
 It runs up to t= 1.7 x 10^(-8) s with E_x = 3. x 10^7 V/cm, which is terminated suddenly due to 
 collapse of methane hydrate. Energies and scatter plots of molecules, the distribution of cosine's 
-in the x-direction are shown in the PDF file "MDTip5pWater-7.pdf", the new version at https://arxiv.org/abs/2311.01182v7 (2024).
+in the x-direction are shown in the PDF file "MDTip5pWater-8.pdf", the new version at https://arxiv.org/abs/2311.01182v8 (2024).
 
 As natural resources, however, the methanes are 60 times environmentally more hazardous 
-materials than carbon dioxide. Methane hydrates that will be mined and then burnt in air 
-should be confined again back to the deep interior of the earth.
+materials than carbon dioxide. The methane hydrate that will be mined and then burnt in air 
+should be confined back to the deep interior of the earth.
 
 ### Procedure of Water Molecules by Five-Points Model ###
 
