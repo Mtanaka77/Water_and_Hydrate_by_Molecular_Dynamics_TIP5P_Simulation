@@ -17,21 +17,21 @@
 !* ------------------------------------------------------------  *
 !*                                                               *
 !*   Files for this simulation                                   *
-!*      @p3mtip5p  code name (p3m + tip5p)                       *
-!*              07a  run name and sequential number (a,b,c...)   *
+!*      @p3mtip5p code name (p3m + tip5p)                        *
+!*          07a is a run name and sequential number (a,b,c...)   *
 !*                                                               *
-!*   1. @p3mtip5p07a.f03 : simulation code                       *
+!*   1. @p3mtip5p07a.f03 : MD simulation code                    *
 !*   2. param_tip5p_D07a.h : parameter file, physical constants  *
-!*   3. TIP507_config.start0 : parameter file, kstart=0 or 2     *
+!*   3. TIP507_config.start0 : parameter file, kstart=0          *
 !*      or continuation TIP507_config.start1 : kstart=1 or 3     *
 !*   4. Initial molecules (exyz and quaternion)                  *             
-!*      1cx666a.exyz, 1cx666a.q for water                        *   
-!*      or mh3.exyz, mh3.q for methane hydrate                   *  
-!*      Refer to if_xyz1 or if_xyz2 in subroutine /init/         *
+!*      1cx666a.exyz/1cx666a.q for liquid water, 1cx666b.xyz in  *
+!*      230 K or mh3.exyz,mh3.q for methane hydrate.             *  
+!*      Refer to if_xyz1 or if_xyz2 parts in subroutine /init/.  *
 !*                                                               *
 !*   Histories:                                                  *
 !*     Translation and rotation of molecules                     *
-!*      5-point hydregen and oxygen pairs                        * 
+!*      5-point hydrogen and oxygen pairs                        * 
 !*      prefactor (realteil) and pref_eps (Lennard-Jones)        *
 !*      epslj_A,B for water, ep(i) for hybrid molecules.         *
 !*                                                               *
@@ -746,7 +746,7 @@
 !     t_init=     1000.d0   !<- at kstart=0, in param
 !     t_wipe_sta= 1700.d0   !<- salt wipe, in parameter 
 !     t_wipe_end= 4700.d0 
-      t_wipe= t_wipe_end -t_wipe_sta  
+!     t_wipe= t_wipe_end -t_wipe_sta  
 !*
       if(kstart.eq.0) then
 !
@@ -773,8 +773,9 @@
         end if
       end if
 !*
-!  for np=0
+!  Ice 1c: ice 273 K is eps= 91.5 (Eyring et al., PNAS 1966)
       if(temperat.lt.273.d0) go to 230
+!                 +++++++++ 
 !
 !  Pseudo salt is wiped out: 
 !   t_wipe_sta=1700. and t_wipe_end=4700 
@@ -866,6 +867,7 @@
         yg1= (16*ya(i) +ya(i+1) +ya(i+2))/18.d0
         zg1= (16*za(i) +za(i+1) +za(i+2))/18.d0
 !
+!  A_ij is read from /init/ at the first step.
         xr1= xa(i) -xg1
         yr1= ya(i) -yg1
         zr1= za(i) -zg1
@@ -1229,7 +1231,7 @@
           write(11,'(/,"  time:      e_kin.W     e_img.W     e_kin(M) ", &
                    "   e_c_r       e_lj        e_p3m       e_tot      ", &
                    "   walltm     vm         exc        <ekin>     <eimg>", &
-                   "         cpu0        cpu1        cpu2")') 
+                   "        cpu0        cpu1        cpu2        cpu3")') 
         end if
 !
         s0= 0
@@ -1308,7 +1310,7 @@
         xwat(is)= sx3/nq1
 !
 !*
-        write(11,'("t=",f9.1,1p7e12.4,2x,5d11.3,2x,4d13.3)') &
+        write(11,'("t=",f9.1,1p7e12.4,2x,5d11.3,2x,4d12.3)') &
                       time(is),ekin0,eimg(is),ekin1,         &
                       ecr(is),elj(is),ep3m(is),etot(is),     &
                       wall_time7,vm,exc,ekin0/nq1,eimg(is)/nq1, &
@@ -2152,8 +2154,8 @@
       implicit none
 !
       include    'param_tip5p_D07a.h'
-      include    'aslfftw3.f03' ! by SX
-!     include    'fftw3.f03'    ! by Intel, or parallel case
+!     include    'aslfftw3.f03' ! by SX
+      include    'fftw3.f03'    ! by Intel, or parallel case
 !                  "call fftw_plan_with_nthreads" must be commented out 
 !
 !     integer(C_INT),save :: n_thread
@@ -2216,7 +2218,7 @@
 !       call fftw_plan_with_nthreads (n_thread)
 !
 !  in SX case
-       call fftw_plan_with_nthreads (omp_get_max_threads()) 
+!      call fftw_plan_with_nthreads (omp_get_max_threads()) 
 !
 !       call dfftw_plan_dft_r2c_3d  &
         plan= fftw_plan_dft_r2c_3d  &
@@ -2340,7 +2342,6 @@
 !
 !
       fft_scale2= mesh**3  
-!     call dfftw_execute_dft_r2c (plan,qq,qq_c)
       call fftw_execute_dft_r2c (plan,qq,qq_c)
 !
 !
@@ -2363,7 +2364,6 @@
       end do 
       end do 
 !
-!     call dfftw_execute_dft_c2r (pinv,phi_x_c,phi_x)
       call fftw_execute_dft_c2r (pinv1,phi_x_c,phi_x)
       call fftw_execute_dft_c2r (pinv2,phi_y_c,phi_y)
       call fftw_execute_dft_c2r (pinv3,phi_z_c,phi_z)
@@ -3130,19 +3130,23 @@
                "           for temperature (k) = ",0pf8.1,/,         &
                " ************************************************",/)') &
                                     a_unit,t_unit,w_unit,vth0,temperat
+!
+        write(11,*) "if_xyz1=",if_xyz1,"  if_xyz2=",if_xyz2
+        write(11,*)
       end if
 !
 !  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 !!    if(kstart.eq.1 .or. kstart.eq.3) then  ! L.601: np= 0
 !!      np= 0                                ! parm.h must declare np=0
 !!    end if
+!
       if(if_xyz1) then
         nq= 6210  ! 5-point water 6210 atoms, 1242 molecules
         np=  216  ! unified atom, 216 (1080 CH4 atoms)
 !
-!  [1] number of atoms
+!  [1] number of atoms for water
       else if(if_xyz2) then
-        nq=  nq0  ! 1cx666a.exyz <- nq=8640 atoms
+        nq=  nq0  ! 1cx666a.exyz <- nq=8640 atoms (6912,4-body)
         np=  np0  ! Salt ions    <- np=4
       end if
 !
@@ -3151,16 +3155,17 @@
 !* General
 !
       l= 0
-      do i= 1,nq,5  ! O-H(1)-H(2)-L(1)-L(2)
+      do i= 1,nq,5   ! O-H(1)-H(2)-L(1)-L(2)
       l= l +5
 !
-      ch(l-4)=  0         ! q_O= 0  ! -0.85 e
+      ch(l-4)=  0    ! q_O= 0 
       ch(l-3)=  q_H
       ch(l-2)=  q_H
       ch(l-1)=  q_L
       ch(l  )=  q_L
 !
-!  For exc             TIP4P        SPC
+!  For Exc             TIP4P        SPC
+!     ch(l-3)=  0    ! 0         ! 
 !     ch(l-2)=  q_H  ! 0.4238d0  !  0.42 e
 !     ch(l-1)=  q_O  !-0.8476d0  ! -0.85 e
 !     ch(l  )=  q_H  ! 0.4238d0  !  0.42 e
@@ -3171,7 +3176,7 @@
       qch(l  )=  0
 !
       am(l-4)= masso      ! 16.  ! O
-      am(l-3)= massh      ! 16.  ! O
+      am(l-3)= massh      !  1.  ! H
       am(l-2)= massh      !  1.  ! H
       am(l-1)= 0
       am(l  )= 0
@@ -3214,10 +3219,8 @@
 !# Radius of counterion Na+............:    0.9200000000000000
 !# Radius of coion Cl-.................:    1.5890000000000000
 !
-      if(np.gt.0) then
-!*
       if(if_xyz2) then
-!
+!+
         j= nq1
         do i= nq+1,nq+np
         j= j +1
@@ -3243,9 +3246,10 @@
           amm(j)= massCl
         end if
         end do
+      end if
 !
-      else if(if_xyz1) then
-!*
+!
+      if(if_xyz1) then
         do i= nq+1,nq+np
         l= l +1
         ch(l)= 0
@@ -3257,21 +3261,19 @@
         do j= nq1+1,nq1+np
         amm(j)= massme
         end do
-!*
-      end if 
       end if 
 !++++++++++++++++++++++++++++++++++++++++++++++++++
 !
       if(io_pe.eq.1) then
         if(np.gt.0) then
-        do i= nq+1,nq+np
-        write(11,'(" i, ch, am, ep, qch,ag(MM)=",i5,1p5d12.5)') &
+          do i= nq+1,nq+np
+          write(11,'(" i, ch, am, ep, qch,ag(MM)=",i5,1p5d12.5)') &
                                  i,ch(i),am(i),ep(i),qch(i),ag(i)
-        end do
+          end do
         end if
 !
         write(11,*)
-        write(11,*) "L.3250: nq=",nq
+        write(11,*) "L.3270: nq=",nq
         write(11,*) " this l is=",l
 ! 
         write(11,*)
@@ -3307,7 +3309,7 @@
 !*  use ice(ic) maker iceic.c by m.matsumoto     *
 !*************************************************
 !  kstart= 0 is continued below
-!  both 1cx444_.exyz and 1cx444_.q must be changed !
+!  both 1cx666_.exyz and 1cx666_.q must be changed !
 !
       if(if_xyz1) then
 !
@@ -3316,11 +3318,10 @@
       else if(if_xyz2) then
 !
         open (unit=17,file='1cx666a.exyz',form='formatted')  ! 273 K 
-      end if
+      end if                                                 ! in data  
 !
       if(io_pe.eq.1) then
 !       write(11,*) "FT17: mh3.exyz for test case"
-!       write(11,*) "FT17: mhl.exyz for test case"
         write(11,*) "FT17: 1cx666a.exyz for water"
         write(11,*) "......................................."
       end if
@@ -3373,7 +3374,17 @@
       yhh= (ya(i+2)+ya(i+1))/2
       zhh= (za(i+2)+za(i+1))/2
 !
+!     phwat  = 104.52d0   ! tip4p
+!     doh    =  0.9572d0 
+!     dohcos = doh * cos(pi*phwat/(2*180.d0))
+!     dohsin = doh * sin(pi*phwat/(2*180.d0))
+!
+!     phtop  = 109.47d0
+!     doL    = 0.70d0
+!     doLcos = doL * cos(pi*phtop/(2*180.d0))
+!     doLsin = doL * sin(pi*phtop/(2*180.d0))
       dohL = dohcos +doLcos
+!          (x1+x2)/2  (doh*cos1 +doL*cos2)
       xpoint= xhh +dohL*xxb/vec1
       ypoint= yhh +dohL*yyb/vec1
       zpoint= zhh +dohL*zzb/vec1
@@ -3390,6 +3401,16 @@
       xa(i+4)= xpoint -doLsin*xxc/vec3
       ya(i+4)= ypoint -doLsin*yyc/vec3
       za(i+4)= zpoint -doLsin*zzc/vec3
+!
+      if(io_pe.eq.1 .and. i.le.1) then
+        write(11,*) "i=1-5"
+        write(11,995) i,xa(i),ya(i),za(i)       ! O
+        write(11,995) i+1,xa(i+1),ya(i+1),za(i+1)
+        write(11,995) i+2,xa(i+2),ya(i+2),za(i+2)
+        write(11,995) i+3,xa(i+3),ya(i+3),za(i+3)
+        write(11,995) i+4,xa(i+4),ya(i+4),za(i+4)
+  995   format(i5,3f8.3)
+      end if
 !
 !  GC position of water
       xg0= (16*xa(i) +xa(i+1) +xa(i+2))/18.d0 
@@ -3451,7 +3472,7 @@
 !
   373 nq= i - 1
       if(io_pe.eq.1) then
-        write(11,*) "L.3280, this value is nq=",nq
+        write(11,*) "L.3450, this value is nq=",nq
 !
         write(11,*) "tip5/p..."
         do i= 1,10
@@ -3549,7 +3570,7 @@
         write(11,*) "....................."
         write(11,*)
 !
-        write(11,*) "L.3400: tip     ch     am      ep      ag"
+        write(11,*) "L.3550: tip     ch     am      ep      ag"
         do i= 1,10
         write(11,'(a2,3x,1p4d12.5)') tip(i),ch(i),am(i),ep(i),ag(i)
   381   format(a2,3x,1p3d12.5)
@@ -3695,7 +3716,6 @@
 !
       else if(if_xyz2) then
         open (unit=30,file='1cx666a.q',form='formatted') 
-!
       end if
 !
 !  Format of f18.15,a1 is changed to f8.5,a1,410.4 !!
@@ -3709,7 +3729,7 @@
 !
         if(io_pe.eq.1) then
         if(if_xyz1) then
-          write(11,*) "1cx666a.q"
+          write(11,*) "mh3.q"
         else if(if_xyz2) then
           write(11,*) "1cx666a.q"
         end if
