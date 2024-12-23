@@ -56,8 +56,8 @@ Each step of the cycle corresponds to (i) translational motion (Step 1),
 (ii) rotational motion (Step 2-4), and (iii) addition of the fields (Step 5-8).
 
 0) Read positions $(x,y,z)$ and quaternions from files by 
-$``read(17) x_{i},y_{i},z_{i}"$ ($i=1,N$), where the dummy sites are obtained 
-by algebraic operation, and $``read(30) e_{0j},e_{1j}, e_{2j}, e_{3j}``$ ($j=1,N/5$).
+$ read(17) x_{i},y_{i},z_{i} ($i=1,N$), where the dummy sites are obtained 
+by algebraic operation, and $ read(30) e_{0j},e_{1j}, e_{2j}, e_{3j} ($j=1,N/5$).
 The initial configuration of water and ice "GenIce" is constracted by
 Dr. M. Matsumote (Ref. 4). This step is executed only at the first time step. 
 
