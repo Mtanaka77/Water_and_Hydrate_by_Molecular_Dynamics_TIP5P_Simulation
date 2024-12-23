@@ -188,7 +188,7 @@ Methane hydrate that is excited by microwaves application is heated and eventual
 
 ### Necessary Files of the Repository ###
 
-Files for simulation 
+Files for simulation runs: 
 
 !*   1. @p3mtip5p07a.f03 : simulation code                       
 
@@ -198,9 +198,9 @@ Files for simulation
 
 !*      and/or TIP507_config.start1 : kstart=1 or 3              
 
-!*   4. Initial files of water : 1c666a.exyz and 1c666a.q
+!*   4. Initial files of water and ice: 1c666a.exyz and 1c666a.q
 
-Post-processing files                                
+Post-processing files:                                
 
 !*   * @lplotip507.f03 - the final history of energy             
 
@@ -210,7 +210,7 @@ Post-processing files
 
 !*   * @wat_radtip507.f03 - radial distribution functions        
                                                          
-References of Numerical Technique
+References of Numerical Technique:
 
 !* 1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).   
 
