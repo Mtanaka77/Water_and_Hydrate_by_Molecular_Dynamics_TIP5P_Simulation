@@ -11,8 +11,8 @@ using the Lennard-Jones potential Psi(r)= eps_A/r^12 -eps_B /r^6 (Ref. 1).
 This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm 
 to study the microwave heating of water and ice. It was shown in the first generation that 
 the ice below 273 K becomes a crystal and is not melted (JCP, 2007, Ref. 2).
-
-The new results by the 5-body rotation coordinate system and TIP5P-Ewald model are shown below and the PDF in the arXiv Library: https://arxiv.org/abs/2311.01182 (2023, 2024).
+The new results by the 5-body rotation coordinate system and TIP5P-Ewald model are shown below 
+and the PDF in the arXiv Library: https://arxiv.org/abs/2311.01182 (2023, 2024).
 
 The fortran code with MPI is given in the file @p3mtip5p07a.f03 with additional files as param_tip5D07a.h, TIP507_config.start0, and initial coordinates 1cx666a.exyz and quaternions 1cx666a.q. Its description of the code is shown at README.md and also PDF documents of this repository. The latter documents are "Water_TIP5P_Simulation.pdf" for numerical coding, and for the physics simulation run by "Water_and_hydrate_molecules_by_TIP5P_code.pdf". 
 The freezing ice state by microwaves, which is our theory discovery in JCP 2007 mentioned 
