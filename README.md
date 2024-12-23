@@ -59,16 +59,17 @@ Each step of the cycle corresponds to (i) translational motion (Step 1),
 $``read(17) \ x_{i},y_{i},z_{i}"$ ($i=1,N$), where the dummy sites are obtained 
 by algebraic operation, and  
 $``read(30) \ e_{0j},e_{1j}, e_{2j}, e_{3j}``$ ($j=1,N/5$).
-This step is executed only at the first time.
+The initial configuration of water and ice "GenIce" is constracted by Dr. M. Matsumote (Ref. 4).  
+This step is executed only at the first time step. 
 
-1) The position $\bm{R}_{j}$ and velocity $\bm{V}_{j} $ of each molecule ($j=1,N/5$) are advanced by summation over five sites of forces $\bm{F}_{k}$ for the translational motion
+2) The position $\bm{R}_{j}$ and velocity $\bm{V}_{j} $ of each molecule ($j=1,N/5$) are advanced by summation over five sites of forces $\bm{F}_{k}$ for the translational motion
 $(k=1,N)$,
 \begin{equation}
 d\bm{V}_{j}/dt= (1/m_{j})\sum_{k=1}^{5} \bm{F}_{k}, \ \ 
 d\bm{R}_{j}/dt= \bm{V}_{j}.
 \end{equation}
 
-2) Next 2)-5) steps are made for half a time steps $\Delta t_{1}=\Delta t/2$ by prediction, 
+3) Next 2)-5) steps are made for half a time steps $\Delta t_{1}=\Delta t/2$ by prediction, 
 and then for a full time step $\Delta t_{2}= \Delta t$ by correction.
 The angular momentum of rotational motion is calculated by summation over the torque of five sites at a time step $\Delta t_{1}$ or $\Delta t_{2}$,
 \begin{equation}
@@ -76,7 +77,7 @@ The angular momentum of rotational motion is calculated by summation over the to
 z_{k}F_{k}^{x} -x_{k}F_{k}^{z}, x_{k}F_{k}^{y} -y_{k}F_{k}^{x})
 \end{equation}
 
-3) The angular frequency $\omega_{j,\alpha}$ is connected to the angular mementum 
+4) The angular frequency $\omega_{j,\alpha}$ is connected to the angular mementum 
 and inertia moment $Im_{j,\alpha}$ with $\alpha= x,y,z$ and the matrix 
 $A_{\alpha,\beta}$ by,
 \begin{equation} 
