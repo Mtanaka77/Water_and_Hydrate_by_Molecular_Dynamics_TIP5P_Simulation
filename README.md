@@ -59,8 +59,8 @@ Each step of the cycle corresponds to (i) translational motion (Step 1),
 $``read(17) \ x_{i},y_{i},z_{i}"$ ($i=1,N$), where the dummy sites are obtained 
 by algebraic operation, and  
 $``read(30) \ e_{0j},e_{1j}, e_{2j}, e_{3j}``$ ($j=1,N/5$).
-The initial configuration of water and ice "GenIce" is constracted by Dr. M. Matsumote (Ref. 4).  
-This step is executed only at the first time step. 
+The initial configuration of water and ice "GenIce" is constracted by
+Dr. M. Matsumote (Ref. 4). This step is executed only at the first time step. 
 
 2) The position $\bm{R}_{j}$ and velocity $\bm{V}_{j} $ of each molecule ($j=1,N/5$) are advanced by summation over five sites of forces $\bm{F}_{k}$ for the translational motion
 $(k=1,N)$,
