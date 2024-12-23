@@ -3,7 +3,7 @@
 We are studying the microwave heating of water and ice by means of the molecular dynamics TIP5P model (with if_xyz2=.true.), and that of the ice and methane hydrate (with if_xyz1=.true.) by the same code.
 
 This is the second generation code against the first one of 3-point SPC/E shake/rattle algorithm 
-to study the microwave heating of water and ice. It was shown in the first generation code that 
+to study the microwave heating of water and ice. It was shown clearly in the first generation code that 
 the ice below 273 K becomes a crystal and is not melted against the strong electric field of microwaves 
 (JCP, 2007, Ref. 1).
 The new results by the 5-body rotation coordinate system and TIP5P-Ewald model are shown below 
