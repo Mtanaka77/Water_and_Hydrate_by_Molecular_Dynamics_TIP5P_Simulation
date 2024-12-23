@@ -151,7 +151,7 @@ that equally separates the HOH angle.
 ### In Order to Start a Run ###
 
 To start a simulation of water cluster with the TIP5P code, the adjacent 4x4 hydrogen pairs of molecules 
-are summed electrostatically, and also the oxygen pairs are coupled by TIP5P Lennard-Jones potentials.
+are summed electrostatically, and also the oxygen pairs are coupled by TIP5P Lennard-Jones potentials (Ref. 5).
 
 1. To get an initial state, we make the size of at least a 6x6x6 water cluster for numerical stability.
 Short-range Coulombic and long-range forces are best separated for interactions, where the short-range 
@@ -182,7 +182,7 @@ to the surrounding system. It is possible to have rapid heating of hot bubbling 
 ### Figures of TIP5P-Model Simulations ###
 
 Molecular dynamics simulations of water and ice, and/or methane hydrate, are shown by using the TIP5P-Ewald model, 
-and the current file is "Water_and_hydrate_by_molecular_dynamics_TIP5P_code.pdf" in this repository.
+and the current file is "Water_and_hydrate_by_molecular_dynamics_TIP5P_code.pdf" in this repository (Ref. 5).
 
 Figures in the color PDF file are water and ice and/or methane hydrate that include the energy of molecules, 
 3-dimensional scatter plots, pair distribtion functions of oxygen and hydrogen atoms, and 
