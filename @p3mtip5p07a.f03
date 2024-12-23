@@ -1,6 +1,6 @@
 !************************************************** May, 2023 ****
 !*                                                               *
-!*   ## Molecular Dynamics of Water and Ice by TIP5P Code ##     *
+!*  ## Molecular Dynamics Simulation of Water by TIP5P Model ##  *
 !*     - Microwave heating, ice below T=273 K is not melted      * 
 !*                                                               *
 !*   Author/Maintainer: Motohiko Tanaka, Ph.D., Nagoya, Japan    *
@@ -8,7 +8,7 @@
 !*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
 !*   Copyright(C) 2006-2024. All rights reserved.                *
 !*                                                               *
-!*   Reference                                                   * 
+!*   References                                                  * 
 !*   1) M.Tanaka, J.Comput.Phys., vol. 79, 206 (1988).           *
 !*   2) M.Tanaka, J.Comput.Phys., vol.107, 124 (1993).           *
 !*   3) M.Tanaka, Comput.Phys.Comm., vol.87, 117 (1995).         *
@@ -18,15 +18,15 @@
 !*                                                               *
 !*   Files for this simulation                                   *
 !*      @p3mtip5p code name (p3m + tip5p)                        *
-!*          07a is a run name and sequential number (a,b,c...)   *
+!*      07a is a run name (07) and sequential number (a,b,c...)  *
 !*                                                               *
 !*   1. @p3mtip5p07a.f03 : MD simulation code                    *
 !*   2. param_tip5p_D07a.h : parameter file, physical constants  *
 !*   3. TIP507_config.start0 : parameter file, kstart=0          *
-!*      or continuation TIP507_config.start1 : kstart=1 or 3     *
-!*   4. Initial molecules (exyz and quaternion)                  *             
+!*      or continuation TIP507_config.start1 : kstart>=1         *
+!*   4. Initial molecules setting (exyz and quaternion)          *             
 !*      1cx666a.exyz/1cx666a.q for liquid water, 1cx666b.xyz in  *
-!*      230 K or mh3.exyz,mh3.q for methane hydrate.             *  
+!*      230 K, or mh3.exyz,mh3.q for methane hydrate.            *  
 !*      Refer to if_xyz1 or if_xyz2 parts in subroutine /init/.  *
 !*                                                               *
 !*   Histories:                                                  *
@@ -65,9 +65,9 @@
 !*                calculate_meshift, etc.                        *
 !*              moldyn - pre-steps  kstart=0,2, or kstart=1,3    *
 !*                     - long 1000 loop                          *
-!*                       -> realteil - forces_5                  *
-!*                       -> p3m_perform                          *
-!*                       -> make files for write(13), write(23)  *
+!*                      -> realteil - forces_5                   *
+!*                      -> p3m_perform                           *
+!*                      -> write files for write(13), write(23)  *
 !*              write(12) for preparation of the next restart    *
 !*                                                               *
 !*   Post-processing programs:                                   *
@@ -78,9 +78,9 @@
 !*   * @wat_radtip507.f03 - pair distribution functions          *
 !*                                                               *
 !*****************************************************************
-!  Only parallel fortran 2003: 
-!     mpif90 -mcmodel=medium -fpic @p3mtip5p07a.f03  &
-!      -I/opt/fftw-3.3.10/include -L/opt/fftw-3.3.10/lib -lfftw3 
+!  Only parallel Fortran 2003: 
+!     mpif90 -mcmodel=medium -fpie @p3mtip5p07a.f03  &
+!      -I/opt/fftw-3/include -L/opt/fftw-3/lib -lfftw3 
 !
 !  FT11 is opened at L.85 and closed at L.690. Afterwards it is
 !  by open/close statements when write's action is called.
