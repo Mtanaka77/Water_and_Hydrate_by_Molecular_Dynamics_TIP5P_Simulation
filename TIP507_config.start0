@@ -1,18 +1,18 @@
 # Praefix-String......................: TIP50701
-# Maximum cpu time for this run..min .:   590.10000000000000
-# Physikalische Endzeit...770000......:  770000.000000000000
+# Maximum cpu time for this run..min .:   590.50000000000000
+# Physikalische Endzeit...770000......:    50.50000000000000
 # Diskretisierungs-Schritt (10fs).....:     0.02500000000000
-# Write out interval IWRT1.FT13,23  50:    50.00000000000000 
+# Write out interval IWRT1.FT13,23  50:    10.00000000000000 
 # Write out interval for IWRT2..ppl3d.:  5000.00000000000000 
 # Interval of iwrth for.write(12).....:  5000.00000000000000 
-# Length of equilibration  kstart=0...:  50000.0000000000000
+# Length of equilibration  kstart=0...:     0.00000000000000
 # Valenz der Gegenionen...............:    1.000000000000000
 # Valenz der negativen Salzionen......:   -1.000000000000000
 # Radius of Na (Ang).....,............:    1.280000000000000
 # Radius of Cl (Ang)..................:    2.224000000000000
 # LJ energy of Na..0.0148, C..0.0374..:    0.014800000000000
 # LJ energy of Cl (kcal/mol)..........:    0.106400000000000
-# Temperature (Kelvin)...... 100 atm..:  273.000000000000000
+# Temperature (Kelvin)...... 100 atm..:  230.000000000000000
 # Ortsraum-Cutoff (Ang)...............:   10.000000000000000
 # LJ-Cutoff..1.1224620..>tip5p-Ewald..:    3.476300000000000
 # alpha..by Deserno 1999. 0.245..>new.:    0.350000000000000

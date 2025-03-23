@@ -29,6 +29,12 @@
 !*      230 K, or mh3.exyz,mh3.q for methane hydrate.            *  
 !*      Refer to if_xyz1 or if_xyz2 parts in subroutine /init/.  *
 !*                                                               *
+!*   +  Generic function names are used, for example, they are   *
+!*      anint <- dnint, abs <- dabs, cabs, etc.                  * 
+!*      cmplx(real,imag,kind(0d0)) for double complex            *
+!*      dble(integer) is equivalent to real(integer,kind(0d0))   *
+!*      for double real                            March 2025    *
+!*                                                               *
 !*   Histories:                                                  *
 !*     Translation and rotation of molecules                     *
 !*      5-point hydrogen and oxygen pairs                        * 
@@ -1406,9 +1412,9 @@
 !
 !
         do i= 1,nq+np
-        x4(i)= x4(i) -DNINT(x4(i)/xmax)*xmax
-        y4(i)= y4(i) -DNINT(y4(i)/ymax)*ymax
-        z4(i)= z4(i) -DNINT(z4(i)/zmax)*zmax
+        x4(i)= x4(i) -anint(x4(i)/xmax)*xmax
+        y4(i)= y4(i) -anint(y4(i)/ymax)*ymax
+        z4(i)= z4(i) -anint(z4(i)/zmax)*zmax
         end do
 !
         write(23,'(i5,/)') nq+np
@@ -1801,9 +1807,9 @@
         dx1= xa(i) -xa(j)
         dy1= ya(i) -ya(j)
         dz1= za(i) -za(j)
-        dx1= dx1 -DNINT(dx1/xmax)*xmax
-        dy1= dy1 -DNINT(dy1/ymax)*ymax
-        dz1= dz1 -DNINT(dz1/zmax)*zmax
+        dx1= dx1 -anint(dx1/xmax)*xmax
+        dy1= dy1 -anint(dy1/ymax)*ymax
+        dz1= dz1 -anint(dz1/zmax)*zmax
         call forces_5 (dx1,dy1,dz1,ch(i),ch(j),xmax,ymax,zmax,  &
                        alpha,e_c_r1,forceV1)
         fec(i,1) = fec(i,1) +forceV1*dx1
@@ -1814,9 +1820,9 @@
         dx2= xa(i) -xa(j)
         dy2= ya(i) -ya(j)
         dz2= za(i) -za(j)
-        dx2= dx2 -DNINT(dx2/xmax)*xmax
-        dy2= dy2 -DNINT(dy2/ymax)*ymax
-        dz2= dz2 -DNINT(dz2/zmax)*zmax
+        dx2= dx2 -anint(dx2/xmax)*xmax
+        dy2= dy2 -anint(dy2/ymax)*ymax
+        dz2= dz2 -anint(dz2/zmax)*zmax
         call forces_5 (dx2,dy2,dz2,ch(i),ch(j),xmax,ymax,zmax,  &
                        alpha,e_c_r2,forceV2)
         fec(i,1) = fec(i,1) +forceV2*dx2
@@ -1827,9 +1833,9 @@
         dx3= xa(i) -xa(j)
         dy3= ya(i) -ya(j)
         dz3= za(i) -za(j)
-        dx3= dx3 -DNINT(dx3/xmax)*xmax
-        dy3= dy3 -DNINT(dy3/ymax)*ymax
-        dz3= dz3 -DNINT(dz3/zmax)*zmax
+        dx3= dx3 -anint(dx3/xmax)*xmax
+        dy3= dy3 -anint(dy3/ymax)*ymax
+        dz3= dz3 -anint(dz3/zmax)*zmax
         call forces_5 (dx3,dy3,dz3,ch(i),ch(j),xmax,ymax,zmax,  &
                        alpha,e_c_r3,forceV3)
         fec(i,1) = fec(i,1) +forceV3*dx3
@@ -1840,9 +1846,9 @@
         dx4= xa(i) -xa(j)
         dy4= ya(i) -ya(j)
         dz4= za(i) -za(j)
-        dx4= dx4 -DNINT(dx4/xmax)*xmax
-        dy4= dy4 -DNINT(dy4/ymax)*ymax
-        dz4= dz4 -DNINT(dz4/zmax)*zmax
+        dx4= dx4 -anint(dx4/xmax)*xmax
+        dy4= dy4 -anint(dy4/ymax)*ymax
+        dz4= dz4 -anint(dz4/zmax)*zmax
         call forces_5 (dx4,dy4,dz4,ch(i),ch(j),xmax,ymax,zmax,  &
                        alpha,e_c_r4,forceV4)
         fec(i,1) = fec(i,1) +forceV4*dx4
@@ -1873,9 +1879,9 @@
       dx1= xa(i) -xa(j)
       dy1= ya(i) -ya(j)
       dz1= za(i) -za(j)
-      dx1= dx1 -DNINT(dx1/xmax)*xmax
-      dy1= dy1 -DNINT(dy1/ymax)*ymax
-      dz1= dz1 -DNINT(dz1/zmax)*zmax
+      dx1= dx1 -anint(dx1/xmax)*xmax
+      dy1= dy1 -anint(dy1/ymax)*ymax
+      dz1= dz1 -anint(dz1/zmax)*zmax
       call forces_5 (dx1,dy1,dz1,ch(i),ch(j),xmax,ymax,zmax,  &
                      alpha,e_c_r1,forceV1)
 !
@@ -1883,9 +1889,9 @@
       dx2= xa(i) -xa(j)
       dy2= ya(i) -ya(j)
       dz2= za(i) -za(j)
-      dx2= dx2 -DNINT(dx2/xmax)*xmax
-      dy2= dy2 -DNINT(dy2/ymax)*ymax
-      dz2= dz2 -DNINT(dz2/zmax)*zmax
+      dx2= dx2 -anint(dx2/xmax)*xmax
+      dy2= dy2 -anint(dy2/ymax)*ymax
+      dz2= dz2 -anint(dz2/zmax)*zmax
       call forces_5 (dx2,dy2,dz2,ch(i),ch(j),xmax,ymax,zmax,  &
                      alpha,e_c_r2,forceV2)
 !
@@ -1893,9 +1899,9 @@
       dx3= xa(i) -xa(j)
       dy3= ya(i) -ya(j)
       dz3= za(i) -za(j)
-      dx3= dx3 -DNINT(dx3/xmax)*xmax
-      dy3= dy3 -DNINT(dy3/ymax)*ymax
-      dz3= dz3 -DNINT(dz3/zmax)*zmax
+      dx3= dx3 -anint(dx3/xmax)*xmax
+      dy3= dy3 -anint(dy3/ymax)*ymax
+      dz3= dz3 -anint(dz3/zmax)*zmax
       call forces_5 (dx3,dy3,dz3,ch(i),ch(j),xmax,ymax,zmax,  &
                      alpha,e_c_r3,forceV3)
 !
@@ -1903,9 +1909,9 @@
       dx4= xa(i) -xa(j)
       dy4= ya(i) -ya(j)
       dz4= za(i) -za(j)
-      dx4= dx4 -DNINT(dx4/xmax)*xmax
-      dy4= dy4 -DNINT(dy4/ymax)*ymax
-      dz4= dz4 -DNINT(dz4/zmax)*zmax
+      dx4= dx4 -anint(dx4/xmax)*xmax
+      dy4= dy4 -anint(dy4/ymax)*ymax
+      dz4= dz4 -anint(dz4/zmax)*zmax
       call forces_5 (dx4,dy4,dz4,ch(i),ch(j),xmax,ymax,zmax,  &
                      alpha,e_c_r4,forceV4)
 !
@@ -1925,9 +1931,9 @@
         dx1= xa(i) -xa(j)
         dy1= ya(i) -ya(j)
         dz1= za(i) -za(j)
-        dx1= dx1 -DNINT(dx1/xmax)*xmax
-        dy1= dy1 -DNINT(dy1/ymax)*ymax
-        dz1= dz1 -DNINT(dz1/zmax)*zmax
+        dx1= dx1 -anint(dx1/xmax)*xmax
+        dy1= dy1 -anint(dy1/ymax)*ymax
+        dz1= dz1 -anint(dz1/zmax)*zmax
         call forces_5 (dx1,dy1,dz1,ch(i),ch(j),xmax,ymax,zmax,  &
                        alpha,e_c_r1,forceV1)
 !
@@ -1997,9 +2003,9 @@
       dy= ya(i) -ya(j)
       dz= za(i) -za(j)
 !
-      dx= dx -DNINT(dx/xmax)*xmax
-      dy= dy -DNINT(dy/ymax)*ymax
-      dz= dz -DNINT(dz/zmax)*zmax
+      dx= dx -anint(dx/xmax)*xmax
+      dy= dy -anint(dy/ymax)*ymax
+      dz= dz -anint(dz/zmax)*zmax
 !
 !   prefactor= t_unit*e_unit)**2 /(w_unit*a_unit**3)
 !   pref_eps = t_unit**2/(w_unit*a_unit**2)
@@ -2090,6 +2096,8 @@
       subroutine forces_5 (dx,dy,dz,chi,chj,xmax,ymax,zmax,  &
                            alpha,e_c_r0,forceV)
 !*---------------------------------------------------------------------
+!  Short-range forces
+!
       use, intrinsic :: iso_c_binding 
       implicit none
       include  'param_tip5p_D07a.h'
@@ -2097,9 +2105,9 @@
       real(C_DOUBLE) :: dx,dy,dz,chi,chj,xmax,ymax,zmax,  &
                         alpha,e_c_r0,forceV,r,r2,ar,tt,erfc
 !
-      dx= dx -DNINT(dx/xmax)*xmax
-      dy= dy -DNINT(dy/ymax)*ymax
-      dz= dz -DNINT(dz/zmax)*zmax
+      dx= dx -anint(dx/xmax)*xmax  !<- generic function name of anint
+      dy= dy -anint(dy/ymax)*ymax
+      dz= dz -anint(dz/zmax)*zmax
 !
       r2 = dx**2 +dy**2 +dz**2
       r  = sqrt(r2)
@@ -2115,6 +2123,7 @@
 !
 !     rsc= dmax1(r,rscCL) 
       e_c_r0 = chi*chj*erfc*exp(-ar**2)/r 
+!
       forceV = chi*chj*(erfc/r +2.d0*alpha/sqrtpi)      &
                                           *exp(-ar**2)/r2 
       return
@@ -2142,12 +2151,13 @@
 !    Brillouin is now a parameter
 !    maxinterpol --> mintpol
 !    floor --> defined: must be stepwise at x= 0.
-!    dround --> = DNINT (round off to nearest integer). 
+!    dround --> = anint (round off to nearest integer). 
 !
 !*---------------------------------------------------------------------
       subroutine p3m_perform (xa,ya,za,ch,fek,npq,first_p3m)
 !*---------------------------------------------------------------------
 !  Only charged particles
+!
       use, intrinsic :: iso_c_binding
 !
       use omp_lib
@@ -2156,7 +2166,7 @@
       include    'param_tip5p_D07a.h'
 !     include    'aslfftw3.f03' ! by SX
       include    'fftw3.f03'    ! by Intel, or parallel case
-!                  "call fftw_plan_with_nthreads" must be commented out 
+!              "call fftw_plan_with_nthreads" must be commented out 
 !
 !     integer(C_INT),save :: n_thread
       type(C_PTR),save :: plan, pinv1,pinv2,pinv3
@@ -2241,15 +2251,15 @@
       end do
 !
 ! --------------------------------------
-      ei = cmplx(0.d0,1.d0,kind(0.d0))
+      ei = cmplx(0.d0,1.d0,kind(0d0))  !<- cmplx( , ,kind(0d0))
 ! --------------------------------------
-      pi = 4.d0*datan(1.d0)
+      pi = 4.d0*atan(1.d0)
       meshmask = mesh-1     
 !
-      dmesh = dfloat(mesh)
+      dmesh = dble(mesh)               !<- real( ,kind(0d0))
       hi = dmesh / Lewald
 !
-      mi2 = 2.d0*dfloat(mintpol)
+      mi2 = 2.d0*dble(mintpol)
       assignshift = mesh -(ip0-1)/2
 !
       qzahl = 0
@@ -2259,11 +2269,11 @@
 !  Charged sites of water H-H-M-M (O-site is not counted).
 !  Co/counter ions are counted.
       do i= 0,npq-1
-      if (dabs(ch(i)) .gt. 1.d-5) then 
-!                                  DNINT by round off (-0.5,0.5)
-        coop(qzahl, 0) = xa(i) - DNINT(xa(i)/Lewald -0.5d0)*Lewald 
-        coop(qzahl, 1) = ya(i) - DNINT(ya(i)/Lewald -0.5d0)*Lewald
-        coop(qzahl, 2) = za(i) - DNINT(za(i)/Lewald -0.5d0)*Lewald
+      if (abs(ch(i)) .gt. 1.d-5) then 
+!                                  anint by round off (-0.5,0.5)
+        coop(qzahl, 0) = xa(i) - anint(xa(i)/Lewald -0.5d0)*Lewald !<- generic name
+        coop(qzahl, 1) = ya(i) - anint(ya(i)/Lewald -0.5d0)*Lewald
+        coop(qzahl, 2) = za(i) - anint(za(i)/Lewald -0.5d0)*Lewald
 !
         qp(qzahl) = ch(i)
         sum_q_2 = sum_q_2 + qp(qzahl)
@@ -2305,17 +2315,17 @@
       d1  = coop(i,0)*hi + modadd1
       gi0 = int(d1 + modadd2) + assignshift
       g(i,0) = gi0 
-      xarg(i) = int( (d1 - DNINT(d1) + 0.5d0)*mi2 )
+      xarg(i) = int( (d1 - anint(d1) + 0.5d0)*mi2 )
 !      
       d1  = coop(i,1)*hi + modadd1 
       gi1 = int(d1 + modadd2) + assignshift
       g(i,1) = gi1
-      yarg(i) = int( (d1 - DNINT(d1) + 0.5d0)*mi2 )
+      yarg(i) = int( (d1 - anint(d1) + 0.5d0)*mi2 )
 !      
       d1  = coop(i,2)*hi + modadd1 
       gi2 = int(d1 + modadd2) + assignshift
       g(i,2) = gi2 
-      zarg(i) = int( (d1 - DNINT(d1) + 0.5d0)*mi2 )
+      zarg(i) = int( (d1 - anint(d1) + 0.5d0)*mi2 )
 !
       m0= -1
 !***
@@ -2442,7 +2452,7 @@
 !-----------
       exponent_limit = 30.d0
 !
-      pi = 4.d0*datan(1.d0)
+      pi = 4.d0*atan(1.d0)
       fak1 = 1.d0/dmesh
       fak2 = (pi/(alpha*Lewald))**2
 !
@@ -2510,7 +2520,7 @@
       end if
 !
       do i= 0,mesh-1
-      dn(i) = dfloat(i) - DNINT(dfloat(i)/dmesh)*dmesh
+      dn(i) = dble(i) - anint(dble(i)/dmesh)*dmesh
       end do
 !
       dn(mesh/2) = 0.d0
@@ -2602,7 +2612,7 @@
                      " charge assignment function")') ip0
       end if
 !
-      dinterpol= dfloat(mintpol)
+      dinterpol= dble(mintpol)
 !
       if (ip0.eq.1) then
       do i= -mintpol, mintpol
@@ -2741,7 +2751,7 @@
       end if
 !  
       do i= 0,mesh-1
-      meshift(i) = i - DNINT(i/dmesh)*dmesh
+      meshift(i) = i - anint(i/dmesh)*dmesh
       end do
 !
       return
@@ -2767,17 +2777,17 @@
       c6 = -0.1984126984127d-3
       c8 =  0.2755731922399d-5
 !
-      pi = 4.d0*datan(1.d0)
+      pi = 4.d0*atan(1.d0)
       pid = pi*d
 !
-      if (dabs(d).gt.epsi) then
+      if (abs(d).gt.epsi) then
          sinc = dsin(pid) / pid
       else 
          pid2 = pid*pid
          sinc = 1.d0 + pid2*( c2 + pid2*( c4 + pid2*(c6 + pid2*c8) ) )
       end if
 !
-      if(dabs(sinc).lt.1.d-100) sinc= 0
+      if(abs(sinc).lt.1.d-100) sinc= 0
 !
       return
       end function sinc
@@ -3022,7 +3032,7 @@
       integer(C_INT)   io_pe,i,j,k,l
       common/sub_proc/ io_pe
 !
-      real(C_DOUBLE) DNINT,shift,vmax1,dgaus2,svx,svy,svz,amas, &
+      real(C_DOUBLE) anint,shift,vmax1,dgaus2,svx,svy,svz,amas, &
                      xnum0,ynum0,znum0,e00,e10,e20,e30,rr
       real(C_float)  ranff
 !
@@ -3061,7 +3071,7 @@
 !        t^2*e^2/(w*a^3) *48 a/e^2 = 48 t^2/(w*a^2)= 48*pref_eps
 !     rlj = r/(ag(i)+ag(j))
 !     if(rlj.le.rlj_cut) then
-!       rlj0= dmax1(rlj,rlj_m)  ! if rlj > rlj_m 
+!       rlj0= max(rlj,rlj_m)  ! if rlj > rlj_m 
 !       rsi = 1.d0/rlj0**2
 !       snt = rsi*rsi*rsi
 !       epsav = sqrt(ep(i)*ep(j))
