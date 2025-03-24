@@ -3,7 +3,7 @@
 !*  ## Molecular Dynamics Simulation of Water by TIP5P Model ##  *
 !*     - Microwave heating, ice below T=273 K is not melted      * 
 !*                                                               *
-!*   Author/Maintainer: Motohiko Tanaka, Ph.D., Nagoya, Japan    *
+!*   Author: Motohiko Tanaka, Ph.D., Chukusa, Nagoya 464, Japan. *
 !*                                                               *
 !*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
 !*   Copyright(C) 2006-2024. All rights reserved.                *
@@ -749,6 +749,16 @@
                              *(1.d0 -exp(-(t8 -tequil)/200.d0)) 
       end if
 !
+      if(it.eq.1 .and. io_pe.eq.1) then
+        open (unit=11,file=praefixc//'.11'//suffix2,             & 
+              status='unknown',position='append',form='formatted')
+!
+        write(11,371) econv,edc,econv*edc
+        write(11,*)
+  371   format(' % econv,edc,econv*edc=',1p3d10.2)
+        close(11)
+      end if
+!
 !     t_init=     1000.d0   !<- at kstart=0, in param
 !     t_wipe_sta= 1700.d0   !<- salt wipe, in parameter 
 !     t_wipe_end= 4700.d0 
@@ -785,6 +795,8 @@
 !
 !  Pseudo salt is wiped out: 
 !   t_wipe_sta=1700. and t_wipe_end=4700 
+!
+      t_wipe= t_wipe_end -t_wipe_sta  
 !
       if(kstart.eq.0 .or. kstart.eq.2) then
 !*
@@ -1194,8 +1206,8 @@
         call clocks (wall_t04,size,cl_first)
 !
 !* End of the loop
-!*  do not fold back positions: (-l/2, l/2). 
-!   +++++++++++++++++++++  L.600: if i>nq, goto 1000
+!*  Do not fold back positions: (-l/2, l/2). 
+!   +++++++++++++++++++++  L.600: if i> nq, goto 1000
 !
 !------------------------------
 !*  Diagnosis section.
@@ -1236,8 +1248,8 @@
 !
           write(11,'(/,"  time:      e_kin.W     e_img.W     e_kin(M) ", &
                    "   e_c_r       e_lj        e_p3m       e_tot      ", &
-                   "   walltm     vm         exc        <ekin>     <eimg>", &
-                   "        cpu0        cpu1        cpu2        cpu3")') 
+                   "    walltm  vm          exc        <ekin>     <eimg>", &
+                   "       cpu0        cpu1        cpu2        cpu3")') 
         end if
 !
         s0= 0
@@ -1316,7 +1328,7 @@
         xwat(is)= sx3/nq1
 !
 !*
-        write(11,'("t=",f9.1,1p7e12.4,2x,5d11.3,2x,4d12.3)') &
+        write(11,'("t=",f9.1,1p7e12.4,2x,0pf9.1,1p4d11.3,2x,4d12.3)') &
                       time(is),ekin0,eimg(is),ekin1,         &
                       ecr(is),elj(is),ep3m(is),etot(is),     &
                       wall_time7,vm,exc,ekin0/nq1,eimg(is)/nq1, &
@@ -2164,8 +2176,8 @@
       implicit none
 !
       include    'param_tip5p_D07a.h'
-!     include    'aslfftw3.f03' ! by SX
-      include    'fftw3.f03'    ! by Intel, or parallel case
+      include    'aslfftw3.f03' ! by SX
+!     include    'fftw3.f03'    ! by Intel, or parallel case
 !              "call fftw_plan_with_nthreads" must be commented out 
 !
 !     integer(C_INT),save :: n_thread
@@ -2251,12 +2263,12 @@
       end do
 !
 ! --------------------------------------
-      ei = cmplx(0.d0,1.d0,kind(0d0))  !<- cmplx( , ,kind(0d0))
+      ei = cmplx(0.d0,1.d0,kind(0d0))  !<- cmplx(real,imag,kind(0d0))
 ! --------------------------------------
       pi = 4.d0*atan(1.d0)
       meshmask = mesh-1     
 !
-      dmesh = dble(mesh)               !<- real( ,kind(0d0))
+      dmesh = dble(mesh)               !<- real*8 dble(integer,kind(0d0))
       hi = dmesh / Lewald
 !
       mi2 = 2.d0*dble(mintpol)

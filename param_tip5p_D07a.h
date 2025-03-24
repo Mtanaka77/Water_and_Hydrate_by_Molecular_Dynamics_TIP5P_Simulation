@@ -6,10 +6,10 @@
       logical        if_xyz1,if_xyz2,if_obsv
 !
 ! /home2, or /lv01 for photon
-!     character     praefixs*29,praefixc*24,praefixe*24, &
-!                   praefixi*24,suffix2*2,suffix1*2,suffix0*1
-      character*4   praefixs*29,praefixc*29,praefixe*29, &
-                    praefixi*29,suffix2*2,suffix1*2,suffix0*1
+      character     praefixs*29,praefixc*24,praefixe*24, &
+                    praefixi*24,suffix2*2,suffix1*2,suffix0*1
+!     character*4   praefixs*29,praefixc*29,praefixe*29, &
+!                   praefixi*29,suffix2*2,suffix1*2,suffix0*1
 !
       real(C_DOUBLE) epsilon
       real(C_DOUBLE) t_init,t_wipe_sta,t_wipe_end
@@ -19,7 +19,7 @@
 !
       parameter  (kstart=0,suffix2='0a', & ! 120a is created
                            suffix1='0a', & ! TIP501__0 
-                           suffix0='0')    ! 
+                           suffix0='1')    ! 
 !     parameter  (kstart=2,suffix2='0b', & ! 120b, kstart=2
 !                          suffix1='0a', & ! TIP501__1
 !                          suffix0='1')    !        +++ 
@@ -27,14 +27,14 @@
 !                          suffix1='0b', & ! TIP501__1
 !                          suffix0='1')    ! 
 ! /home2, /lv01                          +++++++ short 
-!     parameter (praefixs='/home/tanakam/MPI_wat5/TIP600', & ! LXwat3
-!                praefixi='/data/sht/tanakam/tip600',      &
-!                praefixc='/data/sht/tanakam/tip600',      &
-!                praefixe='/data/sht/tanakam/tip600')
-      parameter (praefixs='/home/mtanaka/MPI_wat5/TIP507', & ! LXwat3
-                 praefixi='/home/mtanaka/MPI_wat5/tip507', &
-                 praefixc='/home/mtanaka/MPI_wat5/tip507', &
-                 praefixe='/home/mtanaka/MPI_wat5/tip507')
+      parameter (praefixs='/home/tanakam/MPI_wat5/TIP507', & ! LXwat3
+                 praefixi='/data/sht/tanakam/tip507',      &
+                 praefixc='/data/sht/tanakam/tip507',      &
+                 praefixe='/data/sht/tanakam/tip507')
+!     parameter (praefixs='/home/mtanaka/MPI_wat5/TIP507', & ! LXwat3
+!                praefixi='/home/mtanaka/MPI_wat5/tip507', &
+!                praefixc='/home/mtanaka/MPI_wat5/tip507', &
+!                praefixe='/home/mtanaka/MPI_wat5/tip507')
       parameter (if_xyz1=.false., if_xyz2=.true.,          &
                  if_obsv=.false.)  !! if .false,, save to a file 
 !
