@@ -3,7 +3,7 @@
 !*  ## Molecular Dynamics Simulation of Water by TIP5P Model ##  *
 !*     - Microwave heating, ice below T=273 K is not melted      * 
 !*                                                               *
-!*   Author: Motohiko Tanaka, Ph.D., Chukusa, Nagoya 464, Japan. *
+!*   Author: Motohiko Tanaka, Ph.D., Nagoya 464, Japan.          *
 !*                                                               *
 !*   Released by GPL-3.0 License, https://github.com/Mtanaka77/  *
 !*   Copyright(C) 2006-2024. All rights reserved.                *
@@ -573,7 +573,8 @@
       common/headr2/  t8
       common/headr3/  xleng
 !
-      real(C_DOUBLE)  ekin0,ekin1,eimg2,s0,s1,si,sr,omg_bar
+      real(C_DOUBLE)  ekin0,ekin1,eimg2,s0,s1,si,sr,omg_bar, &
+                      t_wipe
       real(C_float)   ranff
 !
       real(C_float),dimension(npq5) :: x4,y4,z4,ch4,am4,qch4 
@@ -581,7 +582,6 @@
       integer(C_INT) npq,cl_first 
       integer(C_INT) i_barrier,root
 !
-      real(C_DOUBLE) t_wipe
       logical :: first_23=.true.,first_p3m=.true.,  &
                  first_06=.true.,if_tequil=.true.,  &
                  if_kstart=.true.,if_wipe=.true.,   &
@@ -749,20 +749,10 @@
                              *(1.d0 -exp(-(t8 -tequil)/200.d0)) 
       end if
 !
-      if(it.eq.1 .and. io_pe.eq.1) then
-        open (unit=11,file=praefixc//'.11'//suffix2,             & 
-              status='unknown',position='append',form='formatted')
-!
-        write(11,371) econv,edc,econv*edc
-        write(11,*)
-  371   format(' % econv,edc,econv*edc=',1p3d10.2)
-        close(11)
-      end if
-!
-!     t_init=     1000.d0   !<- at kstart=0, in param
+!     t_init=     1000.d0   !<- at kstart=0, in parameter
 !     t_wipe_sta= 1700.d0   !<- salt wipe, in parameter 
 !     t_wipe_end= 4700.d0 
-!     t_wipe= t_wipe_end -t_wipe_sta  
+      t_wipe= t_wipe_end -t_wipe_sta  
 !*
       if(kstart.eq.0) then
 !
@@ -795,8 +785,6 @@
 !
 !  Pseudo salt is wiped out: 
 !   t_wipe_sta=1700. and t_wipe_end=4700 
-!
-      t_wipe= t_wipe_end -t_wipe_sta  
 !
       if(kstart.eq.0 .or. kstart.eq.2) then
 !*
