@@ -230,7 +230,7 @@ References of Numerical Technique:
  
 1. M. Tanaka and M. Sato, Microwave heating of water, ice and saline solution: Molecular dynamics study, J.Chem.Phys., 126, 034509 (2007).
 
-2. Classical Mechanics, H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England (2003); 古典力学，吉岡書店 (2006).
+2. "Classical Mechanics", H. Goldstein, C. Poolee, J. Safko, 3rd Edition, Pearson Education Inc., England (2003); 古典力学，吉岡書店 (2006).
 
 3. M. Tanaka, M. Sato, S. Nakatani, Microwave heating and collapse of methane hydrate by molecular dynamics simulations, https://arxiv.org/1909.01024, Cornell University, USA (2019).
 
